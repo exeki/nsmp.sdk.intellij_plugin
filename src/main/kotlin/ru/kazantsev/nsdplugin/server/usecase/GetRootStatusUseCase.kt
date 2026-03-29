@@ -14,7 +14,7 @@ class GetRootStatusUseCase : HttpRequestUseCase {
     override fun execute(httpExchange: HttpExchange): UseCaseResult {
         return UseCaseResult.of(
             statusCode = 200,
-            body = MessageResponse(status = "ok", message = "NSD Plugin server is running"),
+            body = MessageResponse(message = "NSD Plugin server is running"),
         )
     }
 }

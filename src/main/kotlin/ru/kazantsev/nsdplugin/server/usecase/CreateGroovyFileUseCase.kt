@@ -22,20 +22,20 @@ class CreateGroovyFileUseCase : HttpRequestUseCase {
         val projectName = httpExchange.getQueryParameter("projectName")
             ?: return UseCaseResult.of(
                 statusCode = 400,
-                body = MessageResponse(status = "error", message = "Missing query parameter 'projectName'"),
+                body = MessageResponse(message = "Missing query parameter 'projectName'"),
             )
 
         val project = projectService.findOpenProjectByName(projectName)
             ?: return UseCaseResult.of(
                 statusCode = 404,
-                body = MessageResponse(status = "error", message = "Project '$projectName' not found"),
+                body = MessageResponse(message = "Project '$projectName' not found"),
             )
 
         val fileText = httpExchange.requestBody.bufferedReader(StandardCharsets.UTF_8).use { it.readText() }
         if (fileText.isBlank()) {
             return UseCaseResult.of(
                 statusCode = 400,
-                body = MessageResponse(status = "error", message = "Request body must contain Groovy file text"),
+                body = MessageResponse(message = "Request body must contain Groovy file text"),
             )
         }
 
@@ -44,7 +44,7 @@ class CreateGroovyFileUseCase : HttpRequestUseCase {
         }.getOrElse { error ->
             return UseCaseResult.of(
                 statusCode = 500,
-                body = MessageResponse(status = "error", message = error.message ?: "Failed to create Groovy file"),
+                body = MessageResponse(message = error.message ?: "Failed to create Groovy file"),
             )
         }
 

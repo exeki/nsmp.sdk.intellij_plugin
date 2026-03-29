@@ -14,7 +14,7 @@ class NotFoundUseCase : HttpRequestUseCase {
     override fun execute(httpExchange: HttpExchange): UseCaseResult {
         return UseCaseResult.of(
             statusCode = 404,
-            body = MessageResponse(status = "error", message = "Not found"),
+            body = MessageResponse(message = "Not found"),
         )
     }
 }
