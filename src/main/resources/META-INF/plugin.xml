@@ -1,0 +1,19 @@
+<!-- Plugin Configuration File: https://plugins.jetbrains.com/docs/intellij/plugin-configuration-file.html -->
+<idea-plugin>
+    <id>ru.kazantsev.nsd-plugin</id>
+    <name>NSD</name>
+    <vendor email="exeki@yandex.ru">Kazantsev</vendor>
+    <description><![CDATA[
+        Плагин поднимает локальный HTTP-сервис и готовит основу для интеграции IntelliJ IDEA с внешними инструментами.
+    ]]></description>
+    <depends>com.intellij.modules.platform</depends>
+
+    <extensions defaultExtensionNs="com.intellij">
+        <postStartupActivity implementation="ru.kazantsev.nsdplugin.startup.NsdProjectStartupActivity"/>
+        <applicationConfigurable
+                parentId="tools"
+                instance="ru.kazantsev.nsdplugin.settings.NsdPluginConfigurable"
+                id="ru.kazantsev.nsdplugin.settings"
+                displayName="NSD"/>
+    </extensions>
+</idea-plugin>
