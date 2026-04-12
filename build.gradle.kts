@@ -1,12 +1,11 @@
 plugins {
     id("java")
-    id("org.jetbrains.kotlin.jvm") version "2.1.20"
-    id("org.jetbrains.kotlin.plugin.serialization") version "2.1.20"
+    id("org.jetbrains.kotlin.jvm") version "2.3.0"
     id("org.jetbrains.intellij.platform") version "2.10.2"
 }
 
-group = "ru.kazantsev"
-version = "1.0-SNAPSHOT"
+group = "ru.kazantsev.nsmp.sdk"
+version = "1.0.0"
 
 repositories {
     mavenCentral()
@@ -17,15 +16,16 @@ repositories {
 
 // Read more: https://plugins.jetbrains.com/docs/intellij/tools-intellij-platform-gradle-plugin.html
 dependencies {
-    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.8.1")
-
+    implementation("ru.kazantsev.nsmp.sdk.sources_sync:core:1.1.0")
     intellijPlatform {
-        intellijIdea("2025.2.4")
+        intellijIdeaCommunity("2025.2.4")
         testFramework(org.jetbrains.intellij.platform.gradle.TestFrameworkType.Platform)
+        instrumentationTools()
 
 
         // Add plugin dependencies for compilation here, example:
         // bundledPlugin("com.intellij.java")
+        bundledPlugin("com.intellij.java")
     }
 }
 
@@ -41,11 +41,18 @@ intellijPlatform {
     }
 }
 
-tasks {
-    named<JavaExec>("runIde") {
-        systemProperty("idea.log.debug.categories", "ru.kazantsev.nsdplugin")
+repositories {
+    mavenCentral()
+    maven {
+        url = uri("https://maven.pkg.github.com/exeki/*")
+        credentials {
+            username = System.getenv("GITHUB_USERNAME")
+            password = System.getenv("GITHUB_TOKEN")
+        }
     }
+}
 
+tasks {
     // Set the JVM compatibility versions
     withType<JavaCompile> {
         sourceCompatibility = "21"

@@ -1,1 +1,1 @@
-rootProject.name = "nsd-plugin"
+rootProject.name = "intellij_plugin"

@@ -1,5 +1,5 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="Run IDE with Plugin" type="GradleRunConfiguration" factoryName="Gradle" activateToolWindowBeforeRun="false">
+  <configuration default="false" name="Run IDE with Plugin" type="GradleRunConfiguration" factoryName="Gradle" focusToolWindowBeforeRun="true" show_console_on_std_err="true" show_console_on_std_out="true">
     <log_file alias="idea.log" path="$PROJECT_DIR$/build/idea-sandbox/system/log/idea.log" />
     <log_file checked="false" alias="logs" path="$PROJECT_DIR$/build/idea-sandbox/IU-2025.2.4/log/idea.log" skipped="false" />
     <ExternalSystemSettings>

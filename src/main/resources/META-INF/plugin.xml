@@ -1,6 +1,6 @@
 <!-- Plugin Configuration File: https://plugins.jetbrains.com/docs/intellij/plugin-configuration-file.html -->
 <idea-plugin>
-    <id>ru.kazantsev.nsd-plugin</id>
+    <id>ru.kazantsev.nsmp.sdk.intellij_plugin</id>
     <name>NSD</name>
     <vendor email="exeki@yandex.ru">Kazantsev</vendor>
     <description><![CDATA[
@@ -9,11 +9,16 @@
     <depends>com.intellij.modules.platform</depends>
 
     <extensions defaultExtensionNs="com.intellij">
-        <postStartupActivity implementation="ru.kazantsev.nsdplugin.startup.NsdProjectStartupActivity"/>
-        <applicationConfigurable
+        <postStartupActivity implementation="ru.kazantsev.nsmp.sdk.intellij_plugin.startup.NsdProjectStartupActivity"/>
+        <toolWindow
+                id="NSMP SDK"
+                anchor="right"
+                factoryClass="ru.kazantsev.nsmp.sdk.intellij_plugin.ui.NsmpSdkToolWindowFactory"
+                canCloseContents="false"/>
+        <projectConfigurable
                 parentId="tools"
-                instance="ru.kazantsev.nsdplugin.settings.NsdPluginConfigurable"
-                id="ru.kazantsev.nsdplugin.settings"
-                displayName="NSD"/>
+                instance="ru.kazantsev.nsmp.sdk.intellij_plugin.ui.PluginConfigurable"
+                id="ru.kazantsev.nsmp.sdk.intellij_plugin.services.settings"
+                displayName="NSMP SDK"/>
     </extensions>
 </idea-plugin>
