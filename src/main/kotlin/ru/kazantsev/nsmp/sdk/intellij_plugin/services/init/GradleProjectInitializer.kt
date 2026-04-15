@@ -19,6 +19,7 @@ data class GradleInitResult(
 }
 
 object GradleProjectInitializer {
+
     fun isProjectInitialized(project: Project): Boolean {
         val basePath = project.basePath ?: return false
         val root = Path.of(basePath)

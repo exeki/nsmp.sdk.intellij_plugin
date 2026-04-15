@@ -1,6 +1,8 @@
 package ru.kazantsev.nsmp.sdk.intellij_plugin.ui
 
 import com.intellij.ide.projectView.ProjectView
+import com.intellij.notification.NotificationGroupManager
+import com.intellij.notification.NotificationType
 import com.intellij.openapi.application.ApplicationManager
 import com.intellij.openapi.progress.ProgressIndicator
 import com.intellij.openapi.progress.ProgressManager
@@ -13,7 +15,8 @@ import com.intellij.openapi.wm.ToolWindowFactory
 import com.intellij.ui.content.ContentFactory
 import ru.kazantsev.nsmp.sdk.intellij_plugin.MyMessageBundle
 import ru.kazantsev.nsmp.sdk.intellij_plugin.services.init.GradleProjectInitializer
-import ru.kazantsev.nsmp.sdk.intellij_plugin.services.settings.ProjectInstallationSettingsService
+import ru.kazantsev.nsmp.sdk.intellij_plugin.services.settings.ProjectSettingsService
+import ru.kazantsev.nsmp.sdk.intellij_plugin.services.settings.model.SrcRequestInputState
 import ru.kazantsev.nsmp.sdk.intellij_plugin.services.sync.SrcCommandType
 import ru.kazantsev.nsmp.sdk.intellij_plugin.services.sync.SrcSyncProjectService
 import java.awt.Component
@@ -25,7 +28,11 @@ import javax.swing.JLabel
 import javax.swing.JPanel
 import javax.swing.JSeparator
 
-class NsmpSdkToolWindowFactory : ToolWindowFactory {
+class ToolWindowFactory : ToolWindowFactory {
+    private val notifications by lazy {
+        NotificationGroupManager.getInstance().getNotificationGroup("NSMP SDK Notifications")
+    }
+
     override fun createToolWindowContent(project: Project, toolWindow: ToolWindow) {
         val panel = JPanel().apply {
             layout = BoxLayout(this, BoxLayout.Y_AXIS)
@@ -67,6 +74,7 @@ class NsmpSdkToolWindowFactory : ToolWindowFactory {
         val statusLabel = JLabel().apply {
             alignmentX = Component.LEFT_ALIGNMENT
         }
+
         updateInitStatusLabel(project, statusLabel)
 
         return JPanel().apply {
@@ -99,7 +107,7 @@ class NsmpSdkToolWindowFactory : ToolWindowFactory {
     }
 
     private fun executeCommand(project: Project, commandType: SrcCommandType) {
-        val projectSettings = ProjectInstallationSettingsService.getInstance(project)
+        val projectSettings = ProjectSettingsService.getInstance(project)
         val initialInput = getStoredInput(projectSettings, commandType)
 
         val dialog = SrcRequestDialog(
@@ -151,16 +159,20 @@ class NsmpSdkToolWindowFactory : ToolWindowFactory {
                 }.onSuccess { message ->
                     ApplicationManager.getApplication().invokeLater {
                         refreshProjectExplorer(project)
-                        Messages.showInfoMessage(project, message, commandTitle(commandType))
+                        notifications.createNotification(
+                            commandTitle(commandType),
+                            message,
+                            NotificationType.INFORMATION
+                        ).notify(project)
                     }
                 }.onFailure { error ->
                     ApplicationManager.getApplication().invokeLater {
                         refreshProjectExplorer(project)
-                        Messages.showErrorDialog(
-                            project,
+                        notifications.createNotification(
+                            commandTitle(commandType),
                             error.message ?: MyMessageBundle.message("sync.error.unknown"),
-                            commandTitle(commandType)
-                        )
+                            NotificationType.ERROR
+                        ).notify(project)
                     }
                 }
             }
@@ -226,7 +238,7 @@ class NsmpSdkToolWindowFactory : ToolWindowFactory {
     }
 
     private fun getStoredInput(
-        settings: ProjectInstallationSettingsService,
+        settings: ProjectSettingsService,
         commandType: SrcCommandType
     ) = when (commandType) {
         SrcCommandType.PULL -> settings.pullRequestInput
@@ -235,9 +247,9 @@ class NsmpSdkToolWindowFactory : ToolWindowFactory {
     }
 
     private fun saveStoredInput(
-        settings: ProjectInstallationSettingsService,
+        settings: ProjectSettingsService,
         commandType: SrcCommandType,
-        input: ru.kazantsev.nsmp.sdk.intellij_plugin.services.settings.SrcRequestInputState
+        input: SrcRequestInputState
     ) {
         when (commandType) {
             SrcCommandType.PULL -> settings.pullRequestInput = input

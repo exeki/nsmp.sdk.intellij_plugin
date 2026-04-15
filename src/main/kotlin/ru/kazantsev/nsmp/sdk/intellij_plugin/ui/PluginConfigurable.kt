@@ -11,12 +11,12 @@ import com.intellij.ui.components.JBScrollPane
 import com.intellij.ui.components.JBTextField
 import com.intellij.ui.table.JBTable
 import com.intellij.util.ui.FormBuilder
+import ru.kazantsev.nsmp.basic_api_connector.ConfigService
+import ru.kazantsev.nsmp.basic_api_connector.dto.InstallationDto
 import ru.kazantsev.nsmp.sdk.intellij_plugin.MyMessageBundle
 import ru.kazantsev.nsmp.sdk.intellij_plugin.server.service.NsdHttpServerService
-import ru.kazantsev.nsmp.sdk.intellij_plugin.services.settings.ConnectorInstallation
-import ru.kazantsev.nsmp.sdk.intellij_plugin.services.settings.InstallationConfigFileService
-import ru.kazantsev.nsmp.sdk.intellij_plugin.services.settings.NsdPluginSettingsService
-import ru.kazantsev.nsmp.sdk.intellij_plugin.services.settings.ProjectInstallationSettingsService
+import ru.kazantsev.nsmp.sdk.intellij_plugin.services.settings.AppSettingsService
+import ru.kazantsev.nsmp.sdk.intellij_plugin.services.settings.ProjectSettingsService
 import java.awt.BorderLayout
 import java.awt.FlowLayout
 import javax.swing.BorderFactory
@@ -35,12 +35,12 @@ class PluginConfigurable(private val project: Project) : Configurable {
     private var installationsTable: JBTable? = null
     private var installationsTableModel: DefaultTableModel? = null
     private var installationBox: ComboBox<InstallationOption>? = null
-    private var installations: MutableList<ConnectorInstallation> = mutableListOf()
+    private var installations: MutableList<InstallationDto> = mutableListOf()
 
-    private val fileService: InstallationConfigFileService
-        get() = ApplicationManager.getApplication().getService(InstallationConfigFileService::class.java)
-    private val projectSettings: ProjectInstallationSettingsService
-        get() = ProjectInstallationSettingsService.getInstance(project)
+    private val projectSettings: ProjectSettingsService
+        get() = ProjectSettingsService.getInstance(project)
+    private val configService: ConfigService
+        get() = ConfigService(AppSettingsService.getInstance().connectorConfigPath)
 
     override fun getDisplayName(): String = MyMessageBundle.message("settings.display.name")
 
@@ -101,22 +101,22 @@ class PluginConfigurable(private val project: Project) : Configurable {
     }
 
     override fun isModified(): Boolean {
-        val settings = NsdPluginSettingsService.getInstance()
+        val settings = AppSettingsService.getInstance()
         if (portField?.text?.trim() != settings.serverPort.toString()) return true
         if (configPathField?.text?.trim() != settings.connectorConfigPath) return true
-        if (installations != fileService.load(settings.connectorConfigPath)) return true
+        if (installations != configService.installations) return true
         val selectedId = (installationBox?.selectedItem as? InstallationOption)?.id.orEmpty()
         return selectedId != projectSettings.selectedInstallationId
     }
 
     @Throws(ConfigurationException::class)
     override fun apply() {
-        val settings = NsdPluginSettingsService.getInstance()
+        val settings = AppSettingsService.getInstance()
         val port = parsePort(portField?.text)
         val configPath = configPathField?.text?.trim().orEmpty()
         if (configPath.isBlank()) throw ConfigurationException(MyMessageBundle.message("settings.error.config.path.required"))
 
-        runCatching { fileService.save(configPath, installations) }
+        runCatching { configService.saveInstallations(installations) }
             .getOrElse {
                 throw ConfigurationException(
                     MyMessageBundle.message("settings.error.installations.save.failed", it.message ?: "")
@@ -130,10 +130,10 @@ class PluginConfigurable(private val project: Project) : Configurable {
     }
 
     override fun reset() {
-        val settings = NsdPluginSettingsService.getInstance()
+        val settings = AppSettingsService.getInstance()
         portField?.text = settings.serverPort.toString()
         configPathField?.text = settings.connectorConfigPath
-        installations = fileService.load(settings.connectorConfigPath).toMutableList()
+        installations = configService.getInstallations().toMutableList()
         refreshTable()
         refreshProjectInstallations(projectSettings.selectedInstallationId)
     }
@@ -157,7 +157,7 @@ class PluginConfigurable(private val project: Project) : Configurable {
         )
         if (!dialog.showAndGet()) return
         val installation = dialog.getInstallation()
-        val existingIndex = installations.indexOfFirst { it.installationId == installation.installationId }
+        val existingIndex = installations.indexOfFirst { it.id == installation.id }
         if (existingIndex >= 0) installations[existingIndex] = installation else installations.add(installation)
         refreshTable()
         refreshProjectInstallations(selectedProjectInstallationId)
@@ -172,24 +172,16 @@ class PluginConfigurable(private val project: Project) : Configurable {
         )
         if (!dialog.showAndGet()) return
         val updated = dialog.getInstallation()
-        val duplicateIndex = installations.indexOfFirst { it.installationId == updated.installationId && it != installations[selected] }
-        if (duplicateIndex >= 0) {
-            Messages.showErrorDialog(
-                MyMessageBundle.message("settings.error.installation.duplicate", updated.installationId),
-                MyMessageBundle.message("settings.display.name")
-            )
-            return
-        }
         installations[selected] = updated
         refreshTable()
-        refreshProjectInstallations(updated.installationId)
+        refreshProjectInstallations(updated.id)
         installationsTable?.setRowSelectionInterval(selected, selected)
     }
 
     private fun deleteInstallation() {
         val selected = selectedInstallationIndex() ?: return
         val selectedProjectInstallationId = (installationBox?.selectedItem as? InstallationOption)?.id
-        val removedId = installations[selected].installationId
+        val removedId = installations[selected].id
         installations.removeAt(selected)
         refreshTable()
         refreshProjectInstallations(
@@ -206,7 +198,7 @@ class PluginConfigurable(private val project: Project) : Configurable {
             )
             return
         }
-        installations = fileService.load(path).toMutableList()
+        installations = configService.getInstallations().toMutableList()
         refreshTable()
         refreshProjectInstallations((installationBox?.selectedItem as? InstallationOption)?.id)
     }
@@ -227,7 +219,7 @@ class PluginConfigurable(private val project: Project) : Configurable {
         val box = installationBox ?: return
         box.removeAllItems()
         box.addItem(InstallationOption.None)
-        installations.forEach { box.addItem(InstallationOption(id = it.installationId, label = it.installationId)) }
+        installations.forEach { box.addItem(InstallationOption(id = it.id, label = it.id)) }
 
         val idToSelect = preferredId?.takeIf { it.isNotBlank() }
         if (idToSelect != null) {
@@ -246,7 +238,7 @@ class PluginConfigurable(private val project: Project) : Configurable {
         installations.forEach { installation ->
             model.addRow(
                 arrayOf<Any>(
-                    installation.installationId,
+                    installation.id,
                     installation.scheme,
                     installation.host,
                     maskSecret(installation.accessKey),

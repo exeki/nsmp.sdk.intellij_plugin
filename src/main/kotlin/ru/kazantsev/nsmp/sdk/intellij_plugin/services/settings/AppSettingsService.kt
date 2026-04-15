@@ -11,7 +11,7 @@ import ru.kazantsev.nsmp.basic_api_connector.ConnectorParams
 
 @Service(Service.Level.APP)
 @State(name = "NsdPluginSettings", storages = [Storage("nsd-plugin.xml")])
-class NsdPluginSettingsService : PersistentStateComponent<NsdPluginSettingsService> {
+class AppSettingsService : PersistentStateComponent<AppSettingsService> {
     var serverPort: Int = 8123
     var connectorConfigPath: String = ConnectorParams.getDefaultParamsFilePath()
 
@@ -19,16 +19,16 @@ class NsdPluginSettingsService : PersistentStateComponent<NsdPluginSettingsServi
         logger.info("NSD Plugin settings service initialized. Default port=$serverPort")
     }
 
-    override fun getState(): NsdPluginSettingsService = this
+    override fun getState(): AppSettingsService = this
 
-    override fun loadState(state: NsdPluginSettingsService) {
+    override fun loadState(state: AppSettingsService) {
         XmlSerializerUtil.copyBean(state, this)
         logger.info("NSD Plugin settings loaded. Port=$serverPort")
     }
 
     companion object {
-        fun getInstance(): NsdPluginSettingsService =
-            ApplicationManager.getApplication().getService(NsdPluginSettingsService::class.java)
+        fun getInstance(): AppSettingsService =
+            ApplicationManager.getApplication().getService(AppSettingsService::class.java)
 
         private val logger = thisLogger()
     }

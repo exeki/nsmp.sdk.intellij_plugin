@@ -16,7 +16,7 @@ repositories {
 
 // Read more: https://plugins.jetbrains.com/docs/intellij/tools-intellij-platform-gradle-plugin.html
 dependencies {
-    implementation("ru.kazantsev.nsmp.sdk.sources_sync:core:1.1.0")
+    implementation("ru.kazantsev.nsmp.sdk.sources_sync:core:1.2.7")
     intellijPlatform {
         intellijIdeaCommunity("2025.2.4")
         testFramework(org.jetbrains.intellij.platform.gradle.TestFrameworkType.Platform)

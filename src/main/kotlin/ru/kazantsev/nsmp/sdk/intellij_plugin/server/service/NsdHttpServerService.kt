@@ -8,7 +8,7 @@ import com.sun.net.httpserver.HttpExchange
 import com.sun.net.httpserver.HttpServer
 import ru.kazantsev.nsmp.sdk.intellij_plugin.server.JsonSerializer
 import kotlinx.serialization.json.JsonElement
-import ru.kazantsev.nsmp.sdk.intellij_plugin.services.settings.NsdPluginSettingsService
+import ru.kazantsev.nsmp.sdk.intellij_plugin.services.settings.AppSettingsService
 import java.net.BindException
 import java.net.InetSocketAddress
 import java.nio.charset.StandardCharsets
@@ -46,7 +46,7 @@ class NsdHttpServerService : Disposable {
 
     @Synchronized
     private fun start() {
-        val port = NsdPluginSettingsService.Companion.getInstance().serverPort
+        val port = AppSettingsService.Companion.getInstance().serverPort
 
         try {
             val httpServer = HttpServer.create(InetSocketAddress("127.0.0.1", port), 0).apply {
