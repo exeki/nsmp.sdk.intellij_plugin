@@ -17,17 +17,19 @@ repositories {
 
 // Read more: https://plugins.jetbrains.com/docs/intellij/tools-intellij-platform-gradle-plugin.html
 dependencies {
+    @Suppress("VulnerableLibrariesLocal", "RedundantSuppression")
     implementation("ru.kazantsev.nsmp.sdk.sources_sync:core:1.3.2")
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.9.0")
     intellijPlatform {
         intellijIdeaCommunity("2025.2.4")
         testFramework(org.jetbrains.intellij.platform.gradle.TestFrameworkType.Platform)
-        instrumentationTools()
+        //instrumentationTools()
 
 
         // Add plugin dependencies for compilation here, example:
-        // bundledPlugin("com.intellij.java")
         bundledPlugin("com.intellij.java")
+        bundledPlugin("com.intellij.java")
+        bundledPlugin("org.intellij.groovy")
     }
 }
 

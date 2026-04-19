@@ -6,14 +6,8 @@ import com.intellij.util.ui.JBUI
 import ru.kazantsev.nsmp.sdk.intellij_plugin.MessageBundle
 import java.awt.BorderLayout
 import java.awt.Dimension
-import javax.swing.Box
-import javax.swing.BoxLayout
-import javax.swing.JButton
-import javax.swing.JComponent
-import javax.swing.JPanel
-import javax.swing.SwingConstants
+import javax.swing.*
 import javax.swing.border.CompoundBorder
-import javax.swing.border.EmptyBorder
 import javax.swing.border.LineBorder
 
 class CollapsibleSection(

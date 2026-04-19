@@ -8,21 +8,16 @@ import com.intellij.ui.components.JBScrollPane
 import com.intellij.ui.table.JBTable
 import ru.kazantsev.nsmp.sdk.intellij_plugin.MessageBundle
 import ru.kazantsev.nsmp.sdk.intellij_plugin.services.sync.options.dto.SrcOption
+import ru.kazantsev.nsmp.sdk.intellij_plugin.ui.request_dialog.components.OptionTableModel
 import ru.kazantsev.nsmp.sdk.intellij_plugin.ui.request_dialog.model.OptionRow
 import ru.kazantsev.nsmp.sdk.intellij_plugin.ui.request_dialog.model.SelectedSrcOption
 import java.awt.BorderLayout
 import java.awt.Dimension
-import javax.swing.Box
-import javax.swing.BoxLayout
-import javax.swing.JButton
-import javax.swing.JComponent
-import javax.swing.JPanel
-import javax.swing.ListSelectionModel
-import javax.swing.event.DocumentEvent
-import javax.swing.event.DocumentListener
-import javax.swing.table.AbstractTableModel
 import java.awt.event.MouseAdapter
 import java.awt.event.MouseEvent
+import javax.swing.*
+import javax.swing.event.DocumentEvent
+import javax.swing.event.DocumentListener
 
 class ValuesSelectDialog(
     project: Project,
@@ -187,8 +182,6 @@ class ValuesSelectDialog(
         }
     }
 
-    fun getSelectedCodes(): List<String> = selectedCodes.toList()
-
     fun getSelectedOptions(): List<SelectedSrcOption> {
         return selectedRows().map { SelectedSrcOption(code = it.code, title = it.title) }
     }
@@ -219,35 +212,4 @@ class ValuesSelectDialog(
         }.sortedWith(compareBy<OptionRow> { it.title }.thenBy { it.code })
     }
 
-    private class OptionTableModel : AbstractTableModel() {
-        private val rows = mutableListOf<OptionRow>()
-
-        override fun getRowCount(): Int = rows.size
-
-        override fun getColumnCount(): Int = 2
-
-        override fun getColumnName(column: Int): String {
-            return if (column == 0) {
-                MessageBundle.message("sync.dialog.multi.select.column.title")
-            } else {
-                MessageBundle.message("sync.dialog.multi.select.column.code")
-            }
-        }
-
-        override fun getValueAt(rowIndex: Int, columnIndex: Int): Any {
-            val row = rows[rowIndex]
-            return if (columnIndex == 0) row.title else row.code
-        }
-
-        fun setRows(newRows: List<OptionRow>) {
-            rows.clear()
-            rows.addAll(newRows)
-            fireTableDataChanged()
-        }
-
-        fun rowAt(index: Int): OptionRow? {
-            if (index !in 0 until rows.size) return null
-            return rows[index]
-        }
-    }
 }

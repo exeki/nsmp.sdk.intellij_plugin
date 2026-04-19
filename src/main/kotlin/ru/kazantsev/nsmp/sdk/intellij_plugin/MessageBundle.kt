@@ -7,6 +7,7 @@ import java.util.function.Supplier
 
 private const val BUNDLE = "messages.MessageBundle"
 
+@Suppress("unused")
 internal object MessageBundle {
     private val instance = DynamicBundle(MessageBundle::class.java, BUNDLE)
 

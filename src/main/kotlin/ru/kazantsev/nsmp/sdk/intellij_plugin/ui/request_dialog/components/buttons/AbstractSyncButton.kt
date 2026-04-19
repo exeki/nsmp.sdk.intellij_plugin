@@ -35,8 +35,8 @@ abstract class AbstractSyncButton(
         addActionListener {
             if(!projectSettingsService.checkInstallationIsSpecified()) return@addActionListener
             val dialog = SrcRequestSelectDialog(
+                title = dialogTitle,
                 project = project,
-                titleText = dialogTitle,
                 withForceCheckbox = false,
                 optionsProvider = optionsProvider,
                 action = action,

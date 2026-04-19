@@ -25,8 +25,8 @@ import javax.swing.JPanel
 import javax.swing.ScrollPaneConstants
 
 open class SrcRequestSelectDialog(
+    title: String,
     private val project: Project,
-    private val titleText: String,
     private val withForceCheckbox: Boolean,
     private val optionsProvider: SrcOptionsProvider,
     private val action: (SrcRequestSelectState) -> Unit
@@ -113,7 +113,7 @@ open class SrcRequestSelectDialog(
     private val clearAllButton = JButton(MessageBundle.message("sync.dialog.clear.all"))
 
     init {
-        title = titleText
+        this.title = title
         preloadOptions()
         bindAllCheckBox(allModulesField, modulesField)
         bindAllCheckBox(allScriptsField, scriptsField)

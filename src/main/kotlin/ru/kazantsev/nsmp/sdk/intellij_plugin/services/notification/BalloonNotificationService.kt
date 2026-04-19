@@ -4,8 +4,8 @@ import com.intellij.notification.NotificationGroupManager
 import com.intellij.notification.NotificationType
 import com.intellij.openapi.components.Service
 import com.intellij.openapi.project.Project
-import com.intellij.openapi.ui.Messages
 
+@Suppress("unused")
 @Service(Service.Level.PROJECT)
 class BalloonNotificationService(private val project: Project) {
     private val notifications by lazy {

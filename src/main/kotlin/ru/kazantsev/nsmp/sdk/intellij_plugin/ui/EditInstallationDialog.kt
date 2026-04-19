@@ -15,7 +15,7 @@ import javax.swing.JComponent
 
 class EditInstallationDialog(
     project: Project?,
-    private val titleText: String,
+    titleText: String,
     initialValue: InstallationDto?,
 ) : DialogWrapper(project) {
     private val idField = JBTextField(initialValue?.id.orEmpty())
@@ -53,6 +53,7 @@ class EditInstallationDialog(
             MessageBundle.message("installation.dialog.validation.host.required"),
             hostField
         )
+        //TODO text устарел
         if (accessKeyField.text.trim().isEmpty()) return ValidationInfo(
             MessageBundle.message("installation.dialog.validation.access.key.required"),
             accessKeyField

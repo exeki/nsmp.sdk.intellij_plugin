@@ -1,5 +1,6 @@
 package ru.kazantsev.nsmp.sdk.intellij_plugin.services.project
 
+import com.intellij.openapi.Disposable
 import com.intellij.openapi.components.Service
 import com.intellij.openapi.diagnostic.thisLogger
 import com.intellij.openapi.externalSystem.service.project.manage.ProjectDataImportListener
@@ -17,9 +18,9 @@ import org.jetbrains.jps.model.java.JavaSourceRootType
 @Service(Service.Level.PROJECT)
 class ProjectSourceRootMarkerService(
     private val project: Project,
-) {
+) : Disposable {
     init {
-        project.messageBus.connect(project).subscribe(
+        project.messageBus.connect(this).subscribe(
             VirtualFileManager.VFS_CHANGES,
             object : BulkFileListener {
                 override fun after(events: List<VFileEvent>) {
@@ -29,7 +30,7 @@ class ProjectSourceRootMarkerService(
                 }
             }
         )
-        project.messageBus.connect(project).subscribe(
+        project.messageBus.connect(this).subscribe(
             ProjectDataImportListener.TOPIC,
             object : ProjectDataImportListener {
                 override fun onImportFinished(projectPath: String?) {
@@ -39,6 +40,8 @@ class ProjectSourceRootMarkerService(
             }
         )
     }
+
+    override fun dispose() = Unit
 
     fun markConfiguredRoots() {
         if (project.isDisposed) {

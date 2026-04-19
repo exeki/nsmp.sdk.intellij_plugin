@@ -3,8 +3,8 @@ package ru.kazantsev.nsmp.sdk.intellij_plugin.services.notification
 import com.intellij.openapi.components.Service
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.ui.Messages
-import ru.kazantsev.nsmp.sdk.intellij_plugin.MessageBundle
 
+@Suppress("unused")
 @Service(Service.Level.PROJECT)
 class DialogNotificationService(private val project: Project) {
     fun showInfo(title: String, message: String) {

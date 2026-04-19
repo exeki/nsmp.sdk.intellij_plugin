@@ -4,6 +4,7 @@ class SelectedSrcOption {
     var code: String = ""
     var title: String = ""
 
+    @Suppress("unused")
     constructor()
 
     constructor(code: String, title: String) {
