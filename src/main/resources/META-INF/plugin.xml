@@ -12,10 +12,9 @@
     <extensions defaultExtensionNs="com.intellij">
         <notificationGroup id="NSMP SDK Notifications" displayType="BALLOON" isLogByDefault="true"/>
         <postStartupActivity implementation="ru.kazantsev.nsmp.sdk.intellij_plugin.startup.NsdProjectStartupActivity"/>
-        <editorNotificationProvider
-                implementation="ru.kazantsev.nsmp.sdk.intellij_plugin.ui.notifications.GroovySyncEditorNotificationProvider"/>
         <toolWindow id="NSMP SDK"
                     anchor="right"
+                    icon="/icons/nsmp_logo_stripe.svg"
                     factoryClass="ru.kazantsev.nsmp.sdk.intellij_plugin.ui.ToolWindowFactory"
                     canCloseContents="false"/>
         <projectConfigurable id="ru.kazantsev.nsmp.sdk.intellij_plugin.services.settings"
@@ -23,5 +22,11 @@
                              instance="ru.kazantsev.nsmp.sdk.intellij_plugin.ui.PluginConfigurable"
                              displayName="NSMP SDK"/>
     </extensions>
+
+    <projectListeners>
+        <listener
+                class="ru.kazantsev.nsmp.sdk.intellij_plugin.ui.FileEditorManagerListener"
+                topic="com.intellij.openapi.fileEditor.FileEditorManagerListener"/>
+    </projectListeners>
 
 </idea-plugin>

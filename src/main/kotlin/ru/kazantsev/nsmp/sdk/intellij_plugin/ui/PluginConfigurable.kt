@@ -1,11 +1,11 @@
 package ru.kazantsev.nsmp.sdk.intellij_plugin.ui
 
 import com.intellij.openapi.application.ApplicationManager
+import com.intellij.openapi.components.service
 import com.intellij.openapi.options.Configurable
 import com.intellij.openapi.options.ConfigurationException
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.ui.ComboBox
-import com.intellij.openapi.ui.Messages
 import com.intellij.ui.SimpleListCellRenderer
 import com.intellij.ui.components.JBScrollPane
 import com.intellij.ui.components.JBTextField
@@ -13,8 +13,10 @@ import com.intellij.ui.table.JBTable
 import com.intellij.util.ui.FormBuilder
 import ru.kazantsev.nsmp.basic_api_connector.ConfigService
 import ru.kazantsev.nsmp.basic_api_connector.dto.InstallationDto
-import ru.kazantsev.nsmp.sdk.intellij_plugin.MyMessageBundle
+import ru.kazantsev.nsmp.sdk.intellij_plugin.MessageBundle
 import ru.kazantsev.nsmp.sdk.intellij_plugin.server.service.NsdHttpServerService
+import ru.kazantsev.nsmp.sdk.intellij_plugin.services.notification.DialogNotificationService
+import ru.kazantsev.nsmp.sdk.intellij_plugin.services.project.ProjectSourceRootMarkerService
 import ru.kazantsev.nsmp.sdk.intellij_plugin.services.settings.AppSettingsService
 import ru.kazantsev.nsmp.sdk.intellij_plugin.services.settings.ProjectSettingsService
 import java.awt.BorderLayout
@@ -35,14 +37,19 @@ class PluginConfigurable(private val project: Project) : Configurable {
     private var installationsTable: JBTable? = null
     private var installationsTableModel: DefaultTableModel? = null
     private var installationBox: ComboBox<InstallationOption>? = null
+    private var scriptsDirectoryField: JBTextField? = null
+    private var modulesDirectoryField: JBTextField? = null
+    private var advImportsDirectoryField: JBTextField? = null
     private var installations: MutableList<InstallationDto> = mutableListOf()
 
     private val projectSettings: ProjectSettingsService
-        get() = ProjectSettingsService.getInstance(project)
+        get() = project.service<ProjectSettingsService>()
+    private val appSettings: AppSettingsService
+        get() = ApplicationManager.getApplication().service<AppSettingsService>()
     private val configService: ConfigService
-        get() = ConfigService(AppSettingsService.getInstance().connectorConfigPath)
+        get() = ConfigService(AppSettingsService.getInstance().pathToConfigFile)
 
-    override fun getDisplayName(): String = MyMessageBundle.message("settings.display.name")
+    override fun getDisplayName(): String = MessageBundle.message("settings.display.name")
 
     override fun createComponent(): JComponent {
         if (panel == null) {
@@ -55,12 +62,15 @@ class PluginConfigurable(private val project: Project) : Configurable {
                     value.label
                 }
             }
+            val scriptsDirectory = JBTextField()
+            val modulesDirectory = JBTextField()
+            val advImportsDirectory = JBTextField()
 
             val controls = JPanel(FlowLayout(FlowLayout.LEFT, 8, 0)).apply {
-                add(JButton(MyMessageBundle.message("settings.global.button.add")).apply { addActionListener { addInstallation() } })
-                add(JButton(MyMessageBundle.message("settings.global.button.edit")).apply { addActionListener { editInstallation() } })
-                add(JButton(MyMessageBundle.message("settings.global.button.delete")).apply { addActionListener { deleteInstallation() } })
-                add(JButton(MyMessageBundle.message("settings.global.button.reload")).apply { addActionListener { reloadInstallationsFromPath() } })
+                add(JButton(MessageBundle.message("settings.global.button.add")).apply { addActionListener { addInstallation() } })
+                add(JButton(MessageBundle.message("settings.global.button.edit")).apply { addActionListener { editInstallation() } })
+                add(JButton(MessageBundle.message("settings.global.button.delete")).apply { addActionListener { deleteInstallation() } })
+                add(JButton(MessageBundle.message("settings.global.button.reload")).apply { addActionListener { reloadInstallationsFromPath() } })
             }
 
             val tablePanel = JPanel(BorderLayout()).apply {
@@ -69,17 +79,20 @@ class PluginConfigurable(private val project: Project) : Configurable {
             }
 
             val globalSettingsPanel = FormBuilder.createFormBuilder()
-                .addLabeledComponent(MyMessageBundle.message("settings.global.server.port"), port)
-                .addLabeledComponent(MyMessageBundle.message("settings.global.connector.config.path"), configPath)
+                .addLabeledComponent(MessageBundle.message("settings.global.server.port"), port)
+                .addLabeledComponent(MessageBundle.message("settings.global.connector.config.path"), configPath)
                 .addComponentFillVertically(tablePanel, 0)
                 .panel
-                .apply { border = BorderFactory.createTitledBorder(MyMessageBundle.message("settings.global.title")) }
+                .apply { border = BorderFactory.createTitledBorder(MessageBundle.message("settings.global.title")) }
 
             val projectSettingsPanel = FormBuilder.createFormBuilder()
-                .addLabeledComponent(MyMessageBundle.message("settings.project.installation"), projectInstallationBox)
+                .addLabeledComponent(MessageBundle.message("settings.project.installation"), projectInstallationBox)
+                .addLabeledComponent(MessageBundle.message("settings.project.scripts.path"), scriptsDirectory)
+                .addLabeledComponent(MessageBundle.message("settings.project.modules.path"), modulesDirectory)
+                .addLabeledComponent(MessageBundle.message("settings.project.advimports.path"), advImportsDirectory)
                 .addComponentFillVertically(JPanel(), 0)
                 .panel
-                .apply { border = BorderFactory.createTitledBorder(MyMessageBundle.message("settings.project.title")) }
+                .apply { border = BorderFactory.createTitledBorder(MessageBundle.message("settings.project.title")) }
 
             panel = JPanel().apply {
                 layout = BoxLayout(this, BoxLayout.Y_AXIS)
@@ -94,6 +107,9 @@ class PluginConfigurable(private val project: Project) : Configurable {
             installationsTable = table
             installationsTableModel = model
             installationBox = projectInstallationBox
+            scriptsDirectoryField = scriptsDirectory
+            modulesDirectoryField = modulesDirectory
+            advImportsDirectoryField = advImportsDirectory
         }
 
         reset()
@@ -101,41 +117,56 @@ class PluginConfigurable(private val project: Project) : Configurable {
     }
 
     override fun isModified(): Boolean {
-        val settings = AppSettingsService.getInstance()
-        if (portField?.text?.trim() != settings.serverPort.toString()) return true
-        if (configPathField?.text?.trim() != settings.connectorConfigPath) return true
+        val projectSettings = this.projectSettings
+        val appSettings = this.appSettings
+
+        if (portField?.text?.trim() != appSettings.serverPort.toString()) return true
+        if (configPathField?.text?.trim() != appSettings.pathToConfigFile) return true
+
         if (installations != configService.installations) return true
         val selectedId = (installationBox?.selectedItem as? InstallationOption)?.id.orEmpty()
-        return selectedId != projectSettings.selectedInstallationId
+        if (selectedId != projectSettings.state.selectedInstallationId) return true
+        if (scriptsDirectoryField?.text?.trim() != projectSettings.state.scriptsDirectoryPath) return true
+        if (modulesDirectoryField?.text?.trim() != projectSettings.state.modulesDirectoryPath) return true
+        return advImportsDirectoryField?.text?.trim() != projectSettings.state.advImportsDirectoryPath
     }
 
     @Throws(ConfigurationException::class)
     override fun apply() {
-        val settings = AppSettingsService.getInstance()
+        val projectSettings = this.projectSettings
+        val appSettings = this.appSettings
+
         val port = parsePort(portField?.text)
         val configPath = configPathField?.text?.trim().orEmpty()
-        if (configPath.isBlank()) throw ConfigurationException(MyMessageBundle.message("settings.error.config.path.required"))
+        if (configPath.isBlank()) throw ConfigurationException(MessageBundle.message("settings.error.config.path.required"))
 
         runCatching { configService.saveInstallations(installations) }
             .getOrElse {
                 throw ConfigurationException(
-                    MyMessageBundle.message("settings.error.installations.save.failed", it.message ?: "")
+                    MessageBundle.message("settings.error.installations.save.failed", it.message ?: "")
                 )
             }
 
-        settings.serverPort = port
-        settings.connectorConfigPath = configPath
-        projectSettings.selectedInstallationId = (installationBox?.selectedItem as? InstallationOption)?.id.orEmpty()
-        NsdHttpServerServiceHolder.restartServer()
+        appSettings.serverPort = port
+        appSettings.pathToConfigFile = configPath
+        projectSettings.state.selectedInstallationId = (installationBox?.selectedItem as? InstallationOption)?.id.orEmpty()
+        projectSettings.state.scriptsDirectoryPath = scriptsDirectoryField?.text?.trim().orEmpty()
+        projectSettings.state.modulesDirectoryPath = modulesDirectoryField?.text?.trim().orEmpty()
+        projectSettings.state.advImportsDirectoryPath = advImportsDirectoryField?.text?.trim().orEmpty()
+        project.getService(ProjectSourceRootMarkerService::class.java).markConfiguredRoots()
+        NsdHttpServerServiceHolder.restartServer(project)
     }
 
     override fun reset() {
         val settings = AppSettingsService.getInstance()
         portField?.text = settings.serverPort.toString()
-        configPathField?.text = settings.connectorConfigPath
+        configPathField?.text = settings.pathToConfigFile
         installations = configService.getInstallations().toMutableList()
         refreshTable()
-        refreshProjectInstallations(projectSettings.selectedInstallationId)
+        refreshProjectInstallations(projectSettings.state.selectedInstallationId)
+        scriptsDirectoryField?.text = projectSettings.state.scriptsDirectoryPath
+        modulesDirectoryField?.text = projectSettings.state.modulesDirectoryPath
+        advImportsDirectoryField?.text = projectSettings.state.advImportsDirectoryPath
     }
 
     override fun disposeUIResources() {
@@ -145,14 +176,17 @@ class PluginConfigurable(private val project: Project) : Configurable {
         installationsTable = null
         installationsTableModel = null
         installationBox = null
+        scriptsDirectoryField = null
+        modulesDirectoryField = null
+        advImportsDirectoryField = null
         installations = mutableListOf()
     }
 
     private fun addInstallation() {
         val selectedProjectInstallationId = (installationBox?.selectedItem as? InstallationOption)?.id
-        val dialog = InstallationDialog(
+        val dialog = EditInstallationDialog(
             project = project,
-            titleText = MyMessageBundle.message("installation.dialog.title.add"),
+            titleText = MessageBundle.message("installation.dialog.title.add"),
             initialValue = null
         )
         if (!dialog.showAndGet()) return
@@ -165,9 +199,9 @@ class PluginConfigurable(private val project: Project) : Configurable {
 
     private fun editInstallation() {
         val selected = selectedInstallationIndex() ?: return
-        val dialog = InstallationDialog(
+        val dialog = EditInstallationDialog(
             project = project,
-            titleText = MyMessageBundle.message("installation.dialog.title.edit"),
+            titleText = MessageBundle.message("installation.dialog.title.edit"),
             initialValue = installations[selected]
         )
         if (!dialog.showAndGet()) return
@@ -192,9 +226,9 @@ class PluginConfigurable(private val project: Project) : Configurable {
     private fun reloadInstallationsFromPath() {
         val path = configPathField?.text?.trim().orEmpty()
         if (path.isBlank()) {
-            Messages.showErrorDialog(
-                MyMessageBundle.message("settings.error.config.path.required"),
-                MyMessageBundle.message("settings.display.name")
+            project.getService(DialogNotificationService::class.java).showError(
+                MessageBundle.message("settings.display.name"),
+                MessageBundle.message("settings.error.config.path.required")
             )
             return
         }
@@ -206,9 +240,9 @@ class PluginConfigurable(private val project: Project) : Configurable {
     private fun selectedInstallationIndex(): Int? {
         val selectedRow = installationsTable?.selectedRow ?: -1
         if (selectedRow < 0 || selectedRow >= installations.size) {
-            Messages.showInfoMessage(
-                MyMessageBundle.message("settings.info.select.installation"),
-                MyMessageBundle.message("settings.display.name")
+            project.getService(DialogNotificationService::class.java).showInfo(
+                MessageBundle.message("settings.display.name"),
+                MessageBundle.message("settings.info.select.installation")
             )
             return null
         }
@@ -251,11 +285,11 @@ class PluginConfigurable(private val project: Project) : Configurable {
     private fun createTableModel(): DefaultTableModel {
         return object : DefaultTableModel(
             arrayOf(
-                MyMessageBundle.message("settings.table.id"),
-                MyMessageBundle.message("settings.table.scheme"),
-                MyMessageBundle.message("settings.table.host"),
-                MyMessageBundle.message("settings.table.access.key"),
-                MyMessageBundle.message("settings.table.ignore.ssl"),
+                MessageBundle.message("settings.table.id"),
+                MessageBundle.message("settings.table.scheme"),
+                MessageBundle.message("settings.table.host"),
+                MessageBundle.message("settings.table.access.key"),
+                MessageBundle.message("settings.table.ignore.ssl"),
             ),
             0
         ) {
@@ -265,8 +299,8 @@ class PluginConfigurable(private val project: Project) : Configurable {
 
     private fun parsePort(value: String?): Int {
         val port = value?.trim()?.toIntOrNull()
-            ?: throw ConfigurationException(MyMessageBundle.message("settings.error.server.port.integer"))
-        if (port !in 1..65535) throw ConfigurationException(MyMessageBundle.message("settings.error.server.port.range"))
+            ?: throw ConfigurationException(MessageBundle.message("settings.error.server.port.integer"))
+        if (port !in 1..65535) throw ConfigurationException(MessageBundle.message("settings.error.server.port.range"))
         return port
     }
 
@@ -280,19 +314,19 @@ private data class InstallationOption(
     companion object {
         val None: InstallationOption = InstallationOption(
             id = "",
-            label = MyMessageBundle.message("settings.project.installation.not.selected")
+            label = MessageBundle.message("settings.project.installation.not.selected")
         )
     }
 }
 
 private object NsdHttpServerServiceHolder {
-    fun restartServer() {
+    fun restartServer(project: Project) {
         val service = ApplicationManager.getApplication().getService(NsdHttpServerService::class.java)
         runCatching { service.restart() }
             .onFailure {
-                Messages.showErrorDialog(
-                    MyMessageBundle.message("settings.error.server.restart.failed", it.message ?: ""),
-                    MyMessageBundle.message("settings.display.name")
+                project.getService(DialogNotificationService::class.java).showError(
+                    MessageBundle.message("settings.display.name"),
+                    MessageBundle.message("settings.error.server.restart.failed", it.message ?: "")
                 )
             }
     }

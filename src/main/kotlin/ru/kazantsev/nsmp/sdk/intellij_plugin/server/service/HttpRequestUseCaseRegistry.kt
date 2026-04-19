@@ -3,8 +3,6 @@ package ru.kazantsev.nsmp.sdk.intellij_plugin.server.service
 import com.intellij.openapi.components.Service
 import com.intellij.openapi.diagnostic.thisLogger
 import ru.kazantsev.nsmp.sdk.intellij_plugin.server.HttpRoute
-import ru.kazantsev.nsmp.sdk.intellij_plugin.server.usecase.CreateGroovyFileUseCase
-import ru.kazantsev.nsmp.sdk.intellij_plugin.server.usecase.GetCurrentProjectsUseCase
 import ru.kazantsev.nsmp.sdk.intellij_plugin.server.usecase.GetRootStatusUseCase
 import ru.kazantsev.nsmp.sdk.intellij_plugin.server.usecase.HttpRequestUseCase
 
@@ -12,9 +10,7 @@ import ru.kazantsev.nsmp.sdk.intellij_plugin.server.usecase.HttpRequestUseCase
 class HttpRequestUseCaseRegistry {
 
     private val useCasesByRoute: Map<HttpRoute, HttpRequestUseCase> = listOf(
-        GetRootStatusUseCase(),
-        GetCurrentProjectsUseCase(),
-        CreateGroovyFileUseCase(),
+        GetRootStatusUseCase()
     ).associateBy { it.route }
 
     fun find(route: HttpRoute): HttpRequestUseCase? {

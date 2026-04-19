@@ -1,7 +1,7 @@
 package ru.kazantsev.nsmp.sdk.intellij_plugin.services.init
 
 import com.intellij.openapi.project.Project
-import ru.kazantsev.nsmp.sdk.intellij_plugin.MyMessageBundle
+import ru.kazantsev.nsmp.sdk.intellij_plugin.MessageBundle
 import java.nio.charset.StandardCharsets
 import java.nio.file.Path
 import kotlin.io.path.createDirectories
@@ -30,11 +30,11 @@ object GradleProjectInitializer {
 
     fun initialize(project: Project): GradleInitResult {
         val basePath = project.basePath
-            ?: throw IllegalStateException(MyMessageBundle.message("init.error.project.path.missing"))
+            ?: throw IllegalStateException(MessageBundle.message("init.error.project.path.missing"))
         val root = Path.of(basePath)
 
         val buildFile = resolveBuildFile(root)
-            ?: throw IllegalStateException(MyMessageBundle.message("init.error.build.file.missing"))
+            ?: throw IllegalStateException(MessageBundle.message("init.error.build.file.missing"))
         val settingsFile = resolveSettingsFile(root, buildFile.name.endsWith(".kts"))
 
         val buildOriginal = buildFile.readText(StandardCharsets.UTF_8)

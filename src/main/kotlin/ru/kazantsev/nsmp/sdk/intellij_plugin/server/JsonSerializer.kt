@@ -1,6 +1,5 @@
 package ru.kazantsev.nsmp.sdk.intellij_plugin.server
 
-import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.json.JsonElement
 

@@ -1,0 +1,545 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="0ed9795e-0975-48aa-bb0f-4d495b6ed849" name="Changes" comment="Что то начало работать. Частично.">
+      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/ru/kazantsev/nsmp/sdk/intellij_plugin/exception/InstallationNotFoundException.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/ru/kazantsev/nsmp/sdk/intellij_plugin/exception/LogicException.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/ru/kazantsev/nsmp/sdk/intellij_plugin/exception/SrcSyncUnsupportedType.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/ru/kazantsev/nsmp/sdk/intellij_plugin/exception/UnknownSourceType.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/ru/kazantsev/nsmp/sdk/intellij_plugin/exception/UnselectedProjectInstallation.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/ru/kazantsev/nsmp/sdk/intellij_plugin/services/notification/BalloonNotificationService.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/ru/kazantsev/nsmp/sdk/intellij_plugin/services/notification/DialogNotificationService.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/ru/kazantsev/nsmp/sdk/intellij_plugin/services/notification/NotificationErrorBuilder.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/ru/kazantsev/nsmp/sdk/intellij_plugin/services/project/ProjectSourceRootMarkerService.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/ru/kazantsev/nsmp/sdk/intellij_plugin/services/settings/state/AppState.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/ru/kazantsev/nsmp/sdk/intellij_plugin/services/settings/state/ProjectState.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/ru/kazantsev/nsmp/sdk/intellij_plugin/services/sync/SrcType.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/ru/kazantsev/nsmp/sdk/intellij_plugin/services/sync/SyncService.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/ru/kazantsev/nsmp/sdk/intellij_plugin/services/sync/SyncUIAdapter.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/ru/kazantsev/nsmp/sdk/intellij_plugin/services/sync/options/SrcOptionsConnector.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/ru/kazantsev/nsmp/sdk/intellij_plugin/services/sync/options/SrcOptionsService.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/ru/kazantsev/nsmp/sdk/intellij_plugin/services/sync/options/dto/SrcOption.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/ru/kazantsev/nsmp/sdk/intellij_plugin/services/sync/options/dto/SrcOptionRoot.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/ru/kazantsev/nsmp/sdk/intellij_plugin/services/sync/options/dto/SrcOptionsContainer.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/ru/kazantsev/nsmp/sdk/intellij_plugin/ui/FileEditorManagerListener.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/ru/kazantsev/nsmp/sdk/intellij_plugin/ui/request_dialog/SrcRequestSelectDialog.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/ru/kazantsev/nsmp/sdk/intellij_plugin/ui/request_dialog/ValuesSelectDialog.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/ru/kazantsev/nsmp/sdk/intellij_plugin/ui/request_dialog/components/CollapsibleSection.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/ru/kazantsev/nsmp/sdk/intellij_plugin/ui/request_dialog/components/MultiSelectField.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/ru/kazantsev/nsmp/sdk/intellij_plugin/ui/request_dialog/components/OptionTableModel.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/ru/kazantsev/nsmp/sdk/intellij_plugin/ui/request_dialog/components/buttons/AbstractSyncButton.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/ru/kazantsev/nsmp/sdk/intellij_plugin/ui/request_dialog/components/buttons/PullButton.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/ru/kazantsev/nsmp/sdk/intellij_plugin/ui/request_dialog/components/buttons/PushButton.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/ru/kazantsev/nsmp/sdk/intellij_plugin/ui/request_dialog/components/buttons/SyncCheckButton.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/ru/kazantsev/nsmp/sdk/intellij_plugin/ui/request_dialog/model/OptionRow.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/ru/kazantsev/nsmp/sdk/intellij_plugin/ui/request_dialog/model/SelectedSrcOption.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/ru/kazantsev/nsmp/sdk/intellij_plugin/ui/request_dialog/model/SrcRequestSelectState.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/ru/kazantsev/nsmp/sdk/intellij_plugin/ui/request_dialog/options_provider/LocalSrcOptionsProvider.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/ru/kazantsev/nsmp/sdk/intellij_plugin/ui/request_dialog/options_provider/RemoteSrcOptionsProvider.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/ru/kazantsev/nsmp/sdk/intellij_plugin/ui/request_dialog/options_provider/SrcOptionsProvider.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/icons/nsmp_logo_colored.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/icons/nsmp_logo_stripe.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/icons/nsmp_logo_stripe_black.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/icons/nsmp_logo_stripe_dark.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/icons/nsmp_logo_stripe_white.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/icons/nsmp_top_panel.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/icons/nsmp_top_panel_with_logo.svg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.intellijPlatform/self-update.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.intellijPlatform/self-update.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle.kts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/ru/kazantsev/nsmp/sdk/intellij_plugin/MyMessageBundle.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/ru/kazantsev/nsmp/sdk/intellij_plugin/MessageBundle.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/ru/kazantsev/nsmp/sdk/intellij_plugin/project/ProjectFileCreationResult.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/ru/kazantsev/nsmp/sdk/intellij_plugin/project/ProjectService.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/ru/kazantsev/nsmp/sdk/intellij_plugin/server/JsonSerializer.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/ru/kazantsev/nsmp/sdk/intellij_plugin/server/JsonSerializer.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/ru/kazantsev/nsmp/sdk/intellij_plugin/server/dto/project/ProjectInfoDto.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/ru/kazantsev/nsmp/sdk/intellij_plugin/server/dto/project/SourceRootDto.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/ru/kazantsev/nsmp/sdk/intellij_plugin/server/dto/response/CreateGroovyFileResponse.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/ru/kazantsev/nsmp/sdk/intellij_plugin/server/dto/response/CurrentProjectsResponse.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/ru/kazantsev/nsmp/sdk/intellij_plugin/server/service/HttpRequestUseCaseRegistry.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/ru/kazantsev/nsmp/sdk/intellij_plugin/server/service/HttpRequestUseCaseRegistry.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/ru/kazantsev/nsmp/sdk/intellij_plugin/server/usecase/CreateGroovyFileUseCase.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/ru/kazantsev/nsmp/sdk/intellij_plugin/server/usecase/GetCurrentProjectsUseCase.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/ru/kazantsev/nsmp/sdk/intellij_plugin/services/init/GradleProjectInitializer.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/ru/kazantsev/nsmp/sdk/intellij_plugin/services/init/GradleProjectInitializer.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/ru/kazantsev/nsmp/sdk/intellij_plugin/services/settings/AppSettingsService.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/ru/kazantsev/nsmp/sdk/intellij_plugin/services/settings/AppSettingsService.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/ru/kazantsev/nsmp/sdk/intellij_plugin/services/settings/ProjectSettingsService.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/ru/kazantsev/nsmp/sdk/intellij_plugin/services/settings/ProjectSettingsService.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/ru/kazantsev/nsmp/sdk/intellij_plugin/services/settings/model/SrcRequestInputState.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/ru/kazantsev/nsmp/sdk/intellij_plugin/services/sync/SrcCommandType.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/ru/kazantsev/nsmp/sdk/intellij_plugin/services/sync/SrcSyncProjectService.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/ru/kazantsev/nsmp/sdk/intellij_plugin/startup/NsdProjectStartupActivity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/ru/kazantsev/nsmp/sdk/intellij_plugin/startup/NsdProjectStartupActivity.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/ru/kazantsev/nsmp/sdk/intellij_plugin/ui/InstallationDialog.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/ru/kazantsev/nsmp/sdk/intellij_plugin/ui/EditInstallationDialog.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/ru/kazantsev/nsmp/sdk/intellij_plugin/ui/PluginConfigurable.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/ru/kazantsev/nsmp/sdk/intellij_plugin/ui/PluginConfigurable.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/ru/kazantsev/nsmp/sdk/intellij_plugin/ui/SrcRequestDialog.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/ru/kazantsev/nsmp/sdk/intellij_plugin/ui/ToolWindowFactory.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/ru/kazantsev/nsmp/sdk/intellij_plugin/ui/ToolWindowFactory.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/ru/kazantsev/nsmp/sdk/intellij_plugin/ui/notifications/GroovySyncEditorNotificationProvider.kt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/META-INF/plugin.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/META-INF/plugin.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/messages/MyMessageBundle.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/messages/MessageBundle.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/messages/MyMessageBundle_ru.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/messages/MessageBundle_ru.properties" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="EmbeddingIndexingInfo">
+    <option name="cachedIndexableFilesCount" value="88" />
+  </component>
+  <component name="ExternalProjectsData">
+    <projectState path="$PROJECT_DIR$">
+      <ProjectState />
+    </projectState>
+  </component>
+  <component name="ExternalProjectsManager">
+    <system id="GRADLE">
+      <state>
+        <task path="$PROJECT_DIR$">
+          <activation />
+        </task>
+        <projects_view>
+          <tree_state>
+            <expand>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="intellij_plugin" type="f1a62948:ProjectNode" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="intellij_plugin" type="f1a62948:ProjectNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="intellij_plugin" type="f1a62948:ProjectNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+                <item name="build" type="c8890929:TasksNode$1" />
+              </path>
+            </expand>
+            <select />
+          </tree_state>
+        </projects_view>
+      </state>
+    </system>
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Kotlin Enum" />
+        <option value="Kotlin Interface" />
+        <option value="Kotlin Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;exeki&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/exeki/nsd-intellij-plugin.git&quot;,
+    &quot;accountId&quot;: &quot;678ca613-af78-4bb2-994b-c29bbb590d5a&quot;
+  }
+}</component>
+  <component name="GradleScriptDefinitionsStorage" workingDir="$PROJECT_DIR$" gradleHome="C:\Users\exeki\.gradle\wrapper\dists\gradle-9.0.0-bin\d6wjpkvcgsg3oed0qlfss3wgl\gradle-9.0.0" javaHome="C:\Program Files\JetBrains\IntelliJ IDEA 2025.3.2\jbr" gradleVersion="9.0.0" />
+  <component name="KubernetesApiPersistence">{}</component>
+  <component name="KubernetesApiProvider">{
+  &quot;isMigrated&quot;: true
+}</component>
+  <component name="LogFilters">
+    <option name="FILTER_ERRORS" value="false" />
+    <option name="FILTER_WARNINGS" value="false" />
+    <option name="FILTER_INFO" value="true" />
+    <option name="FILTER_DEBUG" value="true" />
+    <option name="CUSTOM_FILTER" />
+  </component>
+  <component name="McpProjectServerCommands">
+    <commands />
+    <urls />
+  </component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="CurrentFile" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 0
+}</component>
+  <component name="ProjectId" id="3BaMtKym1QHhXORos44zPEDLLom" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Gradle.Build nsd-plugin.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.Build nsmp.sdk.intellij_plugin.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.Build nsmp_sdk_intellij_plugin.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.Run IDE with Plugin.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.nsd-plugin [build].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.nsd-plugin [clean].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.nsmp_sdk_intellij_plugin [buildPlugin].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.nsmp_sdk_intellij_plugin [clean].executor&quot;: &quot;Run&quot;,
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.MCP Project settings loaded&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.typescript.service.memoryLimit.init&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/projects/jvm/nsd/sdk/nsmp.sdk.intellij_plugin/src/main/kotlin/ru/kazantsev/nsmp/sdk/intellij_plugin/ui&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;http.proxy&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  }
+}</component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\projects\jvm\nsd\sdk\nsmp.sdk.intellij_plugin\src\main\kotlin\ru\kazantsev\nsmp\sdk\intellij_plugin\ui" />
+      <recent name="C:\projects\jvm\nsd\sdk\nsmp.sdk.intellij_plugin\src\main\resources\icons" />
+      <recent name="C:\projects\jvm\nsd-plugin" />
+    </key>
+    <key name="CopyKotlinDeclarationDialog.RECENTS_KEY">
+      <recent name="ru.kazantsev.nsmp.sdk.intellij_plugin.ui.request_dialog.components.buttons" />
+      <recent name="ru.kazantsev.nsmp.sdk.intellij_plugin.services.sync.options.dto" />
+      <recent name="ru.kazantsev.nsmp.sdk.intellij_plugin.services.sync" />
+      <recent name="ru.kazantsev.nsmp.sdk.intellij_plugin.exception" />
+      <recent name="ru.kazantsev.nsmp.sdk.intellij_plugin.services.settings" />
+    </key>
+    <key name="K2MoveDeclarationsDialog.RECENT_PACKAGE_KEY">
+      <recent name="ru.kazantsev.nsmp.sdk.intellij_plugin.ui.request_dialog.components" />
+      <recent name="ru.kazantsev.nsmp.sdk.intellij_plugin.ui.request_dialog.options_provider" />
+      <recent name="ru.kazantsev.nsmp.sdk.intellij_plugin.services.sync.options.options_provider" />
+      <recent name="ru.kazantsev.nsmp.sdk.intellij_plugin.ui" />
+      <recent name="ru.kazantsev.nsmp.sdk.intellij_plugin.services.sync.options" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Gradle.Run IDE with Plugin">
+    <configuration default="true" type="JetRunConfigurationType">
+      <module name="nsd-intellij-plugin" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType">
+      <module name="nsd-intellij-plugin" />
+      <option name="filePath" />
+      <method v="2" />
+    </configuration>
+    <configuration name="nsd-plugin [build]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value="build" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <ExternalSystemDebugDisabled>false</ExternalSystemDebugDisabled>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>false</RunAsTest>
+      <GradleProfilingDisabled>false</GradleProfilingDisabled>
+      <GradleCoverageDisabled>false</GradleCoverageDisabled>
+      <method v="2" />
+    </configuration>
+    <configuration name="nsd-plugin [build]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value="build" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <ExternalSystemDebugDisabled>false</ExternalSystemDebugDisabled>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>false</RunAsTest>
+      <GradleProfilingDisabled>false</GradleProfilingDisabled>
+      <GradleCoverageDisabled>false</GradleCoverageDisabled>
+      <method v="2" />
+    </configuration>
+    <configuration name="nsd-plugin [clean]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value="clean" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <ExternalSystemDebugDisabled>false</ExternalSystemDebugDisabled>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>false</RunAsTest>
+      <GradleProfilingDisabled>false</GradleProfilingDisabled>
+      <GradleCoverageDisabled>false</GradleCoverageDisabled>
+      <method v="2" />
+    </configuration>
+    <configuration name="nsd-plugin [clean]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value="clean" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <ExternalSystemDebugDisabled>false</ExternalSystemDebugDisabled>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>false</RunAsTest>
+      <GradleProfilingDisabled>false</GradleProfilingDisabled>
+      <GradleCoverageDisabled>false</GradleCoverageDisabled>
+      <method v="2" />
+    </configuration>
+    <configuration name="nsmp_sdk_intellij_plugin [buildPlugin]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value="buildPlugin" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <ExternalSystemDebugDisabled>false</ExternalSystemDebugDisabled>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>false</RunAsTest>
+      <GradleProfilingDisabled>false</GradleProfilingDisabled>
+      <GradleCoverageDisabled>false</GradleCoverageDisabled>
+      <method v="2" />
+    </configuration>
+    <configuration name="nsmp_sdk_intellij_plugin [buildPlugin]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value="buildPlugin" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <ExternalSystemDebugDisabled>false</ExternalSystemDebugDisabled>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <RunAsTest>false</RunAsTest>
+      <GradleProfilingDisabled>false</GradleProfilingDisabled>
+      <GradleCoverageDisabled>false</GradleCoverageDisabled>
+      <method v="2" />
+    </configuration>
+    <configuration default="true" type="JetRunConfigurationType">
+      <module name="nsd-intellij-plugin" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType">
+      <module name="nsd-intellij-plugin" />
+      <option name="filePath" />
+      <method v="2" />
+    </configuration>
+    <list>
+      <item itemvalue="Gradle.Run IDE with Plugin" />
+      <item itemvalue="Gradle.nsmp_sdk_intellij_plugin [buildPlugin]" />
+      <item itemvalue="Gradle.nsd-plugin [build]" />
+      <item itemvalue="Gradle.nsd-plugin [clean]" />
+    </list>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Gradle.nsd-plugin [clean]" />
+        <item itemvalue="Gradle.nsd-plugin [build]" />
+        <item itemvalue="Gradle.nsmp_sdk_intellij_plugin [buildPlugin]" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-jdk-30f59d01ecdd-2fc7cc6b9a17-intellij.indexing.shared.core-IU-253.30387.90" />
+        <option value="bundled-js-predefined-d6986cc7102b-9b0f141eb926-JavaScript-IU-253.30387.90" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration>C:\Users\exeki\AppData\Roaming\Subversion</configuration>
+    <myIsUseDefaultProxy>true</myIsUseDefaultProxy>
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="0ed9795e-0975-48aa-bb0f-4d495b6ed849" name="Changes" comment="" />
+      <created>1774722941802</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1774722941802</updated>
+      <workItem from="1774722942928" duration="10160000" />
+      <workItem from="1774735653432" duration="598000" />
+      <workItem from="1774739933692" duration="8204000" />
+      <workItem from="1774784984516" duration="1870000" />
+      <workItem from="1775305735979" duration="4506000" />
+      <workItem from="1775322455589" duration="608000" />
+      <workItem from="1775427497140" duration="6892000" />
+      <workItem from="1775799486275" duration="1413000" />
+      <workItem from="1775801210006" duration="10228000" />
+      <workItem from="1775852223628" duration="3866000" />
+      <workItem from="1775895120640" duration="2892000" />
+      <workItem from="1775940610656" duration="601000" />
+      <workItem from="1775998341625" duration="614000" />
+      <workItem from="1775999074568" duration="2086000" />
+      <workItem from="1776003382470" duration="306000" />
+      <workItem from="1776015544806" duration="5012000" />
+      <workItem from="1776067456044" duration="1661000" />
+      <workItem from="1776082901840" duration="6308000" />
+      <workItem from="1776161559220" duration="5878000" />
+      <workItem from="1776230308181" duration="589000" />
+      <workItem from="1776230936235" duration="1322000" />
+      <workItem from="1776232279848" duration="761000" />
+      <workItem from="1776233133498" duration="16210000" />
+      <workItem from="1776319663967" duration="20046000" />
+      <workItem from="1776409559790" duration="15835000" />
+      <workItem from="1776497873108" duration="3711000" />
+      <workItem from="1776501806708" duration="12291000" />
+      <workItem from="1776521146053" duration="20910000" />
+      <workItem from="1776582428752" duration="9601000" />
+      <workItem from="1776592466424" duration="3603000" />
+      <workItem from="1776596916480" duration="27121000" />
+    </task>
+    <task id="LOCAL-00001" summary="1">
+      <option name="closed" value="true" />
+      <created>1774745243664</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1774745243664</updated>
+    </task>
+    <task id="LOCAL-00002" summary="1">
+      <option name="closed" value="true" />
+      <created>1774745254933</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1774745254933</updated>
+    </task>
+    <task id="LOCAL-00003" summary="1">
+      <option name="closed" value="true" />
+      <created>1774747139535</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1774747139535</updated>
+    </task>
+    <task id="LOCAL-00004" summary="1">
+      <option name="closed" value="true" />
+      <created>1776003608239</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1776003608239</updated>
+    </task>
+    <task id="LOCAL-00005" summary="1">
+      <option name="closed" value="true" />
+      <created>1776246335849</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1776246335849</updated>
+    </task>
+    <task id="LOCAL-00006" summary="1">
+      <option name="closed" value="true" />
+      <created>1776249547566</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1776249547566</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="1" />
+    <MESSAGE value="Что то начало работать. Частично." />
+    <option name="LAST_COMMIT_MESSAGE" value="Что то начало работать. Частично." />
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
+  </component>
+</project>

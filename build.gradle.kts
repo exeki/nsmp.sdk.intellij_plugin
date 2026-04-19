@@ -1,6 +1,7 @@
 plugins {
     id("java")
     id("org.jetbrains.kotlin.jvm") version "2.3.0"
+    id("org.jetbrains.kotlin.plugin.serialization") version "2.3.0"
     id("org.jetbrains.intellij.platform") version "2.10.2"
 }
 
@@ -16,7 +17,8 @@ repositories {
 
 // Read more: https://plugins.jetbrains.com/docs/intellij/tools-intellij-platform-gradle-plugin.html
 dependencies {
-    implementation("ru.kazantsev.nsmp.sdk.sources_sync:core:1.2.7")
+    implementation("ru.kazantsev.nsmp.sdk.sources_sync:core:1.3.2")
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.9.0")
     intellijPlatform {
         intellijIdeaCommunity("2025.2.4")
         testFramework(org.jetbrains.intellij.platform.gradle.TestFrameworkType.Platform)
