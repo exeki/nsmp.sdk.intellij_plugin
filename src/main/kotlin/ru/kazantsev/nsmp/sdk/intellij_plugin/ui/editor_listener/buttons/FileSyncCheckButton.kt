@@ -16,10 +16,14 @@ class FileSyncCheckButton(
     override fun actionPerformed(event: AnActionEvent) {
         syncUIAdapter.syncCheck(
             file = file,
-            onSuccessCallback = {
-                balloonNotificationService.showInfo(
-                    MessageBundle.message("sync.command.sync.check.file.notification.title"),
-                    MessageBundle.message("sync.command.sync.check.file.success")
+            onSuccessCallback = { result ->
+                if (result.isEmpty()) balloonNotificationService.showInfo(
+                    title = MessageBundle.message("sync.command.sync.check.file.notification.title"),
+                    message = MessageBundle.message("sync.command.sync.check.file.success")
+                )
+                else balloonNotificationService.showError(
+                    title = MessageBundle.message("sync.command.sync.check.file.notification.title"),
+                    message = MessageBundle.message("sync.command.sync.check.file.not.in.sync")
                 )
             },
             onFailureCallback = { error ->

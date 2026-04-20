@@ -18,7 +18,7 @@ repositories {
 // Read more: https://plugins.jetbrains.com/docs/intellij/tools-intellij-platform-gradle-plugin.html
 dependencies {
     @Suppress("VulnerableLibrariesLocal", "RedundantSuppression")
-    implementation("ru.kazantsev.nsmp.sdk.sources_sync:core:1.3.3")
+    implementation("ru.kazantsev.nsmp.sdk.sources_sync:core:1.3.4")
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.9.0")
     intellijPlatform {
         intellijIdeaCommunity("2025.2.4")

@@ -23,14 +23,16 @@ class FilePushButton(
 ) {
     private var forceCheckBox: JCheckBox = JCheckBox(MessageBundle.message("sync.dialog.force")).also {
         it.alignmentY = Component.CENTER_ALIGNMENT
+        it.isOpaque = false
         it.border = JBUI.Borders.empty()
         it.margin = JBUI.emptyInsets()
     }
 
     override fun createCustomComponent(presentation: Presentation, place: String): JComponent {
-        val pushButton = super.createCustomComponent(presentation, place)
+        val pushButton = createButtonComponent(presentation, place)
         return JPanel().apply {
             layout = BoxLayout(this, BoxLayout.X_AXIS)
+            isOpaque = false
             pushButton.alignmentY = Component.CENTER_ALIGNMENT
             add(pushButton)
             add(forceCheckBox)
@@ -48,18 +50,15 @@ class FilePushButton(
                 )
             },
             onFailureCallback = { error ->
-                if (error is SyncCheckFailedException) {
-                    dialogNotificationService.showInfo(
-                        title = MessageBundle.message("sync.command.push.file.notification.title"),
-                        message = MessageBundle.message("sync.command.push.sync.check.failed")
-                    )
-                } else {
-                    dialogNotificationService.showError(
-                        title = MessageBundle.message("sync.command.push.file.notification.title"),
-                        message = MessageBundle.message("sync.command.error"),
-                        error = error
-                    )
-                }
+                if (error is SyncCheckFailedException) dialogNotificationService.showError(
+                    title = MessageBundle.message("sync.command.push.file.notification.title"),
+                    message = MessageBundle.message("sync.command.push.sync.check.failed")
+                )
+                else dialogNotificationService.showError(
+                    title = MessageBundle.message("sync.command.push.file.notification.title"),
+                    message = MessageBundle.message("sync.command.error"),
+                    error = error
+                )
             }
         )
         forceCheckBox.isSelected = false

@@ -33,18 +33,11 @@ class SyncUIAdapter(private val project: Project) {
         return service.isSupportedFile(file)
     }
 
-    fun saveVirtualFile(virtualFile: VirtualFile) {
-        val document = FileDocumentManager.getInstance().getDocument(virtualFile)
-        if (document != null) FileDocumentManager.getInstance().saveDocument(document)
-        else throw RuntimeException("Can't save virtual file ${virtualFile.name}")
-    }
-
     fun pull(
         file: VirtualFile,
         onSuccessCallback: (SrcDtoRoot) -> Unit,
         onFailureCallback: (Throwable) -> Unit
     ) {
-        saveVirtualFile(file)
         val request = service.getSrcRequestForFileElseThrow(file)
         pull(request, onSuccessCallback, onFailureCallback)
     }
@@ -55,20 +48,16 @@ class SyncUIAdapter(private val project: Project) {
         onFailureCallback: (Throwable) -> Unit
     ) {
         val backgroundTaskTitle = MessageBundle.message("sync.command.pull.title")
+        FileDocumentManager.getInstance().saveAllDocuments()
         ProgressManager.getInstance().run(object : Task.Backgroundable(project, backgroundTaskTitle, true) {
             override fun run(indicator: ProgressIndicator) {
-                runCatching {
-                    service.pull(request)
-                }.onSuccess { result ->
-                    ApplicationManager.getApplication().invokeLater {
-                        refreshProjectExplorer()
-                        onSuccessCallback(result)
-                    }
-                }.onFailure { error ->
-                    ApplicationManager.getApplication().invokeLater {
-                        refreshProjectExplorer()
-                        onFailureCallback(error)
-                    }
+                try {
+                    val result = service.pull(request)
+                    ApplicationManager.getApplication().invokeLater { onSuccessCallback(result) }
+                } catch (error: Throwable) {
+                    ApplicationManager.getApplication().invokeLater { onFailureCallback(error) }
+                } finally {
+                    refreshProjectExplorer()
                 }
             }
         })
@@ -80,7 +69,6 @@ class SyncUIAdapter(private val project: Project) {
         onSuccessCallback: (SrcInfoRoot) -> Unit,
         onFailureCallback: (Throwable) -> Unit
     ) {
-        saveVirtualFile(file)
         val request = service.getSrcRequestForFileElseThrow(file)
         push(request, force, onSuccessCallback, onFailureCallback)
     }
@@ -92,20 +80,16 @@ class SyncUIAdapter(private val project: Project) {
         onFailureCallback: (Throwable) -> Unit
     ) {
         val backgroundTaskTitle = MessageBundle.message("sync.command.push.title")
+        FileDocumentManager.getInstance().saveAllDocuments()
         ProgressManager.getInstance().run(object : Task.Backgroundable(project, backgroundTaskTitle, true) {
             override fun run(indicator: ProgressIndicator) {
-                runCatching {
-                    service.push(request, force)
-                }.onSuccess { result ->
-                    ApplicationManager.getApplication().invokeLater {
-                        refreshProjectExplorer()
-                        onSuccessCallback(result)
-                    }
-                }.onFailure { error ->
-                    ApplicationManager.getApplication().invokeLater {
-                        refreshProjectExplorer()
-                        onFailureCallback(error)
-                    }
+                try {
+                    val result = service.push(request, force)
+                    ApplicationManager.getApplication().invokeLater { onSuccessCallback(result) }
+                } catch (error: Throwable) {
+                    ApplicationManager.getApplication().invokeLater { onFailureCallback(error) }
+                } finally {
+                    refreshProjectExplorer()
                 }
             }
         })
@@ -116,7 +100,6 @@ class SyncUIAdapter(private val project: Project) {
         onSuccessCallback: (SrcInfoRoot) -> Unit,
         onFailureCallback: (Throwable) -> Unit
     ) {
-        saveVirtualFile(file)
         val request = service.getSrcRequestForFileElseThrow(file)
         syncCheck(request, onSuccessCallback, onFailureCallback)
     }
@@ -127,20 +110,16 @@ class SyncUIAdapter(private val project: Project) {
         onFailureCallback: (Throwable) -> Unit
     ) {
         val backgroundTaskTitle = MessageBundle.message("sync.command.sync.check.title")
+        FileDocumentManager.getInstance().saveAllDocuments()
         ProgressManager.getInstance().run(object : Task.Backgroundable(project, backgroundTaskTitle, true) {
             override fun run(indicator: ProgressIndicator) {
-                runCatching {
-                    service.syncCheck(request)
-                }.onSuccess { result ->
-                    ApplicationManager.getApplication().invokeLater {
-                        refreshProjectExplorer()
-                        onSuccessCallback(result)
-                    }
-                }.onFailure { error ->
-                    ApplicationManager.getApplication().invokeLater {
-                        refreshProjectExplorer()
-                        onFailureCallback(error)
-                    }
+                try {
+                    val result = service.syncCheck(request)
+                    ApplicationManager.getApplication().invokeLater { onSuccessCallback(result) }
+                } catch (error: Throwable) {
+                    ApplicationManager.getApplication().invokeLater { onFailureCallback(error) }
+                } finally {
+                    refreshProjectExplorer()
                 }
             }
         })

@@ -10,8 +10,11 @@ import com.intellij.openapi.vfs.VirtualFile
 import ru.kazantsev.nsmp.sdk.intellij_plugin.services.notification.BalloonNotificationService
 import ru.kazantsev.nsmp.sdk.intellij_plugin.services.notification.DialogNotificationService
 import ru.kazantsev.nsmp.sdk.intellij_plugin.services.sync.SyncUIAdapter
+import java.awt.Component
 import java.awt.Dimension
+import javax.swing.BoxLayout
 import javax.swing.JComponent
+import javax.swing.JPanel
 
 abstract class AbstractButton(
     title: String,
@@ -29,6 +32,16 @@ abstract class AbstractButton(
         get() = project.service<DialogNotificationService>()
 
     override fun createCustomComponent(presentation: Presentation, place: String): JComponent {
+        return JPanel().apply {
+            layout = BoxLayout(this, BoxLayout.X_AXIS)
+            isOpaque = false
+            add(createButtonComponent(presentation, place).apply {
+                alignmentY = Component.CENTER_ALIGNMENT
+            })
+        }
+    }
+
+    protected fun createButtonComponent(presentation: Presentation, place: String): JComponent {
         return ActionButtonWithText(this, presentation, place, Dimension(48, BUTTON_HEIGHT))
     }
 
