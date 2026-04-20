@@ -1,6 +1,6 @@
 package ru.kazantsev.nsmp.sdk.intellij_plugin.services.settings.state
 
-import ru.kazantsev.nsmp.sdk.intellij_plugin.ui.request_dialog.model.SrcRequestSelectState
+import ru.kazantsev.nsmp.sdk.intellij_plugin.ui.tool_window.request_dialog.model.SrcRequestSelectState
 
 open class ProjectState {
     var selectedInstallationId: String = ""

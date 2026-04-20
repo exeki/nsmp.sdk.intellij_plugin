@@ -1,4 +1,4 @@
-package ru.kazantsev.nsmp.sdk.intellij_plugin.ui.request_dialog.components
+package ru.kazantsev.nsmp.sdk.intellij_plugin.ui.tool_window.request_dialog.components
 
 import com.intellij.openapi.application.ApplicationManager
 import com.intellij.openapi.application.ModalityState
@@ -7,8 +7,8 @@ import com.intellij.ui.components.JBScrollPane
 import com.intellij.ui.table.JBTable
 import ru.kazantsev.nsmp.sdk.intellij_plugin.MessageBundle
 import ru.kazantsev.nsmp.sdk.intellij_plugin.services.sync.options.dto.SrcOption
-import ru.kazantsev.nsmp.sdk.intellij_plugin.ui.request_dialog.ValuesSelectDialog
-import ru.kazantsev.nsmp.sdk.intellij_plugin.ui.request_dialog.model.SelectedSrcOption
+import ru.kazantsev.nsmp.sdk.intellij_plugin.ui.tool_window.request_dialog.components.ValuesSelectDialog
+import ru.kazantsev.nsmp.sdk.intellij_plugin.ui.tool_window.request_dialog.model.SelectedSrcOption
 import java.awt.BorderLayout
 import java.awt.Dimension
 import java.util.concurrent.CompletableFuture
@@ -21,6 +21,9 @@ import javax.swing.JPanel
 import javax.swing.ScrollPaneConstants
 import javax.swing.table.AbstractTableModel
 
+/**
+ * Поле выбора исходников в запрос (для включения или исключения)
+ */
 class MultiSelectField(
     private val project: Project,
     private val chooserTitle: String,

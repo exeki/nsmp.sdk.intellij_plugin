@@ -1,4 +1,4 @@
-package ru.kazantsev.nsmp.sdk.intellij_plugin.ui.request_dialog
+package ru.kazantsev.nsmp.sdk.intellij_plugin.ui.tool_window.request_dialog.components
 
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.ui.DialogWrapper
@@ -8,17 +8,24 @@ import com.intellij.ui.components.JBScrollPane
 import com.intellij.ui.table.JBTable
 import ru.kazantsev.nsmp.sdk.intellij_plugin.MessageBundle
 import ru.kazantsev.nsmp.sdk.intellij_plugin.services.sync.options.dto.SrcOption
-import ru.kazantsev.nsmp.sdk.intellij_plugin.ui.request_dialog.components.OptionTableModel
-import ru.kazantsev.nsmp.sdk.intellij_plugin.ui.request_dialog.model.OptionRow
-import ru.kazantsev.nsmp.sdk.intellij_plugin.ui.request_dialog.model.SelectedSrcOption
+import ru.kazantsev.nsmp.sdk.intellij_plugin.ui.tool_window.request_dialog.model.OptionRow
+import ru.kazantsev.nsmp.sdk.intellij_plugin.ui.tool_window.request_dialog.model.SelectedSrcOption
 import java.awt.BorderLayout
 import java.awt.Dimension
 import java.awt.event.MouseAdapter
 import java.awt.event.MouseEvent
-import javax.swing.*
+import javax.swing.Box
+import javax.swing.BoxLayout
+import javax.swing.JButton
+import javax.swing.JComponent
+import javax.swing.JPanel
+import javax.swing.ListSelectionModel
 import javax.swing.event.DocumentEvent
 import javax.swing.event.DocumentListener
 
+/**
+ * Диалог для выбора значений в списки на включение в запрос или в список на исключение
+ */
 class ValuesSelectDialog(
     project: Project,
     titleText: String,
@@ -81,7 +88,8 @@ class ValuesSelectDialog(
         val removeSelected = JButton(MessageBundle.message("sync.dialog.multi.select.remove.one"))
         val addFiltered = JButton(MessageBundle.message("sync.dialog.multi.select.add.filtered"))
         val removeAll = JButton(MessageBundle.message("sync.dialog.multi.select.remove.all"))
-        val hintLabel = JBLabel("<html><i>${MessageBundle.message("sync.dialog.multi.select.double.click.hint")}</i></html>")
+        val hintLabel =
+            JBLabel("<html><i>${MessageBundle.message("sync.dialog.multi.select.double.click.hint")}</i></html>")
 
         addSelected.addActionListener {
             selectedCodes.addAll(

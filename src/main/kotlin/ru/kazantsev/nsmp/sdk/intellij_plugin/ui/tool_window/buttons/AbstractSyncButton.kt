@@ -1,4 +1,4 @@
-package ru.kazantsev.nsmp.sdk.intellij_plugin.ui.request_dialog.components.buttons
+package ru.kazantsev.nsmp.sdk.intellij_plugin.ui.tool_window.buttons
 
 import com.intellij.openapi.components.service
 import com.intellij.openapi.project.Project
@@ -6,9 +6,9 @@ import ru.kazantsev.nsmp.sdk.intellij_plugin.services.notification.BalloonNotifi
 import ru.kazantsev.nsmp.sdk.intellij_plugin.services.notification.DialogNotificationService
 import ru.kazantsev.nsmp.sdk.intellij_plugin.services.settings.ProjectSettingsService
 import ru.kazantsev.nsmp.sdk.intellij_plugin.services.sync.SyncUIAdapter
-import ru.kazantsev.nsmp.sdk.intellij_plugin.ui.request_dialog.SrcRequestSelectDialog
-import ru.kazantsev.nsmp.sdk.intellij_plugin.ui.request_dialog.model.SrcRequestSelectState
-import ru.kazantsev.nsmp.sdk.intellij_plugin.ui.request_dialog.options_provider.SrcOptionsProvider
+import ru.kazantsev.nsmp.sdk.intellij_plugin.ui.tool_window.request_dialog.SrcRequestSelectDialog
+import ru.kazantsev.nsmp.sdk.intellij_plugin.ui.tool_window.request_dialog.model.SrcRequestSelectState
+import ru.kazantsev.nsmp.sdk.intellij_plugin.ui.tool_window.request_dialog.options_provider.SrcOptionsProvider
 import java.awt.Dimension
 import javax.swing.JButton
 
@@ -17,13 +17,18 @@ abstract class AbstractSyncButton(
     dialogTitle: String,
     protected val project: Project
 ) : JButton(title) {
-    protected val syncUIAdapter = project.service<SyncUIAdapter>()
 
-    protected val projectSettingsService = project.service<ProjectSettingsService>()
+    protected val syncUIAdapter: SyncUIAdapter
+        get() = project.service<SyncUIAdapter>()
 
-    protected val balloonNotificationService = project.service<BalloonNotificationService>()
+    protected val projectSettingsService: ProjectSettingsService
+        get() = project.service<ProjectSettingsService>()
 
-    protected val dialogNotificationService = project.service<DialogNotificationService>()
+    protected val balloonNotificationService: DialogNotificationService
+        get() = project.service<DialogNotificationService>()
+
+    protected val dialogNotificationService: DialogNotificationService
+        get() = project.service<DialogNotificationService>()
 
     abstract val optionsProvider: SrcOptionsProvider
 
@@ -33,7 +38,7 @@ abstract class AbstractSyncButton(
         alignmentX = LEFT_ALIGNMENT
         maximumSize = Dimension(Int.MAX_VALUE, preferredSize.height)
         addActionListener {
-            if(!projectSettingsService.checkInstallationIsSpecified()) return@addActionListener
+            if (!projectSettingsService.checkInstallationIsSpecified()) return@addActionListener
             val dialog = SrcRequestSelectDialog(
                 title = dialogTitle,
                 project = project,

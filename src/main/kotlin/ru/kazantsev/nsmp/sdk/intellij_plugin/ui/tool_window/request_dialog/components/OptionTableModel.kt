@@ -1,9 +1,12 @@
-package ru.kazantsev.nsmp.sdk.intellij_plugin.ui.request_dialog.components
+package ru.kazantsev.nsmp.sdk.intellij_plugin.ui.tool_window.request_dialog.components
 
 import ru.kazantsev.nsmp.sdk.intellij_plugin.MessageBundle
-import ru.kazantsev.nsmp.sdk.intellij_plugin.ui.request_dialog.model.OptionRow
+import ru.kazantsev.nsmp.sdk.intellij_plugin.ui.tool_window.request_dialog.model.OptionRow
 import javax.swing.table.AbstractTableModel
 
+/**
+ * Таблица с опциями
+ */
 class OptionTableModel : AbstractTableModel() {
     private val rows = mutableListOf<OptionRow>()
 

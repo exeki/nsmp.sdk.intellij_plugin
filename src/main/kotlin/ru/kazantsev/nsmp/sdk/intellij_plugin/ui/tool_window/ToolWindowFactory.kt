@@ -1,4 +1,4 @@
-package ru.kazantsev.nsmp.sdk.intellij_plugin.ui
+package ru.kazantsev.nsmp.sdk.intellij_plugin.ui.tool_window
 
 import com.intellij.ide.projectView.ProjectView
 import com.intellij.openapi.application.ApplicationManager
@@ -8,18 +8,28 @@ import com.intellij.openapi.progress.Task
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.vfs.VirtualFileManager
 import com.intellij.openapi.wm.ToolWindow
+import com.intellij.openapi.wm.ToolWindowFactory
 import com.intellij.ui.content.ContentFactory
 import ru.kazantsev.nsmp.sdk.intellij_plugin.MessageBundle
 import ru.kazantsev.nsmp.sdk.intellij_plugin.services.init.GradleProjectInitializer
 import ru.kazantsev.nsmp.sdk.intellij_plugin.services.notification.DialogNotificationService
-import ru.kazantsev.nsmp.sdk.intellij_plugin.ui.request_dialog.components.buttons.PullButton
-import ru.kazantsev.nsmp.sdk.intellij_plugin.ui.request_dialog.components.buttons.PushButton
-import ru.kazantsev.nsmp.sdk.intellij_plugin.ui.request_dialog.components.buttons.SyncCheckButton
+import ru.kazantsev.nsmp.sdk.intellij_plugin.ui.tool_window.buttons.PullButton
+import ru.kazantsev.nsmp.sdk.intellij_plugin.ui.tool_window.buttons.PushButton
+import ru.kazantsev.nsmp.sdk.intellij_plugin.ui.tool_window.buttons.SyncCheckButton
 import java.awt.Component
 import java.awt.Dimension
-import javax.swing.*
+import javax.swing.BorderFactory
+import javax.swing.Box
+import javax.swing.BoxLayout
+import javax.swing.JButton
+import javax.swing.JLabel
+import javax.swing.JPanel
+import javax.swing.JSeparator
 
-class ToolWindowFactory : com.intellij.openapi.wm.ToolWindowFactory {
+/**
+ * Боковое меню справа
+ */
+class ToolWindowFactory : ToolWindowFactory {
 
     override fun createToolWindowContent(project: Project, toolWindow: ToolWindow) {
         val panel = JPanel().apply {

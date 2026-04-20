@@ -1,4 +1,4 @@
-package ru.kazantsev.nsmp.sdk.intellij_plugin.ui.request_dialog.options_provider
+package ru.kazantsev.nsmp.sdk.intellij_plugin.ui.tool_window.request_dialog.options_provider
 
 import ru.kazantsev.nsmp.sdk.intellij_plugin.services.sync.options.SrcOptionsService
 import java.util.concurrent.CompletableFuture

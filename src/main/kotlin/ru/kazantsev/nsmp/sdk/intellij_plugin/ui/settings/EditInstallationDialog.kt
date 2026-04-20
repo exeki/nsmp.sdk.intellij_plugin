@@ -1,4 +1,4 @@
-package ru.kazantsev.nsmp.sdk.intellij_plugin.ui
+package ru.kazantsev.nsmp.sdk.intellij_plugin.ui.settings
 
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.ui.ComboBox

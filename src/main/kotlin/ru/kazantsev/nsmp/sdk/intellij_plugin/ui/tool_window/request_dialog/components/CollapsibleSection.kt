@@ -1,4 +1,4 @@
-package ru.kazantsev.nsmp.sdk.intellij_plugin.ui.request_dialog.components
+package ru.kazantsev.nsmp.sdk.intellij_plugin.ui.tool_window.request_dialog.components
 
 import com.intellij.ui.components.JBCheckBox
 import com.intellij.ui.components.JBLabel
@@ -10,6 +10,9 @@ import javax.swing.*
 import javax.swing.border.CompoundBorder
 import javax.swing.border.LineBorder
 
+/**
+ * Сворачиваемый блок с настройками для типа исходников
+ */
 class CollapsibleSection(
     private val title: String,
     private val allCheckBox: JBCheckBox,

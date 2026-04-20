@@ -1,7 +1,10 @@
-package ru.kazantsev.nsmp.sdk.intellij_plugin.ui.request_dialog.model
+package ru.kazantsev.nsmp.sdk.intellij_plugin.ui.tool_window.request_dialog.model
 
 import ru.kazantsev.nsmp.sdk.sources_sync.dto.SrcRequest
 
+/**
+ * Модель последней сохраненной формы
+ */
 class SrcRequestSelectState {
     var allAdvImports: Boolean = false
     var advImports: MutableList<SelectedSrcOption> = mutableListOf()

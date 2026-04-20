@@ -1,4 +1,4 @@
-package ru.kazantsev.nsmp.sdk.intellij_plugin.ui.request_dialog
+package ru.kazantsev.nsmp.sdk.intellij_plugin.ui.tool_window.request_dialog
 
 import com.intellij.openapi.components.service
 import com.intellij.openapi.project.Project
@@ -11,10 +11,10 @@ import com.intellij.util.ui.JBUI
 import ru.kazantsev.nsmp.sdk.intellij_plugin.MessageBundle
 import ru.kazantsev.nsmp.sdk.intellij_plugin.services.notification.DialogNotificationService
 import ru.kazantsev.nsmp.sdk.intellij_plugin.services.settings.ProjectSettingsService
-import ru.kazantsev.nsmp.sdk.intellij_plugin.ui.request_dialog.model.SrcRequestSelectState
-import ru.kazantsev.nsmp.sdk.intellij_plugin.ui.request_dialog.options_provider.SrcOptionsProvider
-import ru.kazantsev.nsmp.sdk.intellij_plugin.ui.request_dialog.components.CollapsibleSection
-import ru.kazantsev.nsmp.sdk.intellij_plugin.ui.request_dialog.components.MultiSelectField
+import ru.kazantsev.nsmp.sdk.intellij_plugin.ui.tool_window.request_dialog.model.SrcRequestSelectState
+import ru.kazantsev.nsmp.sdk.intellij_plugin.ui.tool_window.request_dialog.options_provider.SrcOptionsProvider
+import ru.kazantsev.nsmp.sdk.intellij_plugin.ui.tool_window.request_dialog.components.CollapsibleSection
+import ru.kazantsev.nsmp.sdk.intellij_plugin.ui.tool_window.request_dialog.components.MultiSelectField
 import java.awt.BorderLayout
 import java.awt.Dimension
 import javax.swing.Box
@@ -24,6 +24,9 @@ import javax.swing.JComponent
 import javax.swing.JPanel
 import javax.swing.ScrollPaneConstants
 
+/**
+ * Диалог выбора всех трех видов исходников пред отправкой запроса
+ */
 open class SrcRequestSelectDialog(
     title: String,
     private val project: Project,
