@@ -25,14 +25,19 @@ class PullButton(
                 request = state.getRequest(),
                 onSuccessCallback = { value: SrcDtoRoot ->
                     balloonNotificationService.showInfo(
-                        MessageBundle.message("sync.command.pull.title"),
-                        MessageBundle.message("sync.command.pull.success", value.scripts.size, value.modules.size, value.advImports.size),
+                        title = MessageBundle.message("sync.command.pull.title"),
+                        message = MessageBundle.message(
+                            "sync.command.pull.success",
+                            value.scripts.size,
+                            value.modules.size,
+                            value.advImports.size
+                        ),
                     )
                 },
                 onFailureCallback = { e: Throwable ->
                     balloonNotificationService.showError(
-                        MessageBundle.message("sync.command.pull.title"),
-                        e.message ?: MessageBundle.message("sync.error.unknown")
+                        title = MessageBundle.message("sync.command.pull.title"),
+                        message = e.message ?: MessageBundle.message("sync.error.unknown")
                     )
                 }
             )

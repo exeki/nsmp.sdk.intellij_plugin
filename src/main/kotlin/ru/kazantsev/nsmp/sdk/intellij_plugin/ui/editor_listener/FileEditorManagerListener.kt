@@ -1,5 +1,7 @@
 package ru.kazantsev.nsmp.sdk.intellij_plugin.ui.editor_listener
 
+import com.intellij.openapi.actionSystem.ActionManager
+import com.intellij.openapi.actionSystem.DefaultActionGroup
 import com.intellij.openapi.components.service
 import com.intellij.openapi.fileEditor.FileEditor
 import com.intellij.openapi.fileEditor.FileEditorManager
@@ -15,9 +17,8 @@ import ru.kazantsev.nsmp.sdk.intellij_plugin.ui.editor_listener.buttons.FilePull
 import ru.kazantsev.nsmp.sdk.intellij_plugin.ui.editor_listener.buttons.FilePushButton
 import ru.kazantsev.nsmp.sdk.intellij_plugin.ui.editor_listener.buttons.FileSyncCheckButton
 import java.awt.Component
-import javax.swing.Box
+import java.awt.Dimension
 import javax.swing.BoxLayout
-import javax.swing.JCheckBox
 import javax.swing.JComponent
 import javax.swing.JPanel
 
@@ -57,9 +58,7 @@ class FileEditorManagerListener(private val project: Project) : FileEditorManage
         val existingFileUrl = editor.getUserData(TOP_PANEL_FILE_URL_KEY)
         if (existing != null && existingFileUrl == file.url) return
 
-        if (existing != null) {
-            manager.removeTopComponent(editor, existing)
-        }
+        if (existing != null) manager.removeTopComponent(editor, existing)
 
         val panel = createActionsPanel(file)
         manager.addTopComponent(editor, panel)
@@ -77,27 +76,32 @@ class FileEditorManagerListener(private val project: Project) : FileEditorManage
     private fun createActionsPanel(file: VirtualFile): JPanel {
         return JPanel().apply {
             layout = BoxLayout(this, BoxLayout.X_AXIS)
-
-            val forceCheckBox = JCheckBox("Force")
-            val pullButton = FilePullButton(file, project)
-            val syncCheckButton = FileSyncCheckButton(file, project)
-            val pushButton = FilePushButton(file, project, forceCheckBox::isSelected)
-
-            listOf(pullButton, syncCheckButton, pushButton, forceCheckBox).forEach {
-                it.alignmentY = Component.CENTER_ALIGNMENT
-            }
-
-            add(pullButton)
-            add(Box.createHorizontalStrut(6))
-            add(syncCheckButton)
-            add(Box.createHorizontalStrut(6))
-            add(pushButton)
-            //add(Box.createHorizontalStrut(4))
-            add(forceCheckBox)
+            val toolbar = createToolbar(file)
+            toolbar.alignmentY = Component.CENTER_ALIGNMENT
+            add(toolbar)
         }
     }
 
+    private fun JPanel.createToolbar(file: VirtualFile): JComponent {
+        val actionGroup = DefaultActionGroup().apply {
+            add(FilePullButton(file, project))
+            add(FileSyncCheckButton(file, project))
+            add(FilePushButton(file, project))
+        }
+
+        return ActionManager.getInstance()
+            .createActionToolbar(ACTION_PLACE, actionGroup, true)
+            .apply {
+                targetComponent = this@createToolbar
+                setMiniMode(true)
+                minimumButtonSize = Dimension(48, TOOLBAR_HEIGHT)
+            }
+            .component
+    }
+
     private companion object {
+        private const val ACTION_PLACE = "NSMP.EditorTopPanel"
+        private const val TOOLBAR_HEIGHT = 20
         private val TOP_PANEL_KEY = Key.create<JComponent>("nsmp.sdk.groovy.sync.top.panel")
         private val TOP_PANEL_FILE_URL_KEY = Key.create<String>("nsmp.sdk.groovy.sync.top.panel.file.url")
     }

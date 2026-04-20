@@ -15,8 +15,8 @@ class DialogNotificationService(private val project: Project) {
         Messages.showErrorDialog(project, message, title)
     }
 
-    fun showError(title: String, message: String, e: Throwable) {
-        Messages.showErrorDialog(project, NotificationErrorBuilder.buildErrorText(message, e), title)
+    fun showError(title: String, message: String, error: Throwable) {
+        Messages.showErrorDialog(project, NotificationErrorBuilder.buildErrorText(message, error), title)
     }
 
     fun showError(title: String, e: Throwable) {
