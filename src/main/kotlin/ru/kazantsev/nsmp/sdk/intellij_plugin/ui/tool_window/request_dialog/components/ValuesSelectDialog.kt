@@ -6,7 +6,7 @@ import com.intellij.ui.SearchTextField
 import com.intellij.ui.components.JBLabel
 import com.intellij.ui.components.JBScrollPane
 import com.intellij.ui.table.JBTable
-import ru.kazantsev.nsmp.sdk.intellij_plugin.MessageBundle
+import ru.kazantsev.nsmp.sdk.intellij_plugin.ui.MessageBundle
 import ru.kazantsev.nsmp.sdk.intellij_plugin.services.sync.options.dto.SrcOption
 import ru.kazantsev.nsmp.sdk.intellij_plugin.ui.tool_window.request_dialog.model.OptionRow
 import ru.kazantsev.nsmp.sdk.intellij_plugin.ui.tool_window.request_dialog.model.SelectedSrcOption

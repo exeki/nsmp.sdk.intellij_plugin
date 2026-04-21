@@ -3,7 +3,9 @@ package ru.kazantsev.nsmp.sdk.intellij_plugin.ui.editor_listener.buttons
 import com.intellij.openapi.actionSystem.AnActionEvent
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.vfs.VirtualFile
-import ru.kazantsev.nsmp.sdk.intellij_plugin.MessageBundle
+import ru.kazantsev.nsmp.sdk.intellij_plugin.ui.MessageBundle
+import ru.kazantsev.nsmp.sdk.intellij_plugin.services.sync.SrcType
+import kotlin.collections.contains
 
 class FileSyncCheckButton(
     file: VirtualFile,
@@ -13,6 +15,11 @@ class FileSyncCheckButton(
     file = file,
     project = project
 ) {
+
+    override fun compatibleWithFile(): Boolean {
+        return syncUIAdapter.getSrcType(file) in listOf(SrcType.SCRIPT, SrcType.MODULE, SrcType.ADV_IMPORT)
+    }
+
     override fun actionPerformed(event: AnActionEvent) {
         syncUIAdapter.syncCheck(
             file = file,

@@ -3,7 +3,7 @@ package ru.kazantsev.nsmp.sdk.intellij_plugin.ui.tool_window.request_dialog.comp
 import com.intellij.ui.components.JBCheckBox
 import com.intellij.ui.components.JBLabel
 import com.intellij.util.ui.JBUI
-import ru.kazantsev.nsmp.sdk.intellij_plugin.MessageBundle
+import ru.kazantsev.nsmp.sdk.intellij_plugin.ui.MessageBundle
 import java.awt.BorderLayout
 import java.awt.Dimension
 import javax.swing.*

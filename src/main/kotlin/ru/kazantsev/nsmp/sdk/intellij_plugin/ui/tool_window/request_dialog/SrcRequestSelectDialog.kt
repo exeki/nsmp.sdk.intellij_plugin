@@ -8,7 +8,7 @@ import com.intellij.ui.components.JBCheckBox
 import com.intellij.ui.components.JBLabel
 import com.intellij.ui.components.JBScrollPane
 import com.intellij.util.ui.JBUI
-import ru.kazantsev.nsmp.sdk.intellij_plugin.MessageBundle
+import ru.kazantsev.nsmp.sdk.intellij_plugin.ui.MessageBundle
 import ru.kazantsev.nsmp.sdk.intellij_plugin.services.notification.DialogNotificationService
 import ru.kazantsev.nsmp.sdk.intellij_plugin.services.settings.ProjectSettingsService
 import ru.kazantsev.nsmp.sdk.intellij_plugin.ui.tool_window.request_dialog.model.SrcRequestSelectState
@@ -217,7 +217,7 @@ open class SrcRequestSelectDialog(
     private fun showOptionsLoadError(error: Throwable) {
         dialogNotificationService.showError(
             title = MessageBundle.message("sync.dialog.options.load.error.title"),
-            e = error
+            error = error
         )
     }
 

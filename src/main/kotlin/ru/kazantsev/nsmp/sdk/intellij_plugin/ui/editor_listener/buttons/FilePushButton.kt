@@ -5,13 +5,15 @@ import com.intellij.openapi.actionSystem.Presentation
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.vfs.VirtualFile
 import com.intellij.util.ui.JBUI
-import ru.kazantsev.nsmp.sdk.intellij_plugin.MessageBundle
+import ru.kazantsev.nsmp.sdk.intellij_plugin.ui.MessageBundle
+import ru.kazantsev.nsmp.sdk.intellij_plugin.services.sync.SrcType
 import ru.kazantsev.nsmp.sdk.sources_sync.exception.SyncCheckFailedException
 import java.awt.Component
 import javax.swing.BoxLayout
 import javax.swing.JCheckBox
 import javax.swing.JComponent
 import javax.swing.JPanel
+import kotlin.collections.contains
 
 class FilePushButton(
     file: VirtualFile,
@@ -21,6 +23,11 @@ class FilePushButton(
     file = file,
     project = project
 ) {
+
+    override fun compatibleWithFile(): Boolean {
+        return syncUIAdapter.getSrcType(file) in listOf(SrcType.SCRIPT, SrcType.MODULE, SrcType.ADV_IMPORT)
+    }
+
     private var forceCheckBox: JCheckBox = JCheckBox(MessageBundle.message("sync.dialog.force")).also {
         it.alignmentY = Component.CENTER_ALIGNMENT
         it.isOpaque = false
@@ -33,6 +40,7 @@ class FilePushButton(
         return JPanel().apply {
             layout = BoxLayout(this, BoxLayout.X_AXIS)
             isOpaque = false
+            alignmentY = Component.CENTER_ALIGNMENT
             pushButton.alignmentY = Component.CENTER_ALIGNMENT
             add(pushButton)
             add(forceCheckBox)

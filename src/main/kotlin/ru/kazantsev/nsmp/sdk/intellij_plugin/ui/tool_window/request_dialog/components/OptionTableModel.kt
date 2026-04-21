@@ -1,6 +1,6 @@
 package ru.kazantsev.nsmp.sdk.intellij_plugin.ui.tool_window.request_dialog.components
 
-import ru.kazantsev.nsmp.sdk.intellij_plugin.MessageBundle
+import ru.kazantsev.nsmp.sdk.intellij_plugin.ui.MessageBundle
 import ru.kazantsev.nsmp.sdk.intellij_plugin.ui.tool_window.request_dialog.model.OptionRow
 import javax.swing.table.AbstractTableModel
 

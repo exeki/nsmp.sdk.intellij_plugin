@@ -11,7 +11,7 @@ import com.intellij.openapi.progress.Task
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.vfs.VirtualFile
 import com.intellij.openapi.vfs.VirtualFileManager
-import ru.kazantsev.nsmp.sdk.intellij_plugin.MessageBundle
+import ru.kazantsev.nsmp.sdk.intellij_plugin.ui.MessageBundle
 import ru.kazantsev.nsmp.sdk.sources_sync.dto.SrcDtoRoot
 import ru.kazantsev.nsmp.sdk.sources_sync.dto.SrcInfoRoot
 import ru.kazantsev.nsmp.sdk.sources_sync.dto.SrcRequest
@@ -31,6 +31,10 @@ class SyncUIAdapter(private val project: Project) {
 
     fun isSupportedFile(file: VirtualFile): Boolean {
         return service.isSupportedFile(file)
+    }
+
+    fun getSrcType(file: VirtualFile): SrcType? {
+        return service.getSrcType(file)
     }
 
     fun pull(

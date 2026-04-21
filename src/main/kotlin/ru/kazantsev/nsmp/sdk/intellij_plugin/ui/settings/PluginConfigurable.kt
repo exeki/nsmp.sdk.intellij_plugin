@@ -13,7 +13,7 @@ import com.intellij.ui.table.JBTable
 import com.intellij.util.ui.FormBuilder
 import ru.kazantsev.nsmp.basic_api_connector.ConfigService
 import ru.kazantsev.nsmp.basic_api_connector.dto.InstallationDto
-import ru.kazantsev.nsmp.sdk.intellij_plugin.MessageBundle
+import ru.kazantsev.nsmp.sdk.intellij_plugin.ui.MessageBundle
 import ru.kazantsev.nsmp.sdk.intellij_plugin.server.service.NsdHttpServerService
 import ru.kazantsev.nsmp.sdk.intellij_plugin.services.notification.DialogNotificationService
 import ru.kazantsev.nsmp.sdk.intellij_plugin.services.project.ProjectSourceRootMarkerService

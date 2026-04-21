@@ -5,7 +5,7 @@ import com.intellij.openapi.components.Service
 import com.intellij.openapi.components.service
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.vfs.VirtualFile
-import ru.kazantsev.nsmp.sdk.intellij_plugin.MessageBundle
+import ru.kazantsev.nsmp.sdk.intellij_plugin.ui.MessageBundle
 import ru.kazantsev.nsmp.sdk.intellij_plugin.exception.SrcSyncUnsupportedType
 import ru.kazantsev.nsmp.sdk.intellij_plugin.exception.UnknownSourceType
 import ru.kazantsev.nsmp.sdk.intellij_plugin.services.settings.ProjectSettingsService
@@ -30,7 +30,7 @@ class SyncService(private val project: Project) {
         )
     }
 
-    private fun resolveSrcCode(file: VirtualFile): String {
+    fun resolveSrcCode(file: VirtualFile): String {
         return file.nameWithoutExtension.ifBlank { file.name }
     }
 
@@ -45,7 +45,6 @@ class SyncService(private val project: Project) {
             SrcType.SCRIPT -> SrcRequest(scripts = listOf(resolveSrcCode(file)))
             SrcType.MODULE -> SrcRequest(modules = listOf(resolveSrcCode(file)))
             SrcType.ADV_IMPORT -> SrcRequest(advImports = listOf(resolveSrcCode(file)))
-            else -> null
         }
     }
 
@@ -66,12 +65,11 @@ class SyncService(private val project: Project) {
         return if (filePath.startsWith(projectPath.resolve(s).normalize())) SrcType.SCRIPT
         else if (filePath.startsWith(projectPath.resolve(m).normalize())) SrcType.MODULE
         else if (filePath.startsWith(projectPath.resolve(a).normalize())) SrcType.ADV_IMPORT
-        else if (file.extension.equals("groovy", ignoreCase = true)) SrcType.GROOVY
         else null
     }
 
     fun isSupportedFile(file: VirtualFile): Boolean {
-        return getSrcType(file) != null
+        return getSrcType(file) != null || file.extension.equals("groovy", ignoreCase = true)
     }
 
     fun pull(request: SrcRequest): SrcDtoRoot {

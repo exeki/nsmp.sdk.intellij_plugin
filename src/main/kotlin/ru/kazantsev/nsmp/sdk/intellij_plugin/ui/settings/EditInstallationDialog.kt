@@ -9,7 +9,7 @@ import com.intellij.ui.components.JBPasswordField
 import com.intellij.ui.components.JBTextField
 import com.intellij.util.ui.FormBuilder
 import ru.kazantsev.nsmp.basic_api_connector.dto.InstallationDto
-import ru.kazantsev.nsmp.sdk.intellij_plugin.MessageBundle
+import ru.kazantsev.nsmp.sdk.intellij_plugin.ui.MessageBundle
 import java.awt.Dimension
 import javax.swing.JComponent
 

@@ -15,17 +15,6 @@ class SrcOptionsConnector(params: ConnectorParams) : Connector(params) {
         ignoreUnknownKeys = true
     }
 
-    private fun checkStatus(response: ClassicHttpResponse) {
-        val status = response.code
-        if (status !in 200..<400) {
-            val body: String? = if (response.entity != null) EntityUtils.toString(response.entity) else null
-            throw BadResponseException(
-                BadResponseException.createErrorText(this.host, status.toString(), body),
-                status,
-                response
-            )
-        }
-    }
 
     fun getScriptOptions(lang: String? = null): SrcOptionsContainer {
         val response = this.execGet(
@@ -33,7 +22,7 @@ class SrcOptionsConnector(params: ConnectorParams) : Connector(params) {
             paramsConst,
             mapOf("lang" to lang)
         )
-        checkStatus(response)
+        BadResponseException.throwIfNotOk(this, response)
         val bodyText = EntityUtils.toString(response.entity, Charsets.UTF_8)
         return json.decodeFromString(bodyText)
     }
@@ -44,7 +33,7 @@ class SrcOptionsConnector(params: ConnectorParams) : Connector(params) {
             paramsConst,
             null
         )
-        checkStatus(response)
+        BadResponseException.throwIfNotOk(this, response)
         val bodyText = EntityUtils.toString(response.entity, Charsets.UTF_8)
         return json.decodeFromString(bodyText)
     }
@@ -55,7 +44,7 @@ class SrcOptionsConnector(params: ConnectorParams) : Connector(params) {
             paramsConst,
             mapOf("lang" to lang)
         )
-        checkStatus(response)
+        BadResponseException.throwIfNotOk(this, response)
         val bodyText = EntityUtils.toString(response.entity, Charsets.UTF_8)
         return json.decodeFromString(bodyText)
     }

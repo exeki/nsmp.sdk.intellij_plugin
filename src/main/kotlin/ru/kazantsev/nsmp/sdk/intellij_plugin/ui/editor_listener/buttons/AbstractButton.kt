@@ -31,10 +31,13 @@ abstract class AbstractButton(
     val dialogNotificationService: DialogNotificationService
         get() = project.service<DialogNotificationService>()
 
+    abstract fun compatibleWithFile() : Boolean
+
     override fun createCustomComponent(presentation: Presentation, place: String): JComponent {
         return JPanel().apply {
             layout = BoxLayout(this, BoxLayout.X_AXIS)
             isOpaque = false
+            alignmentY = Component.CENTER_ALIGNMENT
             add(createButtonComponent(presentation, place).apply {
                 alignmentY = Component.CENTER_ALIGNMENT
             })

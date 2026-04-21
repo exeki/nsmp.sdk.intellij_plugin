@@ -2,7 +2,7 @@ package ru.kazantsev.nsmp.sdk.intellij_plugin.ui.tool_window.buttons
 
 import com.intellij.openapi.components.service
 import com.intellij.openapi.project.Project
-import ru.kazantsev.nsmp.sdk.intellij_plugin.MessageBundle
+import ru.kazantsev.nsmp.sdk.intellij_plugin.ui.MessageBundle
 import ru.kazantsev.nsmp.sdk.intellij_plugin.services.sync.options.SrcOptionsService
 import ru.kazantsev.nsmp.sdk.intellij_plugin.ui.tool_window.request_dialog.model.SrcRequestSelectState
 import ru.kazantsev.nsmp.sdk.intellij_plugin.ui.tool_window.request_dialog.options_provider.RemoteSrcOptionsProvider

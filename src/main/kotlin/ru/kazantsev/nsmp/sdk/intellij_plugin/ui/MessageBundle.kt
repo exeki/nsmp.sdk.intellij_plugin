@@ -1,4 +1,4 @@
-package ru.kazantsev.nsmp.sdk.intellij_plugin
+package ru.kazantsev.nsmp.sdk.intellij_plugin.ui
 
 import com.intellij.DynamicBundle
 import org.jetbrains.annotations.Nls

@@ -1,7 +1,5 @@
 package ru.kazantsev.nsmp.sdk.intellij_plugin.ui.editor_listener
 
-import com.intellij.openapi.actionSystem.ActionManager
-import com.intellij.openapi.actionSystem.DefaultActionGroup
 import com.intellij.openapi.components.service
 import com.intellij.openapi.fileEditor.FileEditor
 import com.intellij.openapi.fileEditor.FileEditorManager
@@ -12,14 +10,14 @@ import com.intellij.openapi.project.Project
 import com.intellij.openapi.util.Disposer
 import com.intellij.openapi.util.Key
 import com.intellij.openapi.vfs.VirtualFile
+import com.intellij.util.ui.JBUI
 import ru.kazantsev.nsmp.sdk.intellij_plugin.services.sync.SyncUIAdapter
-import ru.kazantsev.nsmp.sdk.intellij_plugin.ui.editor_listener.buttons.FilePullButton
-import ru.kazantsev.nsmp.sdk.intellij_plugin.ui.editor_listener.buttons.FilePushButton
-import ru.kazantsev.nsmp.sdk.intellij_plugin.ui.editor_listener.buttons.FileSyncCheckButton
-import java.awt.Component
-import java.awt.Dimension
-import javax.swing.BoxLayout
+import ru.kazantsev.nsmp.sdk.intellij_plugin.ui.Icons
+import ru.kazantsev.nsmp.sdk.intellij_plugin.ui.editor_listener.panels.FileEditorLeftActionsPanel
+import ru.kazantsev.nsmp.sdk.intellij_plugin.ui.editor_listener.panels.FileEditorRightActionsPanel
+import java.awt.BorderLayout
 import javax.swing.JComponent
+import javax.swing.JLabel
 import javax.swing.JPanel
 
 class FileEditorManagerListener(private val project: Project) : FileEditorManagerListener, DumbAware {
@@ -60,7 +58,7 @@ class FileEditorManagerListener(private val project: Project) : FileEditorManage
 
         if (existing != null) manager.removeTopComponent(editor, existing)
 
-        val panel = createActionsPanel(file)
+        val panel = createTopPanel(file)
         manager.addTopComponent(editor, panel)
         editor.putUserData(TOP_PANEL_KEY, panel)
         editor.putUserData(TOP_PANEL_FILE_URL_KEY, file.url)
@@ -73,35 +71,27 @@ class FileEditorManagerListener(private val project: Project) : FileEditorManage
         }
     }
 
-    private fun createActionsPanel(file: VirtualFile): JPanel {
-        return JPanel().apply {
-            layout = BoxLayout(this, BoxLayout.X_AXIS)
-            val toolbar = createToolbar(file)
-            toolbar.alignmentY = Component.CENTER_ALIGNMENT
-            add(toolbar)
+    private fun createTopPanel(file: VirtualFile): JPanel {
+        return JPanel(BorderLayout()).apply {
+            border = JBUI.Borders.empty(PANEL_VERTICAL_GAP, PANEL_SIDE_GAP)
+            isOpaque = false
+            add(
+                JLabel(Icons.MyIcon),
+                BorderLayout.WEST
+            )
+            add(
+                JPanel(BorderLayout()).apply {
+                    isOpaque = false
+                    add(FileEditorLeftActionsPanel(file, project), BorderLayout.WEST)
+                    add(FileEditorRightActionsPanel(file, project), BorderLayout.EAST)
+                }
+            )
         }
-    }
-
-    private fun JPanel.createToolbar(file: VirtualFile): JComponent {
-        val actionGroup = DefaultActionGroup().apply {
-            add(FilePullButton(file, project))
-            add(FileSyncCheckButton(file, project))
-            add(FilePushButton(file, project))
-        }
-
-        return ActionManager.getInstance()
-            .createActionToolbar(ACTION_PLACE, actionGroup, true)
-            .apply {
-                targetComponent = this@createToolbar
-                setMiniMode(true)
-                minimumButtonSize = Dimension(48, TOOLBAR_HEIGHT)
-            }
-            .component
     }
 
     private companion object {
-        private const val ACTION_PLACE = "NSMP.EditorTopPanel"
-        private const val TOOLBAR_HEIGHT = 20
+        private const val PANEL_VERTICAL_GAP = 4
+        private const val PANEL_SIDE_GAP = 8
         private val TOP_PANEL_KEY = Key.create<JComponent>("nsmp.sdk.groovy.sync.top.panel")
         private val TOP_PANEL_FILE_URL_KEY = Key.create<String>("nsmp.sdk.groovy.sync.top.panel.file.url")
     }
