@@ -61,9 +61,11 @@ class ScrollableTopPanelContent(
 
     override fun getScrollableUnitIncrement(visibleRect: Rectangle, orientation: Int, direction: Int): Int = 0
 
-    override fun getScrollableBlockIncrement(visibleRect: Rectangle, orientation: Int, direction: Int): Int  = 0
+    override fun getScrollableBlockIncrement(visibleRect: Rectangle, orientation: Int, direction: Int): Int {
+        return HORIZONTAL_SCROLL_INCREMENT
+    }
 
     override fun getScrollableTracksViewportWidth(): Boolean = false
 
-    override fun getScrollableTracksViewportHeight(): Boolean = false
+    override fun getScrollableTracksViewportHeight(): Boolean = true
 }
