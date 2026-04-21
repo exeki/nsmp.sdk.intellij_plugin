@@ -11,14 +11,11 @@ import com.intellij.openapi.util.Disposer
 import com.intellij.openapi.util.Key
 import com.intellij.openapi.vfs.VirtualFile
 import com.intellij.util.ui.JBUI
+import com.intellij.ui.components.JBScrollPane
 import ru.kazantsev.nsmp.sdk.intellij_plugin.services.sync.SyncUIAdapter
-import ru.kazantsev.nsmp.sdk.intellij_plugin.ui.Icons
-import ru.kazantsev.nsmp.sdk.intellij_plugin.ui.editor_listener.panels.FileEditorLeftActionsPanel
-import ru.kazantsev.nsmp.sdk.intellij_plugin.ui.editor_listener.panels.FileEditorRightActionsPanel
-import java.awt.BorderLayout
+import java.awt.Dimension
 import javax.swing.JComponent
-import javax.swing.JLabel
-import javax.swing.JPanel
+import javax.swing.ScrollPaneConstants
 
 class FileEditorManagerListener(private val project: Project) : FileEditorManagerListener, DumbAware {
     private val syncUIAdapter: SyncUIAdapter
@@ -71,27 +68,30 @@ class FileEditorManagerListener(private val project: Project) : FileEditorManage
         }
     }
 
-    private fun createTopPanel(file: VirtualFile): JPanel {
-        return JPanel(BorderLayout()).apply {
-            border = JBUI.Borders.empty(PANEL_VERTICAL_GAP, PANEL_SIDE_GAP)
+    private fun createTopPanel(file: VirtualFile): JComponent {
+        val topPanel = ScrollableTopPanelContent(file, project)
+
+        return JBScrollPane(
+            topPanel,
+            ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER,
+            ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED
+        ).apply {
             isOpaque = false
-            add(
-                JLabel(Icons.MyIcon),
-                BorderLayout.WEST
+            viewport.isOpaque = false
+            border = JBUI.Borders.empty()
+            horizontalScrollBar.preferredSize = Dimension(
+                horizontalScrollBar.preferredSize.width,
+                SCROLLBAR_HEIGHT
             )
-            add(
-                JPanel(BorderLayout()).apply {
-                    isOpaque = false
-                    add(FileEditorLeftActionsPanel(file, project), BorderLayout.WEST)
-                    add(FileEditorRightActionsPanel(file, project), BorderLayout.EAST)
-                }
-            )
+            //horizontalScrollBar.unitIncrement = HORIZONTAL_SCROLL_INCREMENT
+            //val topPanelHeight = topPanel.preferredSize.height + SCROLLBAR_HEIGHT
+            //preferredSize = Dimension(topPanel.preferredSize.width, topPanelHeight)
+            //minimumSize = Dimension(0, topPanelHeight)
         }
     }
 
     private companion object {
-        private const val PANEL_VERTICAL_GAP = 4
-        private const val PANEL_SIDE_GAP = 8
+        private const val SCROLLBAR_HEIGHT = 6
         private val TOP_PANEL_KEY = Key.create<JComponent>("nsmp.sdk.groovy.sync.top.panel")
         private val TOP_PANEL_FILE_URL_KEY = Key.create<String>("nsmp.sdk.groovy.sync.top.panel.file.url")
     }
