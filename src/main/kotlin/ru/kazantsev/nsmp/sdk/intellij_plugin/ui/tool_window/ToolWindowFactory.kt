@@ -7,6 +7,7 @@ import com.intellij.ui.content.ContentFactory
 import ru.kazantsev.nsmp.sdk.intellij_plugin.ui.MessageBundle
 import ru.kazantsev.nsmp.sdk.intellij_plugin.ui.tool_window.buttons.PullButton
 import ru.kazantsev.nsmp.sdk.intellij_plugin.ui.tool_window.buttons.PushButton
+import ru.kazantsev.nsmp.sdk.intellij_plugin.ui.tool_window.buttons.ShowLocalChangesButton
 import ru.kazantsev.nsmp.sdk.intellij_plugin.ui.tool_window.buttons.SyncCheckButton
 import java.awt.Component
 import java.awt.Dimension
@@ -40,6 +41,8 @@ class ToolWindowFactory : ToolWindowFactory {
             add(SyncCheckButton(project))
             add(Box.createVerticalStrut(8))
             add(PushButton(project))
+            add(Box.createVerticalStrut(8))
+            add(ShowLocalChangesButton(project))
         }
     }
 

@@ -7,6 +7,7 @@ import com.intellij.openapi.vfs.VirtualFile
 import ru.kazantsev.nsmp.sdk.intellij_plugin.ui.editor_listener.buttons.AbstractButton
 import java.awt.Dimension
 import java.awt.GridBagLayout
+import javax.swing.Box
 import javax.swing.JComponent
 import javax.swing.JPanel
 
@@ -30,7 +31,10 @@ abstract class AbstractFileActionsPanel(
 
     private fun createToolbar(actions: List<AbstractButton>): JComponent {
         val actionGroup = DefaultActionGroup().apply {
-            actions.forEach(::add)
+            actions.forEach{
+                add(it)
+                addSeparator()
+            }
         }
 
         return ActionManager.getInstance()

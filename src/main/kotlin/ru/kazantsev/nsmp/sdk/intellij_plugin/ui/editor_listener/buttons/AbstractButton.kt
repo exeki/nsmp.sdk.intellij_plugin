@@ -45,7 +45,9 @@ abstract class AbstractButton(
     }
 
     protected fun createButtonComponent(presentation: Presentation, place: String): JComponent {
-        return ActionButtonWithText(this, presentation, place, Dimension(48, BUTTON_HEIGHT))
+        return ActionButtonWithText(this, presentation, place, Dimension(48, BUTTON_HEIGHT)).apply {
+            alignmentY = Component.CENTER_ALIGNMENT
+        }
     }
 
     private companion object {

@@ -8,4 +8,5 @@ open class ProjectState {
     var modulesDirectoryPath: String = "src/main/modules"
     var advImportsDirectoryPath: String = "src/main/advimports"
     var savedMultiSelectRequestInput: SrcRequestSelectState = SrcRequestSelectState()
+    var executeContexts: MutableMap<String, String> = mutableMapOf()
 }
