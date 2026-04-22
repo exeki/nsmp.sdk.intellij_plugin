@@ -2,16 +2,16 @@ package ru.kazantsev.nsmp.sdk.intellij_plugin.ui.editor_listener
 
 import com.intellij.openapi.actionSystem.ActionManager
 import com.intellij.openapi.actionSystem.DefaultActionGroup
+import com.intellij.openapi.components.service
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.vfs.VirtualFile
 import com.intellij.util.ui.JBUI
-import ru.kazantsev.nsmp.sdk.intellij_plugin.ui.Icons
+import ru.kazantsev.nsmp.sdk.intellij_plugin.services.settings.ProjectSettingsService
 import ru.kazantsev.nsmp.sdk.intellij_plugin.ui.editor_listener.buttons.*
 import java.awt.BorderLayout
 import java.awt.Dimension
 import java.awt.Rectangle
 import javax.swing.BoxLayout
-import javax.swing.JLabel
 import javax.swing.JPanel
 import javax.swing.Scrollable
 
@@ -54,14 +54,33 @@ class ScrollableTopPanelContent(
             isOpaque = false
         }
 
+    private val projectSettingsService: ProjectSettingsService
+        get() = project.service<ProjectSettingsService>()
+
+    private var collapsed = projectSettingsService.isTopPanelCollapsed()
+
+    private val logo = TopPanelLogo(::toggleCollapsed)
+
     init {
         layout = BoxLayout(this, BoxLayout.X_AXIS)
         border = JBUI.Borders.empty(PANEL_VERTICAL_GAP, PANEL_SIDE_GAP)
         isOpaque = false
-        add(JLabel(Icons.ColoredLogo))
+        add(logo)
         add(toolbar)
+        applyCollapsedState()
     }
 
+    private fun toggleCollapsed() {
+        collapsed = !collapsed
+        projectSettingsService.setTopPanelCollapsed(collapsed)
+        applyCollapsedState()
+    }
+
+    private fun applyCollapsedState() {
+        toolbar.isVisible = !collapsed
+        revalidate()
+        repaint()
+    }
 
     override fun getPreferredScrollableViewportSize(): Dimension = preferredSize
 

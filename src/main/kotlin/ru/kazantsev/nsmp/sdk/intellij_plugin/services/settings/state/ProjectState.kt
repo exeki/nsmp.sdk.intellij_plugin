@@ -9,4 +9,5 @@ open class ProjectState {
     var advImportsDirectoryPath: String = "src/main/advimports"
     var savedMultiSelectRequestInput: SrcRequestSelectState = SrcRequestSelectState()
     var executeContexts: MutableMap<String, String> = mutableMapOf()
+    var topPanelCollapsed: Boolean = false
 }

@@ -85,4 +85,12 @@ class ProjectSettingsService(private val project: Project) : PersistentStateComp
             settings.executeContexts[code] = normalizedValue
         }
     }
+
+    fun isTopPanelCollapsed(): Boolean {
+        return settings.topPanelCollapsed
+    }
+
+    fun setTopPanelCollapsed(value: Boolean) {
+        settings.topPanelCollapsed = value
+    }
 }
