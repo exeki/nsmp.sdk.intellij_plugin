@@ -10,8 +10,8 @@ import com.intellij.openapi.vfs.VirtualFile
 import ru.kazantsev.nsmp.sdk.intellij_plugin.services.notification.BalloonNotificationService
 import ru.kazantsev.nsmp.sdk.intellij_plugin.services.notification.DialogNotificationService
 import ru.kazantsev.nsmp.sdk.intellij_plugin.services.sync.SyncUIAdapter
+import com.intellij.util.ui.JBUI
 import java.awt.Component
-import java.awt.Dimension
 import javax.swing.BoxLayout
 import javax.swing.JComponent
 import javax.swing.JPanel
@@ -45,7 +45,7 @@ abstract class AbstractButton(
     }
 
     protected fun createButtonComponent(presentation: Presentation, place: String): JComponent {
-        return ActionButtonWithText(this, presentation, place, Dimension(48, BUTTON_HEIGHT)).apply {
+        return ActionButtonWithText(this, presentation, place, JBUI.size(48, BUTTON_HEIGHT)).apply {
             alignmentY = Component.CENTER_ALIGNMENT
         }
     }

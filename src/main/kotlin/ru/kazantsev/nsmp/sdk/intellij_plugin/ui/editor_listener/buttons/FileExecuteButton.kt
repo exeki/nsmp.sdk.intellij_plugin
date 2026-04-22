@@ -22,7 +22,6 @@ import ru.kazantsev.nsmp.sdk.intellij_plugin.services.notification.DialogNotific
 import ru.kazantsev.nsmp.sdk.intellij_plugin.services.settings.ProjectSettingsService
 import ru.kazantsev.nsmp.sdk.intellij_plugin.ui.MessageBundle
 import java.awt.Component
-import java.awt.Dimension
 import java.awt.Point
 import java.awt.event.MouseEvent
 import javax.swing.Box
@@ -61,7 +60,9 @@ class FileExecuteButton(
         border = JBUI.Borders.empty()
         textField.isOpaque = false
         textField.background = UIUtil.TRANSPARENT_COLOR
-        preferredSize = Dimension(300, 25)
+        preferredSize = JBUI.size(CONTEXT_FIELD_WIDTH, CONTEXT_FIELD_HEIGHT)
+        minimumSize = preferredSize
+        maximumSize = preferredSize
         text = projectSettingsService.getExecutionContext(file.nameWithoutExtension).orEmpty()
         textField.document.addDocumentListener(object : DocumentListener {
             override fun insertUpdate(e: DocumentEvent) = projectSettingsService.setExecutionContext(text)
@@ -145,5 +146,10 @@ class FileExecuteButton(
 
     private fun htmlTooltip(text: String): String {
         return "<html><body width='420'>$text</body></html>"
+    }
+
+    private companion object {
+        private const val CONTEXT_FIELD_WIDTH = 200
+        private const val CONTEXT_FIELD_HEIGHT = 25
     }
 }

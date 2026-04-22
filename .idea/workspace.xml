@@ -6,7 +6,13 @@
   <component name="ChangeListManager">
     <list default="true" id="0ed9795e-0975-48aa-bb0f-4d495b6ed849" name="Changes" comment="Добавил скролл в топ панель, работает годно">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle.kts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/ru/kazantsev/nsmp/sdk/intellij_plugin/ui/Icons.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/ru/kazantsev/nsmp/sdk/intellij_plugin/ui/Icons.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/ru/kazantsev/nsmp/sdk/intellij_plugin/ui/editor_listener/FileEditorManagerListener.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/ru/kazantsev/nsmp/sdk/intellij_plugin/ui/editor_listener/FileEditorManagerListener.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/kotlin/ru/kazantsev/nsmp/sdk/intellij_plugin/ui/editor_listener/ScrollableTopPanelContent.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/ru/kazantsev/nsmp/sdk/intellij_plugin/ui/editor_listener/ScrollableTopPanelContent.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/ru/kazantsev/nsmp/sdk/intellij_plugin/ui/editor_listener/buttons/AbstractButton.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/ru/kazantsev/nsmp/sdk/intellij_plugin/ui/editor_listener/buttons/AbstractButton.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/ru/kazantsev/nsmp/sdk/intellij_plugin/ui/editor_listener/buttons/FileExecuteButton.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/ru/kazantsev/nsmp/sdk/intellij_plugin/ui/editor_listener/buttons/FileExecuteButton.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/icons/nsmp_logo_colored.svg" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/icons/nsmp_logo_colored.svg" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -14,7 +20,7 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="EmbeddingIndexingInfo">
-    <option name="cachedIndexableFilesCount" value="115" />
+    <option name="cachedIndexableFilesCount" value="118" />
   </component>
   <component name="ExternalProjectsData">
     <projectState path="$PROJECT_DIR$">
@@ -43,7 +49,7 @@
                 <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
                 <item name="intellij_plugin" type="f1a62948:ProjectNode" />
                 <item name="Tasks" type="e4a08cd1:TasksNode" />
-                <item name="build" type="c8890929:TasksNode$1" />
+                <item name="intellij platform" type="c8890929:TasksNode$1" />
               </path>
             </expand>
             <select />
@@ -161,7 +167,7 @@
       <recent name="ru.kazantsev.nsmp.sdk.intellij_plugin.ui.tool_window.request_dialog.components" />
     </key>
   </component>
-  <component name="RunManager" selected="Gradle.Run IDE with Plugin">
+  <component name="RunManager" selected="Gradle.nsmp_sdk_intellij_plugin [buildPlugin]">
     <configuration default="true" type="JetRunConfigurationType">
       <module name="nsd-intellij-plugin" />
       <method v="2">
@@ -342,9 +348,9 @@
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Gradle.nsmp_sdk_intellij_plugin [buildPlugin]" />
         <item itemvalue="Gradle.nsd-plugin [clean]" />
         <item itemvalue="Gradle.nsd-plugin [build]" />
-        <item itemvalue="Gradle.nsmp_sdk_intellij_plugin [buildPlugin]" />
       </list>
     </recent_temporary>
   </component>
@@ -402,7 +408,8 @@
       <workItem from="1776670055978" duration="12714000" />
       <workItem from="1776755211516" duration="24520000" />
       <workItem from="1776787193772" duration="16000" />
-      <workItem from="1776787257541" duration="21109000" />
+      <workItem from="1776787257541" duration="24190000" />
+      <workItem from="1776842802611" duration="5336000" />
     </task>
     <task id="LOCAL-00001" summary="1">
       <option name="closed" value="true" />
@@ -492,7 +499,15 @@
       <option name="project" value="LOCAL" />
       <updated>1776808300124</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="Добавил скролл в топ панель, работает годно">
+      <option name="closed" value="true" />
+      <created>1776808531041</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1776808531041</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

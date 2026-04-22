@@ -81,17 +81,38 @@ class FileEditorManagerListener(private val project: Project) : FileEditorManage
             border = JBUI.Borders.empty()
             horizontalScrollBar.preferredSize = Dimension(
                 horizontalScrollBar.preferredSize.width,
-                SCROLLBAR_HEIGHT
+                JBUI.scale(SCROLLBAR_HEIGHT)
             )
-            //horizontalScrollBar.unitIncrement = HORIZONTAL_SCROLL_INCREMENT
-            //val topPanelHeight = topPanel.preferredSize.height + SCROLLBAR_HEIGHT
-            //preferredSize = Dimension(topPanel.preferredSize.width, topPanelHeight)
-            //minimumSize = Dimension(0, topPanelHeight)
+            addMouseWheelListener { event ->
+                val maxValue = horizontalScrollBar.maximum - horizontalScrollBar.visibleAmount
+                val nextValue = horizontalScrollBar.value + event.unitsToScroll * JBUI.scale(HORIZONTAL_SCROLL_INCREMENT)
+                horizontalScrollBar.value = nextValue.coerceIn(horizontalScrollBar.minimum, maxValue)
+                event.consume()
+            }
+            fun updateHeight() {
+                val overflow = topPanel.preferredSize.width > viewport.extentSize.width
+                val height = JBUI.scale(TOOLBAR_HEIGHT) + if (overflow) JBUI.scale(SCROLLBAR_HEIGHT) else 0
+                preferredSize = Dimension(0, height)
+                minimumSize = Dimension(0, height)
+                horizontalScrollBarPolicy = if (overflow) ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS
+                else ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER
+                revalidate()
+                repaint()
+            }
+            horizontalScrollBar.model.addChangeListener {
+                updateHeight()
+            }
+            viewport.addChangeListener {
+                updateHeight()
+            }
+            updateHeight()
         }
     }
 
-    private companion object {
+    companion object {
+        private const val HORIZONTAL_SCROLL_INCREMENT = 24
         private const val SCROLLBAR_HEIGHT = 6
+        private const val TOOLBAR_HEIGHT = 33
         private val TOP_PANEL_KEY = Key.create<JComponent>("nsmp.sdk.groovy.sync.top.panel")
         private val TOP_PANEL_FILE_URL_KEY = Key.create<String>("nsmp.sdk.groovy.sync.top.panel.file.url")
     }
