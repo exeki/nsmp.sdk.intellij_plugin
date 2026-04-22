@@ -135,7 +135,7 @@ class FileEditorManagerListener(private val project: Project) : FileEditorManage
     }
 
     private fun createTopPanel(file: VirtualFile): JComponent {
-        val topPanel = ScrollableTopPanelContent(file, project)
+        val topPanel = TopPanelContent(file, project)
 
         return JBScrollPane(
             topPanel,
@@ -145,8 +145,7 @@ class FileEditorManagerListener(private val project: Project) : FileEditorManage
             isOpaque = false
             viewport.isOpaque = false
             border = JBUI.Borders.empty()
-            preferredSize = Dimension(0, JBUI.scale(TOOLBAR_HEIGHT))
-            minimumSize = Dimension(0, JBUI.scale(TOOLBAR_HEIGHT))
+            preferredSize = Dimension(0, JBUI.scale(SCROLL_PANEL_HEIGHT + SCROLLBAR_HEIGHT))
             horizontalScrollBar.preferredSize = Dimension(
                 horizontalScrollBar.preferredSize.width,
                 JBUI.scale(SCROLLBAR_HEIGHT)
@@ -157,30 +156,13 @@ class FileEditorManagerListener(private val project: Project) : FileEditorManage
                 horizontalScrollBar.value = nextValue.coerceIn(horizontalScrollBar.minimum, maxValue)
                 event.consume()
             }
-            fun updateHeight() {
-                val overflow = topPanel.preferredSize.width > viewport.extentSize.width
-                val height = JBUI.scale(TOOLBAR_HEIGHT) + if (overflow) JBUI.scale(SCROLLBAR_HEIGHT) else 0
-                preferredSize = Dimension(0, height)
-                minimumSize = Dimension(0, height)
-                horizontalScrollBarPolicy = if (overflow) ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS
-                else ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER
-                revalidate()
-                repaint()
-            }
-            updateHeight()
-            horizontalScrollBar.model.addChangeListener {
-                updateHeight()
-            }
-            viewport.addChangeListener {
-                updateHeight()
-            }
         }
     }
 
     companion object {
+        private const val SCROLL_PANEL_HEIGHT = 30
         private const val HORIZONTAL_SCROLL_INCREMENT = 24
         private const val SCROLLBAR_HEIGHT = 6
-        private const val TOOLBAR_HEIGHT = 33
         private val TOP_PANEL_KEY = Key.create<JComponent>("nsmp.sdk.groovy.sync.top.panel")
         private val TOP_PANEL_FILE_URL_KEY = Key.create<String>("nsmp.sdk.groovy.sync.top.panel.file.url")
     }

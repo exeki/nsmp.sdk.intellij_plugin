@@ -65,9 +65,9 @@ class FileExecuteButton(
         maximumSize = preferredSize
         text = projectSettingsService.getExecutionContext(file.nameWithoutExtension).orEmpty()
         textField.document.addDocumentListener(object : DocumentListener {
-            override fun insertUpdate(e: DocumentEvent) = projectSettingsService.setExecutionContext(text)
-            override fun removeUpdate(e: DocumentEvent) = projectSettingsService.setExecutionContext(text)
-            override fun changedUpdate(e: DocumentEvent) = projectSettingsService.setExecutionContext(text)
+            override fun insertUpdate(e: DocumentEvent) = saveContext()
+            override fun removeUpdate(e: DocumentEvent) = saveContext()
+            override fun changedUpdate(e: DocumentEvent) = saveContext()
         })
         addActionListener {
             val root = srcRoot()
@@ -146,6 +146,10 @@ class FileExecuteButton(
 
     private fun htmlTooltip(text: String): String {
         return "<html><body width='420'>$text</body></html>"
+    }
+
+    private fun saveContext() {
+        projectSettingsService.setExecutionContext(file.nameWithoutExtension, contextField.text)
     }
 
     private companion object {
