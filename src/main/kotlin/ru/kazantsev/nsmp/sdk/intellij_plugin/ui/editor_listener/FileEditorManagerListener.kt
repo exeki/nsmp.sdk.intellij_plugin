@@ -135,7 +135,7 @@ class FileEditorManagerListener(private val project: Project) : FileEditorManage
     }
 
     private fun createTopPanel(file: VirtualFile): JComponent {
-        val topPanel = TopPanelContent(file, project)
+        val topPanel = TopPanelContentRoot(file, project)
 
         return JBScrollPane(
             topPanel,

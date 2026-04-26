@@ -4,26 +4,37 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0ed9795e-0975-48aa-bb0f-4d495b6ed849" name="Changes" comment="Работаю со сворачиванием панели.">
+    <list default="true" id="0ed9795e-0975-48aa-bb0f-4d495b6ed849" name="Changes" comment="Повышена версия src sync">
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/ru/kazantsev/nsmp/sdk/intellij_plugin/actions/file/AbstractFileAction.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/ru/kazantsev/nsmp/sdk/intellij_plugin/actions/file/AbstractGroovyFileAction.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/ru/kazantsev/nsmp/sdk/intellij_plugin/actions/file/AbstractSrcFileAction.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/ru/kazantsev/nsmp/sdk/intellij_plugin/actions/file/FileExecuteAction.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/ru/kazantsev/nsmp/sdk/intellij_plugin/actions/file/FileOpenInBrowserAction.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/ru/kazantsev/nsmp/sdk/intellij_plugin/actions/file/FilePullAction.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/ru/kazantsev/nsmp/sdk/intellij_plugin/actions/file/FilePushAction.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/ru/kazantsev/nsmp/sdk/intellij_plugin/actions/file/FileSyncCheckAction.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/ru/kazantsev/nsmp/sdk/intellij_plugin/ui/editor_listener/buttons/old/AbstractButton.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/ru/kazantsev/nsmp/sdk/intellij_plugin/ui/editor_listener/buttons/old/FileExecuteButton.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/ru/kazantsev/nsmp/sdk/intellij_plugin/ui/editor_listener/buttons/old/FileOpenInBrowserButton.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/ru/kazantsev/nsmp/sdk/intellij_plugin/ui/editor_listener/buttons/old/FilePullButton.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/ru/kazantsev/nsmp/sdk/intellij_plugin/ui/editor_listener/buttons/old/FilePushButton.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/ru/kazantsev/nsmp/sdk/intellij_plugin/ui/editor_listener/buttons/old/FileSyncCheckButton.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/ru/kazantsev/nsmp/sdk/intellij_plugin/ui/editor_listener/panels/AbstractPanelContent.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/ru/kazantsev/nsmp/sdk/intellij_plugin/ui/editor_listener/panels/CollapsedPanelContent.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/ru/kazantsev/nsmp/sdk/intellij_plugin/ui/editor_listener/panels/PanelContent.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/ru/kazantsev/nsmp/sdk/intellij_plugin/ui/editor_listener/subcomponents/FileExecuteCollapsedContent.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/ru/kazantsev/nsmp/sdk/intellij_plugin/ui/editor_listener/subcomponents/FileExecuteContextField.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/ru/kazantsev/nsmp/sdk/intellij_plugin/ui/editor_listener/subcomponents/FileExecuteContextHelp.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/ru/kazantsev/nsmp/sdk/intellij_plugin/ui/editor_listener/subcomponents/FileExecuteContextTitle.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.intellijPlatform/self-update.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.intellijPlatform/self-update.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle.kts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/ru/kazantsev/nsmp/sdk/intellij_plugin/services/settings/ProjectSettingsService.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/ru/kazantsev/nsmp/sdk/intellij_plugin/services/settings/ProjectSettingsService.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/ru/kazantsev/nsmp/sdk/intellij_plugin/services/sync/SrcType.kt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/ru/kazantsev/nsmp/sdk/intellij_plugin/services/sync/SyncService.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/ru/kazantsev/nsmp/sdk/intellij_plugin/services/sync/SyncService.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/ru/kazantsev/nsmp/sdk/intellij_plugin/services/sync/SyncUIAdapter.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/ru/kazantsev/nsmp/sdk/intellij_plugin/services/sync/SyncUIAdapter.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/ru/kazantsev/nsmp/sdk/intellij_plugin/ui/editor_listener/TopPanelContent.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/ru/kazantsev/nsmp/sdk/intellij_plugin/ui/editor_listener/TopPanelContent.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/ru/kazantsev/nsmp/sdk/intellij_plugin/ui/editor_listener/FileEditorManagerListener.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/ru/kazantsev/nsmp/sdk/intellij_plugin/ui/editor_listener/FileEditorManagerListener.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/ru/kazantsev/nsmp/sdk/intellij_plugin/ui/editor_listener/TopPanelContent.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/ru/kazantsev/nsmp/sdk/intellij_plugin/ui/editor_listener/TopPanelContentRoot.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/ru/kazantsev/nsmp/sdk/intellij_plugin/ui/editor_listener/buttons/AbstractButton.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/ru/kazantsev/nsmp/sdk/intellij_plugin/ui/editor_listener/buttons/AbstractButton.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/ru/kazantsev/nsmp/sdk/intellij_plugin/ui/editor_listener/buttons/FileExecuteButton.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/ru/kazantsev/nsmp/sdk/intellij_plugin/ui/editor_listener/buttons/FileExecuteButton.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/kotlin/ru/kazantsev/nsmp/sdk/intellij_plugin/ui/editor_listener/buttons/FileOpenInBrowserButton.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/ru/kazantsev/nsmp/sdk/intellij_plugin/ui/editor_listener/buttons/FileOpenInBrowserButton.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/kotlin/ru/kazantsev/nsmp/sdk/intellij_plugin/ui/editor_listener/buttons/FilePullButton.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/ru/kazantsev/nsmp/sdk/intellij_plugin/ui/editor_listener/buttons/FilePullButton.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/kotlin/ru/kazantsev/nsmp/sdk/intellij_plugin/ui/editor_listener/buttons/FilePushButton.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/ru/kazantsev/nsmp/sdk/intellij_plugin/ui/editor_listener/buttons/FilePushButton.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/kotlin/ru/kazantsev/nsmp/sdk/intellij_plugin/ui/editor_listener/buttons/FileSyncCheckButton.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/ru/kazantsev/nsmp/sdk/intellij_plugin/ui/editor_listener/buttons/FileSyncCheckButton.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/ru/kazantsev/nsmp/sdk/intellij_plugin/ui/tool_window/buttons/PullButton.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/ru/kazantsev/nsmp/sdk/intellij_plugin/ui/tool_window/buttons/PullButton.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/ru/kazantsev/nsmp/sdk/intellij_plugin/ui/tool_window/buttons/PushButton.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/ru/kazantsev/nsmp/sdk/intellij_plugin/ui/tool_window/buttons/PushButton.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/ru/kazantsev/nsmp/sdk/intellij_plugin/ui/tool_window/buttons/SyncCheckButton.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/ru/kazantsev/nsmp/sdk/intellij_plugin/ui/tool_window/buttons/SyncCheckButton.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/ru/kazantsev/nsmp/sdk/intellij_plugin/ui/tool_window/request_dialog/model/SrcRequestSelectState.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/ru/kazantsev/nsmp/sdk/intellij_plugin/ui/tool_window/request_dialog/model/SrcRequestSelectState.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/ru/kazantsev/nsmp/sdk/intellij_plugin/ui/tool_window/request_dialog/options_provider/LocalSrcOptionsProvider.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/ru/kazantsev/nsmp/sdk/intellij_plugin/ui/tool_window/request_dialog/options_provider/LocalSrcOptionsProvider.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/messages/MessageBundle.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/messages/MessageBundle.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/messages/MessageBundle_ru.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/messages/MessageBundle_ru.properties" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -171,17 +182,17 @@
     </key>
     <key name="CopyKotlinDeclarationDialog.RECENTS_KEY">
       <recent name="ru.kazantsev.nsmp.sdk.intellij_plugin.ui.editor_listener.buttons" />
-      <recent name="ru.kazantsev.nsmp.sdk.intellij_plugin.ui.request_dialog.components.buttons" />
-      <recent name="ru.kazantsev.nsmp.sdk.intellij_plugin.services.sync.options.dto" />
-      <recent name="ru.kazantsev.nsmp.sdk.intellij_plugin.services.sync" />
-      <recent name="ru.kazantsev.nsmp.sdk.intellij_plugin.exception" />
+      <recent name="ru.kazantsev.nsmp.sdk.intellij_plugin.actions.file" />
+      <recent name="ru.kazantsev.nsmp.sdk.intellij_plugin.ui.editor_listener.actions" />
+      <recent name="ru.kazantsev.nsmp.sdk.intellij_plugin.ui.editor_listener.panels" />
+      <recent name="ru.kazantsev.nsmp.sdk.intellij_plugin.ui.editor_listener" />
     </key>
     <key name="K2MoveDeclarationsDialog.RECENT_PACKAGE_KEY">
+      <recent name="ru.kazantsev.nsmp.sdk.intellij_plugin.ui.editor_listener.buttons.old" />
+      <recent name="ru.kazantsev.nsmp.sdk.intellij_plugin.actions.file" />
+      <recent name="ru.kazantsev.nsmp.sdk.intellij_plugin.ui.editor_listener.panels" />
       <recent name="ru.kazantsev.nsmp.sdk.intellij_plugin.ui.editor_listener" />
       <recent name="ru.kazantsev.nsmp.sdk.intellij_plugin.services" />
-      <recent name="ru.kazantsev.nsmp.sdk.intellij_plugin.ui" />
-      <recent name="ru.kazantsev.nsmp.sdk.intellij_plugin.ui.settings" />
-      <recent name="ru.kazantsev.nsmp.sdk.intellij_plugin.ui.tool_window.request_dialog.components" />
     </key>
   </component>
   <component name="RunManager" selected="Gradle.Run IDE with Plugin">
@@ -434,7 +445,7 @@
       <workItem from="1777073047524" duration="63000" />
       <workItem from="1777100973807" duration="5689000" />
       <workItem from="1777161517493" duration="11000" />
-      <workItem from="1777192849515" duration="3964000" />
+      <workItem from="1777192849515" duration="29769000" />
     </task>
     <task id="LOCAL-00001" summary="1">
       <option name="closed" value="true" />
@@ -564,7 +575,15 @@
       <option name="project" value="LOCAL" />
       <updated>1776894931947</updated>
     </task>
-    <option name="localTasksCounter" value="17" />
+    <task id="LOCAL-00017" summary="Повышена версия src sync">
+      <option name="closed" value="true" />
+      <created>1777198458163</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1777198458163</updated>
+    </task>
+    <option name="localTasksCounter" value="18" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -586,7 +605,8 @@
     <MESSAGE value="Что то начало работать. Частично." />
     <MESSAGE value="Добавил скролл в топ панель, работает годно" />
     <MESSAGE value="Работаю со сворачиванием панели." />
-    <option name="LAST_COMMIT_MESSAGE" value="Работаю со сворачиванием панели." />
+    <MESSAGE value="Повышена версия src sync" />
+    <option name="LAST_COMMIT_MESSAGE" value="Повышена версия src sync" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

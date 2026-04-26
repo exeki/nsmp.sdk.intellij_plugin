@@ -1,7 +1,5 @@
 package ru.kazantsev.nsmp.sdk.intellij_plugin.ui.editor_listener
 
-import com.intellij.openapi.actionSystem.ActionManager
-import com.intellij.openapi.actionSystem.DefaultActionGroup
 import com.intellij.openapi.components.service
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.vfs.VirtualFile
@@ -9,78 +7,54 @@ import com.intellij.util.ui.JBUI
 import ru.kazantsev.nsmp.sdk.intellij_plugin.services.settings.ProjectSettingsService
 import ru.kazantsev.nsmp.sdk.intellij_plugin.ui.MessageBundle
 import ru.kazantsev.nsmp.sdk.intellij_plugin.ui.editor_listener.buttons.*
+import ru.kazantsev.nsmp.sdk.intellij_plugin.ui.editor_listener.panels.CollapsedPanelContent
+import ru.kazantsev.nsmp.sdk.intellij_plugin.ui.editor_listener.panels.PanelContent
+import ru.kazantsev.nsmp.sdk.intellij_plugin.ui.editor_listener.subcomponents.FileExecuteCollapsedContent
+import ru.kazantsev.nsmp.sdk.intellij_plugin.ui.editor_listener.subcomponents.FileExecuteContextField
+import ru.kazantsev.nsmp.sdk.intellij_plugin.ui.editor_listener.subcomponents.FileExecuteContextTitle
+import ru.kazantsev.nsmp.sdk.sources_sync.data.src.SrcFormat
 import java.awt.BorderLayout
 import java.awt.Component
 import java.awt.Dimension
 import java.awt.Rectangle
+import javax.swing.Box
 import javax.swing.BoxLayout
 import javax.swing.JComponent
-import javax.swing.JLabel
 import javax.swing.JPanel
 import javax.swing.Scrollable
-import javax.swing.SwingConstants
 
-class TopPanelContent(
+class TopPanelContentRoot(
     private val file: VirtualFile,
-    private val project: Project
+    private val project: Project,
 ) : JPanel(BorderLayout()), Scrollable {
 
     private companion object {
         private const val HORIZONTAL_SCROLL_INCREMENT = 24
+        private const val PANEL_HEIGHT = 35
         private const val PANEL_VERTICAL_GAP = 4
         private const val PANEL_SIDE_GAP = 8
-        private const val COLLAPSED_CONTEXT_GAP = 8
-        private const val ACTION_PLACE = "NSMP.EditorTopPanel"
-        private const val TOOLBAR_HEIGHT = 20
     }
 
-    val buttons = listOf(
-        FileExecuteButton(file, project),
-        FileOpenInBrowserButton(file, project),
-        FilePullButton(file, project),
-        FileSyncCheckButton(file, project),
-        FilePushButton(file, project)
-    )
-
-    val actionGroup = DefaultActionGroup().apply {
-        buttons.filter { it.compatibleWithFile() }
-            .forEachIndexed { index, button ->
-                if (index > 0) addSeparator()
-                add(button)
-            }
-    }
-
-    val toolbar = ActionManager.getInstance()
-        .createActionToolbar(ACTION_PLACE, actionGroup, true)
-        .apply {
-            targetComponent = this@TopPanelContent
-            setMiniMode(true)
-            minimumButtonSize = JBUI.size(30, TOOLBAR_HEIGHT)
-        }.component.apply {
-            isOpaque = false
-        }
-
-
-    private val projectSettingsService: ProjectSettingsService
-        get() = project.service<ProjectSettingsService>()
+    private val projectSettingsService=  project.service<ProjectSettingsService>()
 
     private var collapsed = projectSettingsService.isTopPanelCollapsed()
 
     private val logo = TopPanelLogo(::toggleCollapsed)
-    private val collapsedContextLabel = JLabel().apply {
-        isOpaque = false
-        verticalAlignment = SwingConstants.CENTER
-        border = JBUI.Borders.emptyLeft(COLLAPSED_CONTEXT_GAP)
-    }
+
+    private val contentPanel = PanelContent(project, file)
+
+    private val collapsedPanel = CollapsedPanelContent(project, file)
 
     init {
         layout = BoxLayout(this, BoxLayout.X_AXIS)
         border = JBUI.Borders.empty(PANEL_VERTICAL_GAP, PANEL_SIDE_GAP)
         isOpaque = false
         alignmentY = CENTER_ALIGNMENT
+        preferredSize.height = JBUI.scale(PANEL_HEIGHT)
         add(logo)
-        add(collapsedContextLabel)
-        add(toolbar)
+        contentPanel
+        add(contentPanel)
+        add(collapsedPanel)
         applyCollapsedState()
     }
 
@@ -96,19 +70,10 @@ class TopPanelContent(
     }
 
     private fun applyCollapsedState() {
-        toolbar.isVisible = !collapsed
-        updateCollapsedContextLabel()
+        contentPanel.isVisible = !collapsed
+        collapsedPanel.isVisible = collapsed
         revalidate()
         repaint()
-    }
-
-    private fun updateCollapsedContextLabel() {
-        val context = projectSettingsService.getExecutionContext(file.nameWithoutExtension)
-        collapsedContextLabel.isVisible = collapsed && !context.isNullOrBlank()
-        collapsedContextLabel.text = context
-            ?.takeIf { it.isNotBlank() }
-            ?.let { MessageBundle.message("sync.command.execute.context.title", it) }
-            .orEmpty()
     }
 
     override fun getPreferredScrollableViewportSize(): Dimension = preferredSize
