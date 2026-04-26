@@ -1,6 +1,6 @@
 package ru.kazantsev.nsmp.sdk.intellij_plugin.ui.tool_window.request_dialog.model
 
-import ru.kazantsev.nsmp.sdk.sources_sync.dto.SrcRequest
+import ru.kazantsev.nsmp.sdk.sources_sync.data.src.request.SrcRequest
 
 /**
  * Модель последней сохраненной формы
@@ -22,17 +22,17 @@ class SrcRequestSelectState {
 
     fun getRequest() : SrcRequest {
         return SrcRequest(
-            modules = modules.map { it.code },
+            modules = modules.map { it.code }.toSet(),
             allModules = allModules,
-            modulesExcluded = modulesExcluded.map { it.code },
+            modulesExcluded = modulesExcluded.map { it.code }.toSet(),
 
-            scripts = scripts.map { it.code },
+            scripts = scripts.map { it.code }.toSet(),
             allScripts = allScripts,
-            scriptsExcluded = scriptsExcluded.map { it.code },
+            scriptsExcluded = scriptsExcluded.map { it.code }.toSet(),
 
-            advImports = advImports.map { it.code },
-            advImportsExcluded = advImportsExcluded.map { it.code },
+            advImports = advImports.map { it.code }.toSet(),
             allAdvImports = allAdvImports,
+            advImportsExcluded = advImportsExcluded.map { it.code }.toSet(),
         )
     }
 }

@@ -7,8 +7,8 @@ import com.intellij.openapi.project.Project
 import com.intellij.openapi.vfs.VirtualFile
 import ru.kazantsev.nsmp.sdk.intellij_plugin.ui.MessageBundle
 import ru.kazantsev.nsmp.sdk.intellij_plugin.services.settings.ProjectSettingsService
-import ru.kazantsev.nsmp.sdk.intellij_plugin.services.sync.SrcType
 import ru.kazantsev.nsmp.sdk.intellij_plugin.services.sync.SyncService
+import ru.kazantsev.nsmp.sdk.sources_sync.data.src.SrcType
 
 class FileOpenInBrowserButton(
     file: VirtualFile,

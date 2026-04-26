@@ -14,9 +14,11 @@ import java.awt.Component
 import java.awt.Dimension
 import java.awt.Rectangle
 import javax.swing.BoxLayout
+import javax.swing.JComponent
 import javax.swing.JLabel
 import javax.swing.JPanel
 import javax.swing.Scrollable
+import javax.swing.SwingConstants
 
 class TopPanelContent(
     private val file: VirtualFile,
@@ -53,12 +55,11 @@ class TopPanelContent(
         .apply {
             targetComponent = this@TopPanelContent
             setMiniMode(true)
-            alignmentY = CENTER_ALIGNMENT
-            minimumButtonSize = JBUI.size(48, TOOLBAR_HEIGHT)
+            minimumButtonSize = JBUI.size(30, TOOLBAR_HEIGHT)
         }.component.apply {
-            alignmentY = CENTER_ALIGNMENT
             isOpaque = false
         }
+
 
     private val projectSettingsService: ProjectSettingsService
         get() = project.service<ProjectSettingsService>()
@@ -68,6 +69,7 @@ class TopPanelContent(
     private val logo = TopPanelLogo(::toggleCollapsed)
     private val collapsedContextLabel = JLabel().apply {
         isOpaque = false
+        verticalAlignment = SwingConstants.CENTER
         border = JBUI.Borders.emptyLeft(COLLAPSED_CONTEXT_GAP)
     }
 
@@ -80,6 +82,11 @@ class TopPanelContent(
         add(collapsedContextLabel)
         add(toolbar)
         applyCollapsedState()
+    }
+
+    override fun add(comp: Component): Component? {
+        if (comp is JComponent) comp.alignmentY = CENTER_ALIGNMENT
+        return super.add(comp)
     }
 
     private fun toggleCollapsed() {

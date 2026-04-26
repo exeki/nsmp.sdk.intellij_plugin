@@ -7,7 +7,10 @@ import ru.kazantsev.nsmp.sdk.intellij_plugin.services.settings.ProjectSettingsSe
 import ru.kazantsev.nsmp.sdk.intellij_plugin.ui.tool_window.request_dialog.model.SrcRequestSelectState
 import ru.kazantsev.nsmp.sdk.intellij_plugin.ui.tool_window.request_dialog.options_provider.LocalSrcOptionsProvider
 import ru.kazantsev.nsmp.sdk.intellij_plugin.ui.tool_window.request_dialog.options_provider.SrcOptionsProvider
-import ru.kazantsev.nsmp.sdk.sources_sync.dto.SrcInfoRoot
+import ru.kazantsev.nsmp.sdk.sources_sync.data.src.SrcSetRoot
+import ru.kazantsev.nsmp.sdk.sources_sync.data.src.local.LocalFileInfo
+import ru.kazantsev.nsmp.sdk.sources_sync.data.src.pair.SrcSyncCheckPair
+import ru.kazantsev.nsmp.sdk.sources_sync.data.src.remote.RemoteInfo
 
 class SyncCheckButton(
     project: Project
@@ -23,7 +26,7 @@ class SyncCheckButton(
         get() = { state: SrcRequestSelectState ->
             syncUIAdapter.syncCheck(
                 request = state.getRequest(),
-                onSuccessCallback = { value: SrcInfoRoot ->
+                onSuccessCallback = { value: SrcSetRoot<SrcSyncCheckPair<LocalFileInfo, RemoteInfo>> ->
                     if (value.isEmpty()) {
                         balloonNotificationService.showInfo(
                             title = MessageBundle.message("sync.command.sync.check.title"),

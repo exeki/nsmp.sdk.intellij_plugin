@@ -1,6 +1,5 @@
 package ru.kazantsev.nsmp.sdk.intellij_plugin.services.settings
 
-import com.fasterxml.jackson.databind.ObjectMapper
 import com.intellij.openapi.application.ApplicationManager
 import com.intellij.openapi.components.*
 import com.intellij.openapi.project.Project
@@ -59,7 +58,6 @@ class ProjectSettingsService(private val project: Project) : PersistentStateComp
         get() {
             return SrcSyncService(
                 connectorParams,
-                ObjectMapper(),
                 srcFoldersParams
             )
         }

@@ -4,8 +4,7 @@ import com.intellij.openapi.actionSystem.AnActionEvent
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.vfs.VirtualFile
 import ru.kazantsev.nsmp.sdk.intellij_plugin.ui.MessageBundle
-import ru.kazantsev.nsmp.sdk.intellij_plugin.services.sync.SrcType
-import kotlin.collections.contains
+import ru.kazantsev.nsmp.sdk.sources_sync.data.src.SrcType
 
 class FileSyncCheckButton(
     file: VirtualFile,

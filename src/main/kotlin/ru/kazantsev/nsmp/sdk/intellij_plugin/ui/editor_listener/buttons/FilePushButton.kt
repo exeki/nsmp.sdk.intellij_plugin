@@ -1,19 +1,17 @@
 package ru.kazantsev.nsmp.sdk.intellij_plugin.ui.editor_listener.buttons
 
 import com.intellij.openapi.actionSystem.AnActionEvent
-import com.intellij.openapi.actionSystem.Presentation
+import com.intellij.openapi.ui.DialogWrapper
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.vfs.VirtualFile
-import com.intellij.util.ui.JBUI
+import com.intellij.ui.components.JBCheckBox
+import com.intellij.ui.components.JBLabel
 import ru.kazantsev.nsmp.sdk.intellij_plugin.ui.MessageBundle
-import ru.kazantsev.nsmp.sdk.intellij_plugin.services.sync.SrcType
-import ru.kazantsev.nsmp.sdk.sources_sync.exception.SyncCheckFailedException
-import java.awt.Component
-import javax.swing.BoxLayout
-import javax.swing.JCheckBox
+import ru.kazantsev.nsmp.sdk.sources_sync.data.src.SrcType
+import ru.kazantsev.nsmp.sdk.sources_sync.exception.commands.PushSyncCheckFailedException
+import java.awt.BorderLayout
 import javax.swing.JComponent
 import javax.swing.JPanel
-import kotlin.collections.contains
 
 class FilePushButton(
     file: VirtualFile,
@@ -28,29 +26,13 @@ class FilePushButton(
         return syncUIAdapter.getSrcType(file) in listOf(SrcType.SCRIPT, SrcType.MODULE, SrcType.ADV_IMPORT)
     }
 
-    private var forceCheckBox: JCheckBox = JCheckBox(MessageBundle.message("sync.dialog.force")).also {
-        it.alignmentY = Component.CENTER_ALIGNMENT
-        it.isOpaque = false
-        it.border = JBUI.Borders.empty()
-        it.margin = JBUI.emptyInsets()
-    }
-
-    override fun createCustomComponent(presentation: Presentation, place: String): JComponent {
-        val pushButton = createButtonComponent(presentation, place)
-        return JPanel().apply {
-            layout = BoxLayout(this, BoxLayout.X_AXIS)
-            isOpaque = false
-            alignmentY = Component.CENTER_ALIGNMENT
-            pushButton.alignmentY = Component.CENTER_ALIGNMENT
-            add(pushButton)
-            add(forceCheckBox)
-        }
-    }
-
     override fun actionPerformed(event: AnActionEvent) {
+        val confirmationDialog = PushConfirmationDialog(project)
+        if (!confirmationDialog.showAndGet()) return
+
         syncUIAdapter.push(
             file = file,
-            force = forceCheckBox.isSelected,
+            force = confirmationDialog.force,
             onSuccessCallback = {
                 balloonNotificationService.showInfo(
                     MessageBundle.message("sync.command.push.file.notification.title"),
@@ -58,7 +40,7 @@ class FilePushButton(
                 )
             },
             onFailureCallback = { error ->
-                if (error is SyncCheckFailedException) dialogNotificationService.showError(
+                if (error is PushSyncCheckFailedException) dialogNotificationService.showError(
                     title = MessageBundle.message("sync.command.push.file.notification.title"),
                     message = MessageBundle.message("sync.command.push.sync.check.failed")
                 )
@@ -69,6 +51,24 @@ class FilePushButton(
                 )
             }
         )
-        forceCheckBox.isSelected = false
+    }
+
+    private class PushConfirmationDialog(project: Project) : DialogWrapper(project) {
+        private val forceCheckBox = JBCheckBox(MessageBundle.message("sync.dialog.force"))
+
+        val force: Boolean
+            get() = forceCheckBox.isSelected
+
+        init {
+            title = MessageBundle.message("sync.command.push.file.confirmation.title")
+            init()
+        }
+
+        override fun createCenterPanel(): JComponent {
+            return JPanel(BorderLayout(0, 8)).apply {
+                add(JBLabel(MessageBundle.message("sync.command.push.file.confirmation.question")), BorderLayout.NORTH)
+                add(forceCheckBox, BorderLayout.CENTER)
+            }
+        }
     }
 }

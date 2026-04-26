@@ -7,7 +7,8 @@ import ru.kazantsev.nsmp.sdk.intellij_plugin.services.sync.options.SrcOptionsSer
 import ru.kazantsev.nsmp.sdk.intellij_plugin.ui.tool_window.request_dialog.model.SrcRequestSelectState
 import ru.kazantsev.nsmp.sdk.intellij_plugin.ui.tool_window.request_dialog.options_provider.RemoteSrcOptionsProvider
 import ru.kazantsev.nsmp.sdk.intellij_plugin.ui.tool_window.request_dialog.options_provider.SrcOptionsProvider
-import ru.kazantsev.nsmp.sdk.sources_sync.dto.SrcDtoRoot
+import ru.kazantsev.nsmp.sdk.sources_sync.data.src.SrcSetRoot
+import ru.kazantsev.nsmp.sdk.sources_sync.data.src.local.LocalFileInfo
 
 class PullButton(
     project: Project
@@ -23,7 +24,7 @@ class PullButton(
         get() = { state: SrcRequestSelectState ->
             syncUIAdapter.pull(
                 request = state.getRequest(),
-                onSuccessCallback = { value: SrcDtoRoot ->
+                onSuccessCallback = { value: SrcSetRoot<LocalFileInfo> ->
                     balloonNotificationService.showInfo(
                         title = MessageBundle.message("sync.command.pull.title"),
                         message = MessageBundle.message(

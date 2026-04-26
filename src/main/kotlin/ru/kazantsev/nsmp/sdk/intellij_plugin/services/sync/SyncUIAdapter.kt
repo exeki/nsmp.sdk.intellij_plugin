@@ -12,9 +12,13 @@ import com.intellij.openapi.project.Project
 import com.intellij.openapi.vfs.VirtualFile
 import com.intellij.openapi.vfs.VirtualFileManager
 import ru.kazantsev.nsmp.sdk.intellij_plugin.ui.MessageBundle
-import ru.kazantsev.nsmp.sdk.sources_sync.dto.SrcDtoRoot
-import ru.kazantsev.nsmp.sdk.sources_sync.dto.SrcInfoRoot
-import ru.kazantsev.nsmp.sdk.sources_sync.dto.SrcRequest
+import ru.kazantsev.nsmp.sdk.sources_sync.data.src.SrcSetRoot
+import ru.kazantsev.nsmp.sdk.sources_sync.data.src.SrcType
+import ru.kazantsev.nsmp.sdk.sources_sync.data.src.local.LocalFileInfo
+import ru.kazantsev.nsmp.sdk.sources_sync.data.src.pair.SrcPair
+import ru.kazantsev.nsmp.sdk.sources_sync.data.src.pair.SrcSyncCheckPair
+import ru.kazantsev.nsmp.sdk.sources_sync.data.src.remote.RemoteInfo
+import ru.kazantsev.nsmp.sdk.sources_sync.data.src.request.SrcRequest
 
 @Service(Service.Level.PROJECT)
 class SyncUIAdapter(private val project: Project) {
@@ -39,7 +43,7 @@ class SyncUIAdapter(private val project: Project) {
 
     fun pull(
         file: VirtualFile,
-        onSuccessCallback: (SrcDtoRoot) -> Unit,
+        onSuccessCallback: (SrcSetRoot<LocalFileInfo>) -> Unit,
         onFailureCallback: (Throwable) -> Unit
     ) {
         val request = service.getSrcRequestForFileElseThrow(file)
@@ -48,7 +52,7 @@ class SyncUIAdapter(private val project: Project) {
 
     fun pull(
         request: SrcRequest,
-        onSuccessCallback: (SrcDtoRoot) -> Unit,
+        onSuccessCallback: (SrcSetRoot<LocalFileInfo>) -> Unit,
         onFailureCallback: (Throwable) -> Unit
     ) {
         val backgroundTaskTitle = MessageBundle.message("sync.command.pull.title")
@@ -70,7 +74,7 @@ class SyncUIAdapter(private val project: Project) {
     fun push(
         file: VirtualFile,
         force: Boolean,
-        onSuccessCallback: (SrcInfoRoot) -> Unit,
+        onSuccessCallback: (SrcSetRoot<SrcPair<LocalFileInfo, RemoteInfo>>) -> Unit,
         onFailureCallback: (Throwable) -> Unit
     ) {
         val request = service.getSrcRequestForFileElseThrow(file)
@@ -80,7 +84,7 @@ class SyncUIAdapter(private val project: Project) {
     fun push(
         request: SrcRequest,
         force: Boolean,
-        onSuccessCallback: (SrcInfoRoot) -> Unit,
+        onSuccessCallback: (SrcSetRoot<SrcPair<LocalFileInfo, RemoteInfo>>) -> Unit,
         onFailureCallback: (Throwable) -> Unit
     ) {
         val backgroundTaskTitle = MessageBundle.message("sync.command.push.title")
@@ -101,7 +105,7 @@ class SyncUIAdapter(private val project: Project) {
 
     fun syncCheck(
         file: VirtualFile,
-        onSuccessCallback: (SrcInfoRoot) -> Unit,
+        onSuccessCallback: (SrcSetRoot<SrcSyncCheckPair<LocalFileInfo, RemoteInfo>>) -> Unit,
         onFailureCallback: (Throwable) -> Unit
     ) {
         val request = service.getSrcRequestForFileElseThrow(file)
@@ -110,7 +114,7 @@ class SyncUIAdapter(private val project: Project) {
 
     fun syncCheck(
         request: SrcRequest,
-        onSuccessCallback: (SrcInfoRoot) -> Unit,
+        onSuccessCallback: (SrcSetRoot<SrcSyncCheckPair<LocalFileInfo, RemoteInfo>>) -> Unit,
         onFailureCallback: (Throwable) -> Unit
     ) {
         val backgroundTaskTitle = MessageBundle.message("sync.command.sync.check.title")

@@ -1,18 +1,21 @@
 package ru.kazantsev.nsmp.sdk.intellij_plugin.services.sync
 
-import com.fasterxml.jackson.databind.ObjectMapper
 import com.intellij.openapi.components.Service
 import com.intellij.openapi.components.service
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.vfs.VirtualFile
-import ru.kazantsev.nsmp.sdk.intellij_plugin.ui.MessageBundle
 import ru.kazantsev.nsmp.sdk.intellij_plugin.exception.SrcSyncUnsupportedType
 import ru.kazantsev.nsmp.sdk.intellij_plugin.exception.UnknownSourceType
 import ru.kazantsev.nsmp.sdk.intellij_plugin.services.settings.ProjectSettingsService
+import ru.kazantsev.nsmp.sdk.intellij_plugin.ui.MessageBundle
 import ru.kazantsev.nsmp.sdk.sources_sync.SrcSyncService
-import ru.kazantsev.nsmp.sdk.sources_sync.dto.SrcDtoRoot
-import ru.kazantsev.nsmp.sdk.sources_sync.dto.SrcInfoRoot
-import ru.kazantsev.nsmp.sdk.sources_sync.dto.SrcRequest
+import ru.kazantsev.nsmp.sdk.sources_sync.data.src.SrcSetRoot
+import ru.kazantsev.nsmp.sdk.sources_sync.data.src.SrcType
+import ru.kazantsev.nsmp.sdk.sources_sync.data.src.local.LocalFileInfo
+import ru.kazantsev.nsmp.sdk.sources_sync.data.src.pair.SrcPair
+import ru.kazantsev.nsmp.sdk.sources_sync.data.src.pair.SrcSyncCheckPair
+import ru.kazantsev.nsmp.sdk.sources_sync.data.src.remote.RemoteInfo
+import ru.kazantsev.nsmp.sdk.sources_sync.data.src.request.SrcRequest
 import java.nio.file.Path
 import java.nio.file.Paths
 
@@ -25,7 +28,6 @@ class SyncService(private val project: Project) {
     private fun createSrcService(): SrcSyncService {
         return SrcSyncService(
             projectSettingsService.connectorParams,
-            ObjectMapper(),
             projectSettingsService.srcFoldersParams
         )
     }
@@ -42,9 +44,9 @@ class SyncService(private val project: Project) {
 
     fun getSrcRequestForFile(file: VirtualFile, type: SrcType): SrcRequest? {
         return when (type) {
-            SrcType.SCRIPT -> SrcRequest(scripts = listOf(resolveSrcCode(file)))
-            SrcType.MODULE -> SrcRequest(modules = listOf(resolveSrcCode(file)))
-            SrcType.ADV_IMPORT -> SrcRequest(advImports = listOf(resolveSrcCode(file)))
+            SrcType.SCRIPT -> SrcRequest(scripts = setOf(resolveSrcCode(file)))
+            SrcType.MODULE -> SrcRequest(modules = setOf(resolveSrcCode(file)))
+            SrcType.ADV_IMPORT -> SrcRequest(advImports = setOf(resolveSrcCode(file)))
         }
     }
 
@@ -72,15 +74,15 @@ class SyncService(private val project: Project) {
         return getSrcType(file) != null || file.extension.equals("groovy", ignoreCase = true)
     }
 
-    fun pull(request: SrcRequest): SrcDtoRoot {
+    fun pull(request: SrcRequest): SrcSetRoot<LocalFileInfo> {
         return createSrcService().pull(request)
     }
 
-    fun syncCheck(request: SrcRequest): SrcInfoRoot {
+    fun syncCheck(request: SrcRequest):  SrcSetRoot<SrcSyncCheckPair<LocalFileInfo, RemoteInfo>> {
         return createSrcService().syncCheck(request)
     }
 
-    fun push(request: SrcRequest, force: Boolean): SrcInfoRoot {
+    fun push(request: SrcRequest, force: Boolean):  SrcSetRoot<SrcPair<LocalFileInfo, RemoteInfo>> {
         return createSrcService().push(request, force)
     }
 
