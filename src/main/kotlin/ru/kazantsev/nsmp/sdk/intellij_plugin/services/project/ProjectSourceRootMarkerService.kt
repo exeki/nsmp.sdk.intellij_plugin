@@ -19,6 +19,7 @@ import org.jetbrains.jps.model.java.JavaSourceRootType
 class ProjectSourceRootMarkerService(
     private val project: Project,
 ) : Disposable {
+    //TODO убрать хардкод путей, перевести на настройки
     init {
         project.messageBus.connect(this).subscribe(
             VirtualFileManager.VFS_CHANGES,

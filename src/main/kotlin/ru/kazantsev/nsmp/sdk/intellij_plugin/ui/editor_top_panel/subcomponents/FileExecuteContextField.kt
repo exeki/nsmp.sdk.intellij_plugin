@@ -1,6 +1,6 @@
 @file:Suppress("FoldInitializerAndIfToElvis")
 
-package ru.kazantsev.nsmp.sdk.intellij_plugin.ui.editor_listener.subcomponents
+package ru.kazantsev.nsmp.sdk.intellij_plugin.ui.editor_top_panel.subcomponents
 
 import com.intellij.openapi.components.service
 import com.intellij.openapi.fileChooser.FileChooser
@@ -24,7 +24,7 @@ class FileExecuteContextField(
 
     private companion object {
         private const val CONTEXT_FIELD_WIDTH = 200
-        private const val CONTEXT_FIELD_HEIGHT = 35
+        private const val CONTEXT_FIELD_HEIGHT = 25
     }
 
     private val projectSettingsService : ProjectSettingsService
@@ -48,7 +48,6 @@ class FileExecuteContextField(
     init {
         isOpaque = false
         background = UIUtil.TRANSPARENT_COLOR
-        border = JBUI.Borders.empty()
         alignmentY = CENTER_ALIGNMENT
         textField.isOpaque = false
         textField.background = UIUtil.TRANSPARENT_COLOR

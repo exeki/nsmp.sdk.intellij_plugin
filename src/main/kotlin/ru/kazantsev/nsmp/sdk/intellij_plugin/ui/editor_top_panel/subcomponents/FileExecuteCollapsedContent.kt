@@ -1,11 +1,11 @@
-package ru.kazantsev.nsmp.sdk.intellij_plugin.ui.editor_listener.subcomponents
+package ru.kazantsev.nsmp.sdk.intellij_plugin.ui.editor_top_panel.subcomponents
 
 import com.intellij.openapi.components.service
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.vfs.VirtualFile
-import com.intellij.util.ui.JBUI
 import ru.kazantsev.nsmp.sdk.intellij_plugin.services.settings.ProjectSettingsService
 import ru.kazantsev.nsmp.sdk.intellij_plugin.ui.MessageBundle
+import java.awt.event.HierarchyEvent
 import javax.swing.JLabel
 
 class FileExecuteCollapsedContent(
@@ -19,17 +19,15 @@ class FileExecuteCollapsedContent(
     init {
         isOpaque = false
         alignmentY = CENTER_ALIGNMENT
-        border = JBUI.Borders.emptyLeft(COLLAPSED_CONTEXT_GAP)
-        addPropertyChangeListener("visible") { event ->
-            val becameVisible = event.newValue as? Boolean ?: return@addPropertyChangeListener
-            if (becameVisible) updateCollapsedContextLabel()
-            revalidate()
-            repaint()
+        addHierarchyListener { e ->
+            if (e.changeFlags and HierarchyEvent.SHOWING_CHANGED.toLong() != 0L) {
+                if (isShowing) {
+                    updateCollapsedContextLabel()
+                    revalidate()
+                    repaint()
+                }
+            }
         }
-    }
-
-    companion object {
-        private const val COLLAPSED_CONTEXT_GAP = 8
     }
 
     private fun updateCollapsedContextLabel() {

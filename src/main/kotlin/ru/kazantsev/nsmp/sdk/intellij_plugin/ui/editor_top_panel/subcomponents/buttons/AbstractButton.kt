@@ -1,4 +1,4 @@
-package ru.kazantsev.nsmp.sdk.intellij_plugin.ui.editor_listener.buttons
+package ru.kazantsev.nsmp.sdk.intellij_plugin.ui.editor_top_panel.subcomponents.buttons
 
 import com.intellij.openapi.actionSystem.Presentation
 import com.intellij.openapi.actionSystem.impl.ActionButtonWithText
@@ -6,7 +6,6 @@ import com.intellij.openapi.project.Project
 import com.intellij.openapi.vfs.VirtualFile
 import com.intellij.util.ui.JBUI
 import ru.kazantsev.nsmp.sdk.intellij_plugin.actions.file.AbstractFileAction
-import javax.swing.JComponent
 
 abstract class AbstractButton(
     protected val project: Project,
@@ -27,14 +26,11 @@ abstract class AbstractButton(
     }
 
     init {
+        maximumSize = minimumSize
         alignmentY = CENTER_ALIGNMENT
     }
 
     fun computableWithFile(): Boolean {
         return action.computableWithFile(project, file)
-    }
-
-    fun addIfComputableWithFile(component: JComponent) {
-        if(computableWithFile()) component.add(this)
     }
 }

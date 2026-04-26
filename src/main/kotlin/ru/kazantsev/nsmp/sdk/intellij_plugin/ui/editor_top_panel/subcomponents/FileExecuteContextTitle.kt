@@ -1,8 +1,7 @@
-package ru.kazantsev.nsmp.sdk.intellij_plugin.ui.editor_listener.subcomponents
+package ru.kazantsev.nsmp.sdk.intellij_plugin.ui.editor_top_panel.subcomponents
 
 import com.intellij.ui.components.JBLabel
 import ru.kazantsev.nsmp.sdk.intellij_plugin.ui.MessageBundle
-import java.awt.Component
 
 class FileExecuteContextTitle : JBLabel(MessageBundle.message("sync.command.execute.context.label")){
     init {

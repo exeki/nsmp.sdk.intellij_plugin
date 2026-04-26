@@ -1,23 +1,23 @@
 @file:Suppress("FoldInitializerAndIfToElvis")
 
-package ru.kazantsev.nsmp.sdk.intellij_plugin.ui.editor_listener.buttons
+package ru.kazantsev.nsmp.sdk.intellij_plugin.ui.editor_top_panel.subcomponents.buttons
 
 import com.intellij.openapi.actionSystem.Presentation
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.vfs.VirtualFile
-import ru.kazantsev.nsmp.sdk.intellij_plugin.actions.file.FilePushAction
+import ru.kazantsev.nsmp.sdk.intellij_plugin.actions.file.FileOpenInBrowserAction
 
-class FilePushButton(
+class FileOpenInBrowserButton(
     project: Project,
     file: VirtualFile,
 ) : AbstractButton(
     file = file,
     project = project,
-    action = FilePushAction(),
+    action = FileOpenInBrowserAction(),
     //TODO перевести на бандл
     presentation = Presentation().apply {
-        text = "Push"
-        description = "Push current file"
+        text = "Open in Browser"
+        description = "Open current file in browser"
         isEnabledAndVisible = true
         icon = null
     }

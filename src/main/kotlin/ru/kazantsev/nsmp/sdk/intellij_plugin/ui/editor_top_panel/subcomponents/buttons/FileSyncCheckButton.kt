@@ -1,23 +1,23 @@
 @file:Suppress("FoldInitializerAndIfToElvis")
 
-package ru.kazantsev.nsmp.sdk.intellij_plugin.ui.editor_listener.buttons
+package ru.kazantsev.nsmp.sdk.intellij_plugin.ui.editor_top_panel.subcomponents.buttons
 
 import com.intellij.openapi.actionSystem.Presentation
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.vfs.VirtualFile
-import ru.kazantsev.nsmp.sdk.intellij_plugin.actions.file.FileOpenInBrowserAction
+import ru.kazantsev.nsmp.sdk.intellij_plugin.actions.file.FileSyncCheckAction
 
-class FileOpenInBrowserButton(
+class FileSyncCheckButton(
     project: Project,
     file: VirtualFile,
 ) : AbstractButton(
     file = file,
     project = project,
-    action = FileOpenInBrowserAction(),
+    action = FileSyncCheckAction(),
     //TODO перевести на бандл
     presentation = Presentation().apply {
-        text = "Open in Browser"
-        description = "Open current file in browser"
+        text = "Sync Check"
+        description = "Sync check current file"
         isEnabledAndVisible = true
         icon = null
     }

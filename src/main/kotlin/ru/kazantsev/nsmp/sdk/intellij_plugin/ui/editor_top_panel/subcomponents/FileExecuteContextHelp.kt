@@ -1,4 +1,4 @@
-package ru.kazantsev.nsmp.sdk.intellij_plugin.ui.editor_listener.subcomponents
+package ru.kazantsev.nsmp.sdk.intellij_plugin.ui.editor_top_panel.subcomponents
 
 import com.intellij.icons.AllIcons
 import ru.kazantsev.nsmp.sdk.intellij_plugin.ui.MessageBundle

@@ -4,7 +4,7 @@
     <name>NSMP SDK</name>
     <vendor email="exeki@yandex.ru">Kazantsev Egor</vendor>
     <description><![CDATA[
-        Плагин поднимает локальный HTTP-сервис и готовит основу для интеграции IntelliJ IDEA с внешними инструментами.
+        TODO TODO TODO TODO TODO TODO TODO TODO.
     ]]></description>
     <depends>com.intellij.modules.platform</depends>
     <depends>com.intellij.modules.java</depends>
@@ -13,6 +13,7 @@
     <extensions defaultExtensionNs="com.intellij">
         <notificationGroup id="NSMP SDK Notifications" displayType="BALLOON" isLogByDefault="true"/>
         <postStartupActivity implementation="ru.kazantsev.nsmp.sdk.intellij_plugin.startup.NsdProjectStartupActivity"/>
+        <postStartupActivity implementation="ru.kazantsev.nsmp.sdk.intellij_plugin.startup.ListenersStartupActivity"/>
         <toolWindow id="NSMP SDK"
                     anchor="right"
                     icon="/icons/nsmp_logo_stripe.svg"
@@ -25,9 +26,8 @@
     </extensions>
 
     <projectListeners>
-        <listener
-                class="ru.kazantsev.nsmp.sdk.intellij_plugin.ui.editor_listener.FileEditorManagerListener"
-                topic="com.intellij.openapi.fileEditor.FileEditorManagerListener"/>
+        <listener class="ru.kazantsev.nsmp.sdk.intellij_plugin.listeners.TopPanelFileEditorManagerListener"
+                  topic="com.intellij.openapi.fileEditor.FileEditorManagerListener"/>
     </projectListeners>
 
 </idea-plugin>
