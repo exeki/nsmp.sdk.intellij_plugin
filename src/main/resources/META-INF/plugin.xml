@@ -26,7 +26,7 @@
     </extensions>
 
     <projectListeners>
-        <listener class="ru.kazantsev.nsmp.sdk.intellij_plugin.listeners.TopPanelFileEditorManagerListener"
+        <listener class="ru.kazantsev.nsmp.sdk.intellij_plugin.listeners.top_panel.TopPanelFileEditorManagerListener"
                   topic="com.intellij.openapi.fileEditor.FileEditorManagerListener"/>
     </projectListeners>
 

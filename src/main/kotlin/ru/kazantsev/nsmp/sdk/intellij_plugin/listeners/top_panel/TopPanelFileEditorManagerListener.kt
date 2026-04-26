@@ -1,4 +1,4 @@
-package ru.kazantsev.nsmp.sdk.intellij_plugin.listeners
+package ru.kazantsev.nsmp.sdk.intellij_plugin.listeners.top_panel
 
 import com.intellij.openapi.components.service
 import com.intellij.openapi.fileEditor.FileEditor

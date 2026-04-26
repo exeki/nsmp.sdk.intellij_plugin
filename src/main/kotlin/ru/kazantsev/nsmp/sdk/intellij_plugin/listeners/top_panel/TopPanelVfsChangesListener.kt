@@ -1,5 +1,6 @@
-package ru.kazantsev.nsmp.sdk.intellij_plugin.listeners
+package ru.kazantsev.nsmp.sdk.intellij_plugin.listeners.top_panel
 
+import com.intellij.openapi.Disposable
 import com.intellij.openapi.components.Service
 import com.intellij.openapi.components.service
 import com.intellij.openapi.fileEditor.FileEditorManager
@@ -17,10 +18,11 @@ import ru.kazantsev.nsmp.sdk.intellij_plugin.services.ui.TopPanelService
 @Service(Service.Level.PROJECT)
 class TopPanelVfsChangesListener(
     private val project: Project,
-) : BulkFileListener {
+) : BulkFileListener, Disposable {
+
+    val busConnection = project.messageBus.connect(this)
 
     init {
-        val busConnection = project.messageBus.connect()
         busConnection.subscribe(VirtualFileManager.VFS_CHANGES, this)
     }
 
@@ -73,4 +75,7 @@ class TopPanelVfsChangesListener(
             else -> event.file?.url?.let(::listOf).orEmpty()
         }
     }
+
+    override fun dispose() = busConnection.dispose()
+
 }
