@@ -14,10 +14,15 @@
         <notificationGroup id="NSMP SDK Notifications" displayType="BALLOON" isLogByDefault="true"/>
         <postStartupActivity implementation="ru.kazantsev.nsmp.sdk.intellij_plugin.startup.NsdProjectStartupActivity"/>
         <postStartupActivity implementation="ru.kazantsev.nsmp.sdk.intellij_plugin.startup.ListenersStartupActivity"/>
-        <toolWindow id="NSMP SDK"
+        <toolWindow id="NSMP SDK Sources Sync"
                     anchor="right"
-                    icon="/icons/nsmp_logo_stripe.svg"
-                    factoryClass="ru.kazantsev.nsmp.sdk.intellij_plugin.ui.tool_window.ToolWindowFactory"
+                    icon="/icons/logo/stripe/nsmp_logo_stripe.svg"
+                    factoryClass="ru.kazantsev.nsmp.sdk.intellij_plugin.ui.tool_window.main.ToolWindowFactory"
+                    canCloseContents="false"/>
+        <toolWindow id="NSMP SDK Diff Manager"
+                    anchor="bottom"
+                    icon="/icons/logo/stripe_crossed/nsmp_logo_stripe_crossed.svg"
+                    factoryClass="ru.kazantsev.nsmp.sdk.intellij_plugin.ui.tool_window.diff_manager.DiffManagerToolWindowFactory"
                     canCloseContents="false"/>
         <projectConfigurable id="ru.kazantsev.nsmp.sdk.intellij_plugin.services.settings"
                              parentId="tools"

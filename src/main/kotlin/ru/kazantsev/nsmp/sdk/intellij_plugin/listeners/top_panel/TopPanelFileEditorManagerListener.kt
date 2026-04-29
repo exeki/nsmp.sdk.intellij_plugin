@@ -9,15 +9,15 @@ import com.intellij.openapi.project.DumbAware
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.util.Disposer
 import com.intellij.openapi.vfs.VirtualFile
-import ru.kazantsev.nsmp.sdk.intellij_plugin.services.sync.SyncUIAdapter
+import ru.kazantsev.nsmp.sdk.intellij_plugin.services.sync.SyncService
 import ru.kazantsev.nsmp.sdk.intellij_plugin.services.ui.TopPanelService
 import ru.kazantsev.nsmp.sdk.intellij_plugin.ui.editor_top_panel.TopPanelScrollPane
 
 class TopPanelFileEditorManagerListener(private val project: Project) : FileEditorManagerListener, DumbAware {
-    private val syncUIAdapter = project.service<SyncUIAdapter>()
+    private val syncService = project.service<SyncService>()
 
     override fun fileOpened(source: FileEditorManager, file: VirtualFile) {
-        if (!syncUIAdapter.isSupportedFile(file)) return
+        if (!syncService.isSupportedFile(file)) return
         source.getEditors(file).forEach { editor ->
             installTopPanel(source, editor, file, force = false)
         }
@@ -25,7 +25,7 @@ class TopPanelFileEditorManagerListener(private val project: Project) : FileEdit
 
     override fun selectionChanged(event: FileEditorManagerEvent) {
         val file = event.newFile ?: return
-        if (!syncUIAdapter.isSupportedFile(file)) return
+        if (!syncService.isSupportedFile(file)) return
         event.manager.getEditors(file).forEach { editor ->
             installTopPanel(event.manager, editor, file, force = true)
         }

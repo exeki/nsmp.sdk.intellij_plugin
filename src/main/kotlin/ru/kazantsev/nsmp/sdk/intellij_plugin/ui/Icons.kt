@@ -4,7 +4,7 @@ import com.intellij.openapi.util.IconLoader
 
 object Icons {
     val ColoredLogo = IconLoader.getIcon(
-        "/icons/nsmp_logo_colored.svg",
+        "/icons/top_panel/nsmp_logo_colored.svg",
         Icons::class.java
     )
 }

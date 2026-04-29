@@ -2,12 +2,15 @@
 
 package ru.kazantsev.nsmp.sdk.intellij_plugin.services
 
+import com.intellij.ide.projectView.ProjectView
+import com.intellij.openapi.application.ApplicationManager
 import com.intellij.openapi.components.Service
 import com.intellij.openapi.editor.Document
 import com.intellij.openapi.fileEditor.FileDocumentManager
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.vfs.LocalFileSystem
 import com.intellij.openapi.vfs.VirtualFile
+import com.intellij.openapi.vfs.VirtualFileManager
 import kotlinx.io.files.FileNotFoundException
 import java.nio.file.Path
 import java.nio.file.Paths
@@ -61,7 +64,7 @@ class FileSupportService(private val project: Project) {
         return getVirtualFileByAbsolutePath(projectPath)
     }
 
-    fun getDocument(file: VirtualFile) : Document {
+    fun getDocument(file: VirtualFile): Document {
         val document = fileDocumentManager.getDocument(file)
         if (document == null) throw RuntimeException("Can't get document for file ${file.path}")
         return document
@@ -69,6 +72,14 @@ class FileSupportService(private val project: Project) {
 
     fun saveDocument(document: Document) {
         fileDocumentManager.saveDocument(document)
+    }
+
+    fun refreshProjectExplorer() {
+        VirtualFileManager.getInstance().asyncRefresh {
+            ApplicationManager.getApplication().invokeLater {
+                ProjectView.getInstance(project).refresh()
+            }
+        }
     }
 
 }

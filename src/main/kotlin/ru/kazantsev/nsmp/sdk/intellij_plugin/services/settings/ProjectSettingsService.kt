@@ -54,7 +54,7 @@ class ProjectSettingsService(private val project: Project) : PersistentStateComp
             )
         }
 
-    val srcService: SrcSyncService
+    val srcSyncService: SrcSyncService
         get() {
             return SrcSyncService(
                 connectorParams,

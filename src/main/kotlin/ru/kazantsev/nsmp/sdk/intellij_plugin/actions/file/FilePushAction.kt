@@ -9,7 +9,7 @@ import com.intellij.ui.components.JBCheckBox
 import com.intellij.ui.components.JBLabel
 import ru.kazantsev.nsmp.sdk.intellij_plugin.services.notification.BalloonNotificationService
 import ru.kazantsev.nsmp.sdk.intellij_plugin.services.notification.DialogNotificationService
-import ru.kazantsev.nsmp.sdk.intellij_plugin.services.sync.SyncUIAdapter
+import ru.kazantsev.nsmp.sdk.intellij_plugin.services.sync.SyncService
 import ru.kazantsev.nsmp.sdk.intellij_plugin.ui.MessageBundle
 import ru.kazantsev.nsmp.sdk.sources_sync.exception.commands.PushSyncCheckFailedException
 import java.awt.BorderLayout
@@ -22,14 +22,14 @@ class FilePushAction() : AbstractSrcFileAction() {
         val file = event.getData(CommonDataKeys.VIRTUAL_FILE) ?: return
         val project = event.getData(CommonDataKeys.PROJECT) ?: return
         if (!computableWithFile(project, file)) return
-        val syncUIAdapter = project.service<SyncUIAdapter>()
+        val syncService = project.service<SyncService>()
         val dialogNotificationService = project.service<DialogNotificationService>()
         val balloonNotificationService = project.service<BalloonNotificationService>()
 
         val confirmationDialog = PushConfirmationDialog(project)
         if (!confirmationDialog.showAndGet()) return
 
-        syncUIAdapter.push(
+        syncService.push(
             file = file,
             force = confirmationDialog.force,
             onSuccessCallback = {
