@@ -14,7 +14,7 @@ import javax.swing.JComponent
 import javax.swing.JLabel
 import javax.swing.JPanel
 
-class DiffManagerTopPanel() : JPanel(FlowLayout(FlowLayout.LEFT, 8, 0)) {
+class DiffManagerTopPanel : JPanel(FlowLayout(FlowLayout.LEFT, 8, 0)) {
 
     companion object {
         const val COMPONENT_HEIGHT = 28

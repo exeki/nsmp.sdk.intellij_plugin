@@ -8,7 +8,7 @@ import ru.kazantsev.nsmp.sdk.intellij_plugin.services.settings.ProjectSettingsSe
 import ru.kazantsev.nsmp.sdk.intellij_plugin.services.sync.SyncService
 import ru.kazantsev.nsmp.sdk.sources_sync.data.SrcType
 
-class FileOpenInBrowserAction() : AbstractSrcFileAction() {
+class FileOpenInBrowserAction : AbstractSrcFileAction() {
 
     override fun actionPerformed(event: AnActionEvent) {
         val file = event.getData(CommonDataKeys.VIRTUAL_FILE) ?: return
@@ -24,7 +24,6 @@ class FileOpenInBrowserAction() : AbstractSrcFileAction() {
             SrcType.SCRIPT -> "$base/#script:$code"
             SrcType.MODULE -> "$base/#scriptModule:$code"
             SrcType.ADV_IMPORT -> "$base/#advImportConfig:$code"
-            else -> throw RuntimeException("Unsupported type $type for FileOpenInBrowserAction")
         }
         BrowserUtil.browse(url)
     }

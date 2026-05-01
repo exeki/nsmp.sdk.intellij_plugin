@@ -7,7 +7,7 @@ import com.intellij.openapi.progress.ProgressManager
 import ru.kazantsev.nsmp.sdk.intellij_plugin.services.sync.SyncService
 import ru.kazantsev.nsmp.sdk.intellij_plugin.tasks.backgroundable.SyncCheckBackgroundTask
 
-class FileSyncCheckAction() : AbstractSrcFileAction() {
+class FileSyncCheckAction : AbstractSrcFileAction() {
 
     override fun actionPerformed(event: AnActionEvent) {
         val file = event.getData(CommonDataKeys.VIRTUAL_FILE) ?: return

@@ -10,7 +10,6 @@ import com.intellij.openapi.ui.TextFieldWithBrowseButton
 import com.intellij.openapi.vfs.VirtualFile
 import com.intellij.util.ui.JBUI
 import com.intellij.util.ui.UIUtil
-import kotlinx.io.files.FileNotFoundException
 import ru.kazantsev.nsmp.sdk.intellij_plugin.services.FileSupportService
 import ru.kazantsev.nsmp.sdk.intellij_plugin.services.settings.ProjectSettingsService
 import ru.kazantsev.nsmp.sdk.intellij_plugin.ui.MessageBundle

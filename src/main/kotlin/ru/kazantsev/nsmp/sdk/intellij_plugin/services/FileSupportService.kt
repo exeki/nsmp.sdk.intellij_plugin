@@ -1,5 +1,3 @@
-@file:Suppress("FoldInitializerAndIfToElvis")
-
 package ru.kazantsev.nsmp.sdk.intellij_plugin.services
 
 import com.intellij.ide.projectView.ProjectView
@@ -50,10 +48,6 @@ class FileSupportService(private val project: Project) {
     fun getVirtualFileByAbsolutePath(relativePath: String): VirtualFile? {
         val filePath = relativePathToAbsolute(relativePath)
         return LocalFileSystem.getInstance().refreshAndFindFileByPath(filePath)
-    }
-
-    fun getGroovySrcFolderAbsolutePath(): String {
-        return relativePathToAbsolute(SRC_GROOVY_DIRECTORY)
     }
 
     fun getGroovySrcFolderVirtualFile(): VirtualFile? {

@@ -1,7 +1,6 @@
 package ru.kazantsev.nsmp.sdk.intellij_plugin.services.sync.options
 
 import kotlinx.serialization.json.Json
-import org.apache.hc.core5.http.ClassicHttpResponse
 import org.apache.hc.core5.http.io.entity.EntityUtils
 import ru.kazantsev.nsmp.basic_api_connector.Connector
 import ru.kazantsev.nsmp.basic_api_connector.ConnectorParams

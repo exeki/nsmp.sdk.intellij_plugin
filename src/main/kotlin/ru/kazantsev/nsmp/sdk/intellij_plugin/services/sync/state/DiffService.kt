@@ -50,6 +50,7 @@ class DiffService(
         return getProviderByState(state).getSrcSetRoot(request)
     }
 
+    @Suppress("unused")
     private fun loadStateSrcSet(state: SrcState, request: SrcSetRequest): SrcSet<SrcVirtualFile> {
         return getProviderByState(state).getSrcSet(request)
     }

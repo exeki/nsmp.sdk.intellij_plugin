@@ -15,7 +15,7 @@ import java.awt.BorderLayout
 import javax.swing.JComponent
 import javax.swing.JPanel
 
-class FilePushAction() : AbstractSrcFileAction() {
+class FilePushAction : AbstractSrcFileAction() {
 
     override fun actionPerformed(event: AnActionEvent) {
         val file = event.getData(CommonDataKeys.VIRTUAL_FILE) ?: return

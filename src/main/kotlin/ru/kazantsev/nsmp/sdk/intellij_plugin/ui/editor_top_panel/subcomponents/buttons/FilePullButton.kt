@@ -1,5 +1,3 @@
-@file:Suppress("FoldInitializerAndIfToElvis")
-
 package ru.kazantsev.nsmp.sdk.intellij_plugin.ui.editor_top_panel.subcomponents.buttons
 
 import com.intellij.openapi.actionSystem.Presentation

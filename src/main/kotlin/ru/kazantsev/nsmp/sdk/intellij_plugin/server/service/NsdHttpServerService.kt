@@ -46,7 +46,7 @@ class NsdHttpServerService : Disposable {
 
     @Synchronized
     private fun start() {
-        val port = AppSettingsService.Companion.getInstance().serverPort
+        val port = AppSettingsService.getInstance().serverPort
 
         try {
             val httpServer = HttpServer.create(InetSocketAddress("127.0.0.1", port), 0).apply {

@@ -8,7 +8,6 @@ import com.intellij.openapi.project.Project
 import com.intellij.openapi.roots.ContentEntry
 import com.intellij.openapi.roots.ModuleRootModificationUtil
 import com.intellij.openapi.vfs.VirtualFile
-import com.intellij.openapi.vfs.newvfs.events.VFileEvent
 import org.jetbrains.jps.model.java.JavaResourceRootType
 import org.jetbrains.jps.model.java.JavaSourceRootType
 import ru.kazantsev.nsmp.sdk.intellij_plugin.services.settings.ProjectSettingsService

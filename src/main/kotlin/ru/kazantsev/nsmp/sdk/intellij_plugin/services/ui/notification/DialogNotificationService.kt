@@ -4,7 +4,6 @@ import com.intellij.openapi.components.Service
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.ui.Messages
 
-@Suppress("unused")
 @Service(Service.Level.PROJECT)
 class DialogNotificationService(private val project: Project) {
     fun showInfo(title: String, message: String) {
