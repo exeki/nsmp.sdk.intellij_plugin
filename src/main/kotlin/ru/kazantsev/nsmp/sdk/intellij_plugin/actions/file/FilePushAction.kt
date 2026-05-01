@@ -7,8 +7,8 @@ import com.intellij.openapi.project.Project
 import com.intellij.openapi.ui.DialogWrapper
 import com.intellij.ui.components.JBCheckBox
 import com.intellij.ui.components.JBLabel
-import ru.kazantsev.nsmp.sdk.intellij_plugin.services.notification.BalloonNotificationService
-import ru.kazantsev.nsmp.sdk.intellij_plugin.services.notification.DialogNotificationService
+import ru.kazantsev.nsmp.sdk.intellij_plugin.services.ui.notification.BalloonNotificationService
+import ru.kazantsev.nsmp.sdk.intellij_plugin.services.ui.notification.DialogNotificationService
 import ru.kazantsev.nsmp.sdk.intellij_plugin.services.sync.SyncService
 import ru.kazantsev.nsmp.sdk.intellij_plugin.ui.MessageBundle
 import ru.kazantsev.nsmp.sdk.sources_sync.exception.commands.PushSyncCheckFailedException

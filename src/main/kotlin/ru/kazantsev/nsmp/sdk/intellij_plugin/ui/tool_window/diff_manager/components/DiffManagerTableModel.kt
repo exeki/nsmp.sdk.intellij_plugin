@@ -1,21 +1,17 @@
-package ru.kazantsev.nsmp.sdk.intellij_plugin.ui.tool_window.diff_manager
+package ru.kazantsev.nsmp.sdk.intellij_plugin.ui.tool_window.diff_manager.components
 
 import ru.kazantsev.nsmp.sdk.intellij_plugin.ui.MessageBundle
 import ru.kazantsev.nsmp.sdk.intellij_plugin.ui.tool_window.diff_manager.model.DiffRow
-import java.time.ZoneId
-import java.time.format.DateTimeFormatter
 import javax.swing.table.AbstractTableModel
 
 class DiffManagerTableModel : AbstractTableModel() {
     private val rows = mutableListOf<DiffRow>()
-    private val dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
-        .withZone(ZoneId.systemDefault())
+
 
     private val columns = listOf(
-        MessageBundle.message("sync.command.local.changes.table.type"),
-        MessageBundle.message("sync.command.local.changes.table.code"),
-        MessageBundle.message("sync.command.local.changes.table.status"),
-        MessageBundle.message("sync.command.local.changes.table.last.sync.date"),
+        MessageBundle.message("sync.command.diff.manager.table.type"),
+        MessageBundle.message("sync.command.diff.manager.table.code"),
+        MessageBundle.message("sync.command.diff.manager.table.status"),
     )
 
     override fun getRowCount(): Int = rows.size
@@ -30,7 +26,6 @@ class DiffManagerTableModel : AbstractTableModel() {
             0 -> row.type.code
             1 -> row.code
             2 -> row.status.name
-            3 -> row.lastSyncDate?.let(dateFormatter::format).orEmpty()
             else -> ""
         }
     }

@@ -10,20 +10,20 @@ import com.intellij.openapi.progress.ProgressManager
 import com.intellij.openapi.progress.Task
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.vfs.VirtualFile
-import com.intellij.util.concurrency.AppExecutorUtil
 import ru.kazantsev.nsmp.sdk.intellij_plugin.exception.SrcSyncUnsupportedType
 import ru.kazantsev.nsmp.sdk.intellij_plugin.exception.UnknownSourceType
 import ru.kazantsev.nsmp.sdk.intellij_plugin.services.FileSupportService
 import ru.kazantsev.nsmp.sdk.intellij_plugin.services.settings.ProjectSettingsService
+import ru.kazantsev.nsmp.sdk.intellij_plugin.services.sync.state.LastSyncedSrcStateService
 import ru.kazantsev.nsmp.sdk.intellij_plugin.ui.MessageBundle
 import ru.kazantsev.nsmp.sdk.sources_sync.SrcSyncService
-import ru.kazantsev.nsmp.sdk.sources_sync.data.src.SrcSetRoot
-import ru.kazantsev.nsmp.sdk.sources_sync.data.src.SrcType
-import ru.kazantsev.nsmp.sdk.sources_sync.data.src.local.LocalFileInfo
-import ru.kazantsev.nsmp.sdk.sources_sync.data.src.pair.SrcPair
-import ru.kazantsev.nsmp.sdk.sources_sync.data.src.pair.SrcSyncCheckPair
-import ru.kazantsev.nsmp.sdk.sources_sync.data.src.remote.RemoteInfo
-import ru.kazantsev.nsmp.sdk.sources_sync.data.src.request.SrcRequest
+import ru.kazantsev.nsmp.sdk.sources_sync.data.SrcType
+import ru.kazantsev.nsmp.sdk.sources_sync.data.request.SrcRequest
+import ru.kazantsev.nsmp.sdk.sources_sync.data.root.SrcSetRoot
+import ru.kazantsev.nsmp.sdk.sources_sync.data.src.SrcChecksum
+import ru.kazantsev.nsmp.sdk.sources_sync.data.src.SrcFileChecksum
+import ru.kazantsev.nsmp.sdk.sources_sync.data.src.SrcPair
+import ru.kazantsev.nsmp.sdk.sources_sync.data.src.SrcSyncCheckPair
 import java.nio.file.Path
 import java.nio.file.Paths
 
@@ -35,11 +35,11 @@ class SyncService(private val project: Project) {
 
     val projectSettingsService = project.service<ProjectSettingsService>()
 
-    val lastSyncedStateService = project.service<LastSyncedStateService>()
+    val lastSyncedSrcStateService = project.service<LastSyncedSrcStateService>()
 
     val fileSupportService = project.service<FileSupportService>()
 
-    private fun createSrcService(): SrcSyncService {
+    fun createSrcSyncService(): SrcSyncService {
         return SrcSyncService(
             projectSettingsService.connectorParams,
             projectSettingsService.srcFoldersParams
@@ -88,15 +88,15 @@ class SyncService(private val project: Project) {
         return getSrcType(file) != null || file.extension.equals("groovy", ignoreCase = true)
     }
 
-    fun pull(request: SrcRequest): SrcSetRoot<LocalFileInfo> {
-        val result = createSrcService().pull(request)
-        lastSyncedStateService.updateLastSyncedStateBackground(result)
+    fun pull(request: SrcRequest): SrcSetRoot<SrcFileChecksum> {
+        val result = createSrcSyncService().pull(request)
+        lastSyncedSrcStateService.updateLastSyncedStateBackground(result)
         return result
     }
 
     fun pull(
         file: VirtualFile,
-        onSuccessCallback: (SrcSetRoot<LocalFileInfo>) -> Unit,
+        onSuccessCallback: (SrcSetRoot<SrcFileChecksum>) -> Unit,
         onFailureCallback: (Throwable) -> Unit
     ) {
         val request = getSrcRequestForFileElseThrow(file)
@@ -105,7 +105,7 @@ class SyncService(private val project: Project) {
 
     fun pull(
         request: SrcRequest,
-        onSuccessCallback: (SrcSetRoot<LocalFileInfo>) -> Unit,
+        onSuccessCallback: (SrcSetRoot<SrcFileChecksum>) -> Unit,
         onFailureCallback: (Throwable) -> Unit
     ) {
         val backgroundTaskTitle = MessageBundle.message("sync.command.pull.title")
@@ -125,13 +125,13 @@ class SyncService(private val project: Project) {
     }
 
 
-    fun syncCheck(request: SrcRequest): SrcSetRoot<SrcSyncCheckPair<LocalFileInfo, RemoteInfo>> {
-        return createSrcService().syncCheck(request)
+    fun syncCheck(request: SrcRequest): SrcSetRoot<SrcSyncCheckPair<SrcFileChecksum, SrcChecksum>> {
+        return createSrcSyncService().syncCheck(request)
     }
 
     fun syncCheck(
         file: VirtualFile,
-        onSuccessCallback: (SrcSetRoot<SrcSyncCheckPair<LocalFileInfo, RemoteInfo>>) -> Unit,
+        onSuccessCallback: (SrcSetRoot<SrcSyncCheckPair<SrcFileChecksum, SrcChecksum>>) -> Unit,
         onFailureCallback: (Throwable) -> Unit
     ) {
         val request = getSrcRequestForFileElseThrow(file)
@@ -140,7 +140,7 @@ class SyncService(private val project: Project) {
 
     fun syncCheck(
         request: SrcRequest,
-        onSuccessCallback: (SrcSetRoot<SrcSyncCheckPair<LocalFileInfo, RemoteInfo>>) -> Unit,
+        onSuccessCallback: (SrcSetRoot<SrcSyncCheckPair<SrcFileChecksum, SrcChecksum>>) -> Unit,
         onFailureCallback: (Throwable) -> Unit
     ) {
         val backgroundTaskTitle = MessageBundle.message("sync.command.sync.check.title")
@@ -159,16 +159,16 @@ class SyncService(private val project: Project) {
         })
     }
 
-    fun push(request: SrcRequest, force: Boolean): SrcSetRoot<SrcPair<LocalFileInfo, RemoteInfo>> {
-        val result = createSrcService().push(request, force)
-        lastSyncedStateService.updateLastSyncedStateBackground(result.convert { it.local })
+    fun push(request: SrcRequest, force: Boolean): SrcSetRoot<SrcPair<SrcFileChecksum, SrcChecksum>> {
+        val result = createSrcSyncService().push(request, force)
+        lastSyncedSrcStateService.updateLastSyncedStateBackground(result.convert { _, pair -> pair.left })
         return result
     }
 
     fun push(
         file: VirtualFile,
         force: Boolean,
-        onSuccessCallback: (SrcSetRoot<SrcPair<LocalFileInfo, RemoteInfo>>) -> Unit,
+        onSuccessCallback: (SrcSetRoot<SrcPair<SrcFileChecksum, SrcChecksum>>) -> Unit,
         onFailureCallback: (Throwable) -> Unit
     ) {
         val request = getSrcRequestForFileElseThrow(file)
@@ -178,7 +178,7 @@ class SyncService(private val project: Project) {
     fun push(
         request: SrcRequest,
         force: Boolean,
-        onSuccessCallback: (SrcSetRoot<SrcPair<LocalFileInfo, RemoteInfo>>) -> Unit,
+        onSuccessCallback: (SrcSetRoot<SrcPair<SrcFileChecksum, SrcChecksum>>) -> Unit,
         onFailureCallback: (Throwable) -> Unit
     ) {
         val backgroundTaskTitle = MessageBundle.message("sync.command.push.title")

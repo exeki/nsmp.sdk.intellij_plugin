@@ -2,18 +2,18 @@ package ru.kazantsev.nsmp.sdk.intellij_plugin.actions.global
 
 import com.intellij.openapi.components.service
 import com.intellij.openapi.project.Project
-import ru.kazantsev.nsmp.sdk.intellij_plugin.services.notification.BalloonNotificationService
-import ru.kazantsev.nsmp.sdk.intellij_plugin.services.notification.DialogNotificationService
+import ru.kazantsev.nsmp.sdk.intellij_plugin.services.ui.notification.BalloonNotificationService
+import ru.kazantsev.nsmp.sdk.intellij_plugin.services.ui.notification.DialogNotificationService
 import ru.kazantsev.nsmp.sdk.intellij_plugin.services.settings.ProjectSettingsService
 import ru.kazantsev.nsmp.sdk.intellij_plugin.services.sync.SyncService
 import ru.kazantsev.nsmp.sdk.intellij_plugin.ui.MessageBundle
 import ru.kazantsev.nsmp.sdk.intellij_plugin.ui.global_src_request_dialog.model.SrcRequestSelectState
 import ru.kazantsev.nsmp.sdk.intellij_plugin.ui.global_src_request_dialog.options_provider.LocalSrcOptionsProvider
 import ru.kazantsev.nsmp.sdk.intellij_plugin.ui.global_src_request_dialog.options_provider.SrcOptionsProvider
-import ru.kazantsev.nsmp.sdk.sources_sync.data.src.SrcSetRoot
-import ru.kazantsev.nsmp.sdk.sources_sync.data.src.local.LocalFileInfo
-import ru.kazantsev.nsmp.sdk.sources_sync.data.src.pair.SrcSyncCheckPair
-import ru.kazantsev.nsmp.sdk.sources_sync.data.src.remote.RemoteInfo
+import ru.kazantsev.nsmp.sdk.sources_sync.data.root.SrcSetRoot
+import ru.kazantsev.nsmp.sdk.sources_sync.data.src.SrcChecksum
+import ru.kazantsev.nsmp.sdk.sources_sync.data.src.SrcFileChecksum
+import ru.kazantsev.nsmp.sdk.sources_sync.data.src.SrcSyncCheckPair
 
 class GlobalSyncCheckAction : AbstractGlobalSyncAction() {
     override fun getOptionProvider(project: Project): SrcOptionsProvider {
@@ -26,7 +26,7 @@ class GlobalSyncCheckAction : AbstractGlobalSyncAction() {
         val syncService = project.service<SyncService>()
         syncService.syncCheck(
             request = state.getRequest(),
-            onSuccessCallback = { value: SrcSetRoot<SrcSyncCheckPair<LocalFileInfo, RemoteInfo>> ->
+            onSuccessCallback = { value: SrcSetRoot<SrcSyncCheckPair<SrcFileChecksum, SrcChecksum>> ->
                 if (value.isEmpty()) {
                     balloonNotificationService.showInfo(
                         title = MessageBundle.message("sync.command.sync.check.title"),

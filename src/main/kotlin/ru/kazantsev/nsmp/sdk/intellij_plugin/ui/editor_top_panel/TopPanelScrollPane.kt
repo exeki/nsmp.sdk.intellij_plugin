@@ -24,10 +24,10 @@ class TopPanelScrollPane(
     }
 
     init {
-        fun setWidth(width: Int) {
-            preferredSize = Dimension(preferredSize.width, JBUI.scale(width))
-            minimumSize = Dimension(0, JBUI.scale(width))
-            maximumSize = Dimension(Int.MAX_VALUE, JBUI.scale(width))
+        fun setHeight(height: Int) {
+            preferredSize = Dimension(preferredSize.width, JBUI.scale(height))
+            minimumSize = Dimension(0, JBUI.scale(height))
+            maximumSize = Dimension(Int.MAX_VALUE, JBUI.scale(height))
         }
         isOpaque = false
         viewport.isOpaque = false
@@ -51,10 +51,10 @@ class TopPanelScrollPane(
             val contentWidth = topPanel.preferredSize.width
             if (viewportWidth in 1..<contentWidth) {
                 horizontalScrollBarPolicy = HORIZONTAL_SCROLLBAR_AS_NEEDED
-                setWidth(PANEL_HEIGHT + SCROLLBAR_HEIGHT)
+                setHeight(PANEL_HEIGHT + SCROLLBAR_HEIGHT)
             } else {
                 horizontalScrollBarPolicy = HORIZONTAL_SCROLLBAR_NEVER
-                setWidth(PANEL_HEIGHT)
+                setHeight(PANEL_HEIGHT)
             }
         }
         viewport.addChangeListener { updateHorizontalPolicy() }

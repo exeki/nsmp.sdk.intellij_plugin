@@ -27,10 +27,10 @@ class FileExecuteContextField(
         private const val CONTEXT_FIELD_HEIGHT = 25
     }
 
-    private val projectSettingsService : ProjectSettingsService
+    private val projectSettingsService: ProjectSettingsService
         get() = project.service<ProjectSettingsService>()
 
-    private val fileSupportService : FileSupportService
+    private val fileSupportService: FileSupportService
         get() = project.service<FileSupportService>()
 
     private fun saveContext() {
@@ -38,11 +38,8 @@ class FileExecuteContextField(
     }
 
     private fun srcRoot(): VirtualFile {
-        return try {
-            fileSupportService.getGroovySrcFolderVirtualFile()
-        } catch (_: FileNotFoundException) {
-            fileSupportService.getProjectVirtualFile()
-        }
+        val file = fileSupportService.getGroovySrcFolderVirtualFile()
+        return file ?: fileSupportService.getProjectVirtualFile()
     }
 
     init {

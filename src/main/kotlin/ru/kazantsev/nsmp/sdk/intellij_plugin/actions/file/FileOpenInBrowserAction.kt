@@ -6,7 +6,7 @@ import com.intellij.openapi.actionSystem.CommonDataKeys
 import com.intellij.openapi.components.service
 import ru.kazantsev.nsmp.sdk.intellij_plugin.services.settings.ProjectSettingsService
 import ru.kazantsev.nsmp.sdk.intellij_plugin.services.sync.SyncService
-import ru.kazantsev.nsmp.sdk.sources_sync.data.src.SrcType
+import ru.kazantsev.nsmp.sdk.sources_sync.data.SrcType
 
 class FileOpenInBrowserAction() : AbstractSrcFileAction() {
 
@@ -24,6 +24,7 @@ class FileOpenInBrowserAction() : AbstractSrcFileAction() {
             SrcType.SCRIPT -> "$base/#script:$code"
             SrcType.MODULE -> "$base/#scriptModule:$code"
             SrcType.ADV_IMPORT -> "$base/#advImportConfig:$code"
+            else -> throw RuntimeException("Unsupported type $type for FileOpenInBrowserAction")
         }
         BrowserUtil.browse(url)
     }

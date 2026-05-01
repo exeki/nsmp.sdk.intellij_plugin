@@ -2,7 +2,7 @@ package ru.kazantsev.nsmp.sdk.intellij_plugin.actions.file
 
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.vfs.VirtualFile
-import ru.kazantsev.nsmp.sdk.sources_sync.data.src.SrcFormat
+import ru.kazantsev.nsmp.sdk.sources_sync.data.SrcFormat
 
 abstract class AbstractGroovyFileAction : AbstractFileAction() {
 

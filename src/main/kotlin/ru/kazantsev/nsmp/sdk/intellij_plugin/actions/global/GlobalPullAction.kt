@@ -2,15 +2,15 @@ package ru.kazantsev.nsmp.sdk.intellij_plugin.actions.global
 
 import com.intellij.openapi.components.service
 import com.intellij.openapi.project.Project
-import ru.kazantsev.nsmp.sdk.intellij_plugin.services.notification.BalloonNotificationService
+import ru.kazantsev.nsmp.sdk.intellij_plugin.services.ui.notification.BalloonNotificationService
 import ru.kazantsev.nsmp.sdk.intellij_plugin.services.sync.SyncService
 import ru.kazantsev.nsmp.sdk.intellij_plugin.services.sync.options.SrcOptionsService
 import ru.kazantsev.nsmp.sdk.intellij_plugin.ui.MessageBundle
 import ru.kazantsev.nsmp.sdk.intellij_plugin.ui.global_src_request_dialog.model.SrcRequestSelectState
 import ru.kazantsev.nsmp.sdk.intellij_plugin.ui.global_src_request_dialog.options_provider.RemoteSrcOptionsProvider
 import ru.kazantsev.nsmp.sdk.intellij_plugin.ui.global_src_request_dialog.options_provider.SrcOptionsProvider
-import ru.kazantsev.nsmp.sdk.sources_sync.data.src.SrcSetRoot
-import ru.kazantsev.nsmp.sdk.sources_sync.data.src.local.LocalFileInfo
+import ru.kazantsev.nsmp.sdk.sources_sync.data.root.SrcSetRoot
+import ru.kazantsev.nsmp.sdk.sources_sync.data.src.SrcFileChecksum
 
 class GlobalPullAction : AbstractGlobalSyncAction() {
 
@@ -24,7 +24,7 @@ class GlobalPullAction : AbstractGlobalSyncAction() {
         return { state: SrcRequestSelectState ->
             syncService.pull(
                 request = state.getRequest(),
-                onSuccessCallback = { value: SrcSetRoot<LocalFileInfo> ->
+                onSuccessCallback = { value: SrcSetRoot<SrcFileChecksum> ->
                     balloonNotificationService.showInfo(
                         title = MessageBundle.message("sync.command.pull.title"),
                         message = MessageBundle.message(

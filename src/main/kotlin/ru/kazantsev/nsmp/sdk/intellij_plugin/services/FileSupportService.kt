@@ -12,6 +12,7 @@ import com.intellij.openapi.vfs.LocalFileSystem
 import com.intellij.openapi.vfs.VirtualFile
 import com.intellij.openapi.vfs.VirtualFileManager
 import kotlinx.io.files.FileNotFoundException
+import ru.kazantsev.nsmp.sdk.intellij_plugin.exception.NotTextFileException
 import java.nio.file.Path
 import java.nio.file.Paths
 
@@ -41,33 +42,30 @@ class FileSupportService(private val project: Project) {
         return Path.of(projectPath, pathString).normalize().toString()
     }
 
-    fun getVirtualFileByRelativePath(relativePath: String): VirtualFile {
+    fun getVirtualFileByRelativePath(relativePath: String): VirtualFile? {
         val filePath = relativePathToAbsolute(relativePath)
         return getVirtualFileByAbsolutePath(filePath)
     }
 
-    fun getVirtualFileByAbsolutePath(relativePath: String): VirtualFile {
+    fun getVirtualFileByAbsolutePath(relativePath: String): VirtualFile? {
         val filePath = relativePathToAbsolute(relativePath)
         return LocalFileSystem.getInstance().refreshAndFindFileByPath(filePath)
-            ?: throw FileNotFoundException("File not found: $relativePath")
     }
 
     fun getGroovySrcFolderAbsolutePath(): String {
         return relativePathToAbsolute(SRC_GROOVY_DIRECTORY)
     }
 
-    fun getGroovySrcFolderVirtualFile(): VirtualFile {
+    fun getGroovySrcFolderVirtualFile(): VirtualFile? {
         return getVirtualFileByRelativePath(SRC_GROOVY_DIRECTORY)
     }
 
     fun getProjectVirtualFile(): VirtualFile {
-        return getVirtualFileByAbsolutePath(projectPath)
+        return getVirtualFileByAbsolutePath(projectPath) ?: throw FileNotFoundException("Project is not found")
     }
 
     fun getDocument(file: VirtualFile): Document {
-        val document = fileDocumentManager.getDocument(file)
-        if (document == null) throw RuntimeException("Can't get document for file ${file.path}")
-        return document
+        return fileDocumentManager.getDocument(file) ?: throw NotTextFileException("File ${file.path} not a text file")
     }
 
     fun saveDocument(document: Document) {

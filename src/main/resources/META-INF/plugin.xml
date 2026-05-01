@@ -17,7 +17,7 @@
         <toolWindow id="NSMP SDK Sources Sync"
                     anchor="right"
                     icon="/icons/logo/stripe/nsmp_logo_stripe.svg"
-                    factoryClass="ru.kazantsev.nsmp.sdk.intellij_plugin.ui.tool_window.main.ToolWindowFactory"
+                    factoryClass="ru.kazantsev.nsmp.sdk.intellij_plugin.ui.tool_window.main.MainToolWindowFactory"
                     canCloseContents="false"/>
         <toolWindow id="NSMP SDK Diff Manager"
                     anchor="bottom"

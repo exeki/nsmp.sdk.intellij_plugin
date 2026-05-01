@@ -12,7 +12,7 @@ import javax.swing.*
 /**
  * Боковое меню справа
  */
-class ToolWindowFactory : ToolWindowFactory {
+class MainToolWindowFactory : ToolWindowFactory {
 
     override fun createToolWindowContent(project: Project, toolWindow: ToolWindow) {
         val panel = JPanel().apply {

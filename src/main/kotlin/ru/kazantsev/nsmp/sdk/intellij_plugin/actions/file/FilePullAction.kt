@@ -3,8 +3,8 @@ package ru.kazantsev.nsmp.sdk.intellij_plugin.actions.file
 import com.intellij.openapi.actionSystem.AnActionEvent
 import com.intellij.openapi.actionSystem.CommonDataKeys
 import com.intellij.openapi.components.service
-import ru.kazantsev.nsmp.sdk.intellij_plugin.services.notification.BalloonNotificationService
-import ru.kazantsev.nsmp.sdk.intellij_plugin.services.notification.DialogNotificationService
+import ru.kazantsev.nsmp.sdk.intellij_plugin.services.ui.notification.BalloonNotificationService
+import ru.kazantsev.nsmp.sdk.intellij_plugin.services.ui.notification.DialogNotificationService
 import ru.kazantsev.nsmp.sdk.intellij_plugin.services.sync.SyncService
 import ru.kazantsev.nsmp.sdk.intellij_plugin.ui.MessageBundle
 

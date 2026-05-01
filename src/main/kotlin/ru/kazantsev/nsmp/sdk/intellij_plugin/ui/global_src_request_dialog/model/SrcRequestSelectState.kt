@@ -1,6 +1,6 @@
 package ru.kazantsev.nsmp.sdk.intellij_plugin.ui.global_src_request_dialog.model
 
-import ru.kazantsev.nsmp.sdk.sources_sync.data.src.request.SrcRequest
+import ru.kazantsev.nsmp.sdk.sources_sync.data.request.SrcRequest
 
 /**
  * Модель последней сохраненной формы

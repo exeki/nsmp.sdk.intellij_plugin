@@ -1,9 +1,12 @@
-package ru.kazantsev.nsmp.sdk.intellij_plugin.services.notification
+package ru.kazantsev.nsmp.sdk.intellij_plugin.services.ui.notification
+
+import ru.kazantsev.nsmp.sdk.intellij_plugin.exception.LogicException
 
 interface NotificationErrorBuilder {
     companion object {
 
         fun buildErrorText(error: Throwable): String {
+            if (error is LogicException) return error.message
             val parts = mutableListOf<String>()
             parts.add(buildErrorPart(error))
             var cause = error.cause
@@ -15,6 +18,7 @@ interface NotificationErrorBuilder {
         }
 
         fun buildErrorText(message: String, error: Throwable): String {
+            if (error is LogicException) return message + "\n" + error.message
             val parts = mutableListOf<String>()
             parts.add(buildErrorPart(error))
             var cause = error.cause

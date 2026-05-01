@@ -1,4 +1,4 @@
-@file:Suppress("SimplifiableCallChain")
+@file:Suppress("SimplifiableCallChain", "FoldInitializerAndIfToElvis")
 
 package ru.kazantsev.nsmp.sdk.intellij_plugin.services
 
@@ -9,7 +9,10 @@ import com.intellij.openapi.vfs.VirtualFile
 import com.intellij.psi.PsiManager
 import org.jetbrains.plugins.groovy.lang.psi.GroovyFile
 import ru.kazantsev.nsmp.basic_api_connector.Connector
+import ru.kazantsev.nsmp.sdk.intellij_plugin.exception.ContextFileNotExists
+import ru.kazantsev.nsmp.sdk.intellij_plugin.exception.FileExecuteExtensionException
 import ru.kazantsev.nsmp.sdk.intellij_plugin.services.settings.ProjectSettingsService
+import ru.kazantsev.nsmp.sdk.sources_sync.data.SrcFormat
 
 @Service(Service.Level.PROJECT)
 class ScriptExecutionService(private val project: Project) {
@@ -20,11 +23,10 @@ class ScriptExecutionService(private val project: Project) {
     val fileSupportService: FileSupportService
         get() = project.service<FileSupportService>()
 
-    fun concatenateFiles(
+    private fun concatenateFiles(
         file: VirtualFile,
-        contextFileRelativePath: String
+        contextVirtualFile: VirtualFile
     ): String {
-        val contextVirtualFile = fileSupportService.getVirtualFileByRelativePath(contextFileRelativePath)
         return listOf(contextVirtualFile, file)
             .onEach { fileSupportService.saveDocument(fileSupportService.getDocument(it)) }
             .map { file -> readTextWithoutPackage(file) }
@@ -32,7 +34,8 @@ class ScriptExecutionService(private val project: Project) {
     }
 
     private fun readTextWithoutPackage(file: VirtualFile): String {
-        val psiFile = PsiManager.getInstance(project).findFile(file) as GroovyFile
+        val psiFile = PsiManager.getInstance(project).findFile(file) as? GroovyFile
+            ?: throw FileExecuteExtensionException("File ${file.path} is not a Groovy PSI file")
         val packageDefinition = psiFile.packageDefinition ?: return psiFile.text
 
         return psiFile.text
@@ -46,11 +49,20 @@ class ScriptExecutionService(private val project: Project) {
         return document.text
     }
 
-    fun executeFile(file: VirtualFile, contextFileRelativePath: String? = null): String {
-        val connectionParams = projectSettingsService.connectorParams
-        val connector = Connector(connectionParams)
-        return  if (contextFileRelativePath.isNullOrEmpty())  connector.execFile(getSingleFileText(file))
-        else  connector.execFile(concatenateFiles(file, contextFileRelativePath))
+    fun buildExecutionPayload(file: VirtualFile, contextFileRelativePath: String? = null): String {
+        if (file.extension != SrcFormat.GROOVY.code) throw FileExecuteExtensionException("File ${file.path} is not a Groovy File")
+        return if (contextFileRelativePath.isNullOrEmpty()) getSingleFileText(file)
+        else {
+            val contextVirtualFile = fileSupportService.getVirtualFileByRelativePath(contextFileRelativePath)
+            if (contextVirtualFile == null) throw ContextFileNotExists("Context file $contextFileRelativePath not exists")
+            if (contextVirtualFile.extension != SrcFormat.GROOVY.code) throw FileExecuteExtensionException("File ${contextVirtualFile.path} is not a Groovy File")
+            concatenateFiles(file, contextVirtualFile)
+        }
     }
 
+    fun executePayload(payload: String): String {
+        val connectionParams = projectSettingsService.connectorParams
+        val connector = Connector(connectionParams)
+        return connector.execFile(payload)
+    }
 }

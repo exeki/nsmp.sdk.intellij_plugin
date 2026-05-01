@@ -5,9 +5,9 @@ import java.util.concurrent.CompletableFuture
 import ru.kazantsev.nsmp.sdk.intellij_plugin.services.settings.ProjectSettingsService
 import ru.kazantsev.nsmp.sdk.intellij_plugin.services.sync.options.dto.SrcOption
 import ru.kazantsev.nsmp.sdk.sources_sync.SrcSyncService
-import ru.kazantsev.nsmp.sdk.sources_sync.data.src.SrcType
-import ru.kazantsev.nsmp.sdk.sources_sync.data.src.local.LocalFileInfo
-import ru.kazantsev.nsmp.sdk.sources_sync.data.src.request.SrcSetRequest
+import ru.kazantsev.nsmp.sdk.sources_sync.data.SrcType
+import ru.kazantsev.nsmp.sdk.sources_sync.data.request.SrcSetRequest
+import ru.kazantsev.nsmp.sdk.sources_sync.data.src.SrcFileChecksum
 
 class LocalSrcOptionsProvider(
     private val projectSettingsService: ProjectSettingsService,
@@ -48,7 +48,7 @@ class LocalSrcOptionsProvider(
         )
     }
 
-    private fun toSrcOption(dto: LocalFileInfo): SrcOption {
+    private fun toSrcOption(dto: SrcFileChecksum): SrcOption {
         return SrcOption(
             code = dto.code,
             title = dto.file.name,

@@ -15,7 +15,7 @@ import ru.kazantsev.nsmp.basic_api_connector.ConfigService
 import ru.kazantsev.nsmp.basic_api_connector.dto.InstallationDto
 import ru.kazantsev.nsmp.sdk.intellij_plugin.ui.MessageBundle
 import ru.kazantsev.nsmp.sdk.intellij_plugin.server.service.NsdHttpServerService
-import ru.kazantsev.nsmp.sdk.intellij_plugin.services.notification.DialogNotificationService
+import ru.kazantsev.nsmp.sdk.intellij_plugin.services.ui.notification.DialogNotificationService
 import ru.kazantsev.nsmp.sdk.intellij_plugin.services.project.SourceRootMarkerService
 import ru.kazantsev.nsmp.sdk.intellij_plugin.services.settings.AppSettingsService
 import ru.kazantsev.nsmp.sdk.intellij_plugin.services.settings.ProjectSettingsService
@@ -46,8 +46,8 @@ class PluginConfigurable(private val project: Project) : Configurable {
         get() = project.service<ProjectSettingsService>()
     private val appSettings: AppSettingsService
         get() = ApplicationManager.getApplication().service<AppSettingsService>()
-    private val configService: ConfigService
-        get() = ConfigService(AppSettingsService.getInstance().pathToConfigFile)
+
+    fun createConfigService(pathToConfigFile : String): ConfigService = ConfigService(pathToConfigFile)
 
     override fun getDisplayName(): String = MessageBundle.message("settings.display.name")
 
@@ -121,9 +121,10 @@ class PluginConfigurable(private val project: Project) : Configurable {
         val appSettings = this.appSettings
 
         if (portField?.text?.trim() != appSettings.serverPort.toString()) return true
-        if (configPathField?.text?.trim() != appSettings.pathToConfigFile) return true
+        val configPath = configPathField?.text?.trim().orEmpty()
+        if (configPath != appSettings.pathToConfigFile) return true
 
-        if (installations != configService.installations) return true
+        if (installations != createConfigService(configPath).installations) return true
         val selectedId = (installationBox?.selectedItem as? InstallationOption)?.id.orEmpty()
         if (selectedId != projectSettings.state.selectedInstallationId) return true
         if (scriptsDirectoryField?.text?.trim() != projectSettings.state.scriptsDirectoryPath) return true
@@ -140,7 +141,7 @@ class PluginConfigurable(private val project: Project) : Configurable {
         val configPath = configPathField?.text?.trim().orEmpty()
         if (configPath.isBlank()) throw ConfigurationException(MessageBundle.message("settings.error.config.path.required"))
 
-        runCatching { configService.saveInstallations(installations) }
+        runCatching { createConfigService(configPath).saveInstallations(installations) }
             .getOrElse {
                 throw ConfigurationException(
                     MessageBundle.message("settings.error.installations.save.failed", it.message ?: "")
@@ -153,7 +154,7 @@ class PluginConfigurable(private val project: Project) : Configurable {
         projectSettings.state.scriptsDirectoryPath = scriptsDirectoryField?.text?.trim().orEmpty()
         projectSettings.state.modulesDirectoryPath = modulesDirectoryField?.text?.trim().orEmpty()
         projectSettings.state.advImportsDirectoryPath = advImportsDirectoryField?.text?.trim().orEmpty()
-        project.getService(SourceRootMarkerService::class.java).markConfiguredRoots()
+        project.service<SourceRootMarkerService>().markConfiguredRoots()
         NsdHttpServerServiceHolder.restartServer(project)
     }
 
@@ -161,7 +162,7 @@ class PluginConfigurable(private val project: Project) : Configurable {
         val settings = AppSettingsService.getInstance()
         portField?.text = settings.serverPort.toString()
         configPathField?.text = settings.pathToConfigFile
-        installations = configService.getInstallations().toMutableList()
+        installations = createConfigService(settings.pathToConfigFile).getInstallations().toMutableList()
         refreshTable()
         refreshProjectInstallations(projectSettings.state.selectedInstallationId)
         scriptsDirectoryField?.text = projectSettings.state.scriptsDirectoryPath
@@ -232,7 +233,7 @@ class PluginConfigurable(private val project: Project) : Configurable {
             )
             return
         }
-        installations = configService.getInstallations().toMutableList()
+        installations = createConfigService(path).getInstallations().toMutableList()
         refreshTable()
         refreshProjectInstallations((installationBox?.selectedItem as? InstallationOption)?.id)
     }

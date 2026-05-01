@@ -1,16 +1,16 @@
 package ru.kazantsev.nsmp.sdk.intellij_plugin.ui.tool_window.diff_manager.model
 
-import ru.kazantsev.nsmp.sdk.sources_sync.data.src.SrcType
-import java.nio.file.Path
-import java.time.Instant
+import com.intellij.openapi.vfs.VirtualFile
+import ru.kazantsev.nsmp.sdk.intellij_plugin.services.sync.data.DiffStatus
+import ru.kazantsev.nsmp.sdk.intellij_plugin.services.sync.data.SrcState
+import ru.kazantsev.nsmp.sdk.sources_sync.data.SrcType
 
 data class DiffRow(
     val type: SrcType,
     val code: String,
-    val leftPath: Path?,
-    val rightPath: Path?,
-    val leftSet: CompareSetType,
-    val rightSet: CompareSetType,
-    val status: DiffStatus,
-    val lastSyncDate: Instant?
+    val leftFile : VirtualFile?,
+    val leftSet: SrcState,
+    val rightFile : VirtualFile?,
+    val rightSet: SrcState,
+    val status: DiffStatus
 )

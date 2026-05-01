@@ -1,4 +1,4 @@
-package ru.kazantsev.nsmp.sdk.intellij_plugin.services.notification
+package ru.kazantsev.nsmp.sdk.intellij_plugin.services.ui.notification
 
 import com.intellij.notification.NotificationGroupManager
 import com.intellij.notification.NotificationType
