@@ -3,10 +3,9 @@ package ru.kazantsev.nsmp.sdk.intellij_plugin.actions.file
 import com.intellij.openapi.actionSystem.AnActionEvent
 import com.intellij.openapi.actionSystem.CommonDataKeys
 import com.intellij.openapi.components.service
-import ru.kazantsev.nsmp.sdk.intellij_plugin.services.ui.notification.BalloonNotificationService
-import ru.kazantsev.nsmp.sdk.intellij_plugin.services.ui.notification.DialogNotificationService
+import com.intellij.openapi.progress.ProgressManager
 import ru.kazantsev.nsmp.sdk.intellij_plugin.services.sync.SyncService
-import ru.kazantsev.nsmp.sdk.intellij_plugin.ui.MessageBundle
+import ru.kazantsev.nsmp.sdk.intellij_plugin.tasks.backgroundable.SyncCheckBackgroundTask
 
 class FileSyncCheckAction() : AbstractSrcFileAction() {
 
@@ -15,27 +14,7 @@ class FileSyncCheckAction() : AbstractSrcFileAction() {
         val project = event.getData(CommonDataKeys.PROJECT) ?: return
         if (!computableWithFile(project, file)) return
         val syncService = project.service<SyncService>()
-        val dialogNotificationService = project.service<DialogNotificationService>()
-        val balloonNotificationService = project.service<BalloonNotificationService>()
-        syncService.syncCheck(
-            file = file,
-            onSuccessCallback = { result ->
-                if (result.any { entry -> entry.value.any { it.conflict } }) balloonNotificationService.showError(
-                    title = MessageBundle.message("sync.command.sync.check.file.notification.title"),
-                    message = MessageBundle.message("sync.command.sync.check.file.not.in.sync")
-                )
-                else balloonNotificationService.showInfo(
-                    title = MessageBundle.message("sync.command.sync.check.file.notification.title"),
-                    message = MessageBundle.message("sync.command.sync.check.file.success")
-                )
-            },
-            onFailureCallback = { error ->
-                dialogNotificationService.showError(
-                    title = MessageBundle.message("sync.command.sync.check.file.notification.title"),
-                    message = MessageBundle.message("sync.command.error"),
-                    error = error
-                )
-            }
-        )
+        val request = syncService.getSrcRequestForFileElseThrow(file)
+        ProgressManager.getInstance().run(SyncCheckBackgroundTask(project = project, request = request))
     }
 }

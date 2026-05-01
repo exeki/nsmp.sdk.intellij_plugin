@@ -3,15 +3,14 @@ package ru.kazantsev.nsmp.sdk.intellij_plugin.actions.file
 import com.intellij.openapi.actionSystem.AnActionEvent
 import com.intellij.openapi.actionSystem.CommonDataKeys
 import com.intellij.openapi.components.service
+import com.intellij.openapi.progress.ProgressManager
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.ui.DialogWrapper
 import com.intellij.ui.components.JBCheckBox
 import com.intellij.ui.components.JBLabel
-import ru.kazantsev.nsmp.sdk.intellij_plugin.services.ui.notification.BalloonNotificationService
-import ru.kazantsev.nsmp.sdk.intellij_plugin.services.ui.notification.DialogNotificationService
 import ru.kazantsev.nsmp.sdk.intellij_plugin.services.sync.SyncService
+import ru.kazantsev.nsmp.sdk.intellij_plugin.tasks.backgroundable.PushBackgroundTask
 import ru.kazantsev.nsmp.sdk.intellij_plugin.ui.MessageBundle
-import ru.kazantsev.nsmp.sdk.sources_sync.exception.commands.PushSyncCheckFailedException
 import java.awt.BorderLayout
 import javax.swing.JComponent
 import javax.swing.JPanel
@@ -23,33 +22,16 @@ class FilePushAction() : AbstractSrcFileAction() {
         val project = event.getData(CommonDataKeys.PROJECT) ?: return
         if (!computableWithFile(project, file)) return
         val syncService = project.service<SyncService>()
-        val dialogNotificationService = project.service<DialogNotificationService>()
-        val balloonNotificationService = project.service<BalloonNotificationService>()
 
         val confirmationDialog = PushConfirmationDialog(project)
         if (!confirmationDialog.showAndGet()) return
 
-        syncService.push(
-            file = file,
+        val request = syncService.getSrcRequestForFileElseThrow(file)
+        ProgressManager.getInstance().run(PushBackgroundTask(
+            project = project,
+            request = request,
             force = confirmationDialog.force,
-            onSuccessCallback = {
-                balloonNotificationService.showInfo(
-                    MessageBundle.message("sync.command.push.file.notification.title"),
-                    MessageBundle.message("sync.command.push.file.success")
-                )
-            },
-            onFailureCallback = { error ->
-                if (error is PushSyncCheckFailedException) dialogNotificationService.showError(
-                    title = MessageBundle.message("sync.command.push.file.notification.title"),
-                    message = MessageBundle.message("sync.command.push.sync.check.failed")
-                )
-                else dialogNotificationService.showError(
-                    title = MessageBundle.message("sync.command.push.file.notification.title"),
-                    message = MessageBundle.message("sync.command.error"),
-                    error = error
-                )
-            }
-        )
+        ))
     }
 
     private class PushConfirmationDialog(project: Project) : DialogWrapper(project) {

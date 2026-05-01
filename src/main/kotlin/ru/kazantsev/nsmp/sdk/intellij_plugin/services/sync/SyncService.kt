@@ -1,20 +1,12 @@
 package ru.kazantsev.nsmp.sdk.intellij_plugin.services.sync
 
-import com.intellij.openapi.application.ApplicationManager
 import com.intellij.openapi.components.Service
 import com.intellij.openapi.components.service
-import com.intellij.openapi.diagnostic.thisLogger
-import com.intellij.openapi.fileEditor.FileDocumentManager
-import com.intellij.openapi.progress.ProgressIndicator
-import com.intellij.openapi.progress.ProgressManager
-import com.intellij.openapi.progress.Task
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.vfs.VirtualFile
 import ru.kazantsev.nsmp.sdk.intellij_plugin.exception.SrcSyncUnsupportedType
 import ru.kazantsev.nsmp.sdk.intellij_plugin.exception.UnknownSourceType
-import ru.kazantsev.nsmp.sdk.intellij_plugin.services.FileSupportService
 import ru.kazantsev.nsmp.sdk.intellij_plugin.services.settings.ProjectSettingsService
-import ru.kazantsev.nsmp.sdk.intellij_plugin.services.sync.state.LastSyncedSrcStateService
 import ru.kazantsev.nsmp.sdk.intellij_plugin.ui.MessageBundle
 import ru.kazantsev.nsmp.sdk.sources_sync.SrcSyncService
 import ru.kazantsev.nsmp.sdk.sources_sync.data.SrcType
@@ -29,15 +21,9 @@ import java.nio.file.Paths
 
 @Service(Service.Level.PROJECT)
 class SyncService(private val project: Project) {
-    companion object {
-        private val logger = thisLogger()
-    }
+
 
     val projectSettingsService = project.service<ProjectSettingsService>()
-
-    val lastSyncedSrcStateService = project.service<LastSyncedSrcStateService>()
-
-    val fileSupportService = project.service<FileSupportService>()
 
     fun createSrcSyncService(): SrcSyncService {
         return SrcSyncService(
@@ -89,111 +75,15 @@ class SyncService(private val project: Project) {
     }
 
     fun pull(request: SrcRequest): SrcSetRoot<SrcFileChecksum> {
-        val result = createSrcSyncService().pull(request)
-        lastSyncedSrcStateService.updateLastSyncedStateBackground(result)
-        return result
+        return createSrcSyncService().pull(request)
     }
-
-    fun pull(
-        file: VirtualFile,
-        onSuccessCallback: (SrcSetRoot<SrcFileChecksum>) -> Unit,
-        onFailureCallback: (Throwable) -> Unit
-    ) {
-        val request = getSrcRequestForFileElseThrow(file)
-        pull(request, onSuccessCallback, onFailureCallback)
-    }
-
-    fun pull(
-        request: SrcRequest,
-        onSuccessCallback: (SrcSetRoot<SrcFileChecksum>) -> Unit,
-        onFailureCallback: (Throwable) -> Unit
-    ) {
-        val backgroundTaskTitle = MessageBundle.message("sync.command.pull.title")
-        FileDocumentManager.getInstance().saveAllDocuments()
-        ProgressManager.getInstance().run(object : Task.Backgroundable(project, backgroundTaskTitle, true) {
-            override fun run(indicator: ProgressIndicator) {
-                try {
-                    val result = pull(request)
-                    ApplicationManager.getApplication().invokeLater { onSuccessCallback(result) }
-                } catch (error: Throwable) {
-                    ApplicationManager.getApplication().invokeLater { onFailureCallback(error) }
-                } finally {
-                    fileSupportService.refreshProjectExplorer()
-                }
-            }
-        })
-    }
-
 
     fun syncCheck(request: SrcRequest): SrcSetRoot<SrcSyncCheckPair<SrcFileChecksum, SrcChecksum>> {
         return createSrcSyncService().syncCheck(request)
     }
 
-    fun syncCheck(
-        file: VirtualFile,
-        onSuccessCallback: (SrcSetRoot<SrcSyncCheckPair<SrcFileChecksum, SrcChecksum>>) -> Unit,
-        onFailureCallback: (Throwable) -> Unit
-    ) {
-        val request = getSrcRequestForFileElseThrow(file)
-        syncCheck(request, onSuccessCallback, onFailureCallback)
-    }
-
-    fun syncCheck(
-        request: SrcRequest,
-        onSuccessCallback: (SrcSetRoot<SrcSyncCheckPair<SrcFileChecksum, SrcChecksum>>) -> Unit,
-        onFailureCallback: (Throwable) -> Unit
-    ) {
-        val backgroundTaskTitle = MessageBundle.message("sync.command.sync.check.title")
-        FileDocumentManager.getInstance().saveAllDocuments()
-        ProgressManager.getInstance().run(object : Task.Backgroundable(project, backgroundTaskTitle, true) {
-            override fun run(indicator: ProgressIndicator) {
-                try {
-                    val result = syncCheck(request)
-                    ApplicationManager.getApplication().invokeLater { onSuccessCallback(result) }
-                } catch (error: Throwable) {
-                    ApplicationManager.getApplication().invokeLater { onFailureCallback(error) }
-                } finally {
-                    fileSupportService.refreshProjectExplorer()
-                }
-            }
-        })
-    }
-
     fun push(request: SrcRequest, force: Boolean): SrcSetRoot<SrcPair<SrcFileChecksum, SrcChecksum>> {
-        val result = createSrcSyncService().push(request, force)
-        lastSyncedSrcStateService.updateLastSyncedStateBackground(result.convert { _, pair -> pair.left })
-        return result
+        return createSrcSyncService().push(request, force)
     }
 
-    fun push(
-        file: VirtualFile,
-        force: Boolean,
-        onSuccessCallback: (SrcSetRoot<SrcPair<SrcFileChecksum, SrcChecksum>>) -> Unit,
-        onFailureCallback: (Throwable) -> Unit
-    ) {
-        val request = getSrcRequestForFileElseThrow(file)
-        push(request, force, onSuccessCallback, onFailureCallback)
-    }
-
-    fun push(
-        request: SrcRequest,
-        force: Boolean,
-        onSuccessCallback: (SrcSetRoot<SrcPair<SrcFileChecksum, SrcChecksum>>) -> Unit,
-        onFailureCallback: (Throwable) -> Unit
-    ) {
-        val backgroundTaskTitle = MessageBundle.message("sync.command.push.title")
-        FileDocumentManager.getInstance().saveAllDocuments()
-        ProgressManager.getInstance().run(object : Task.Backgroundable(project, backgroundTaskTitle, true) {
-            override fun run(indicator: ProgressIndicator) {
-                try {
-                    val result = push(request, force)
-                    ApplicationManager.getApplication().invokeLater { onSuccessCallback(result) }
-                } catch (error: Throwable) {
-                    ApplicationManager.getApplication().invokeLater { onFailureCallback(error) }
-                } finally {
-                    fileSupportService.refreshProjectExplorer()
-                }
-            }
-        })
-    }
 }

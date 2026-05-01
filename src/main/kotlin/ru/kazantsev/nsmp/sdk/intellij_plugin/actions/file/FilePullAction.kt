@@ -3,10 +3,9 @@ package ru.kazantsev.nsmp.sdk.intellij_plugin.actions.file
 import com.intellij.openapi.actionSystem.AnActionEvent
 import com.intellij.openapi.actionSystem.CommonDataKeys
 import com.intellij.openapi.components.service
-import ru.kazantsev.nsmp.sdk.intellij_plugin.services.ui.notification.BalloonNotificationService
-import ru.kazantsev.nsmp.sdk.intellij_plugin.services.ui.notification.DialogNotificationService
+import com.intellij.openapi.progress.ProgressManager
 import ru.kazantsev.nsmp.sdk.intellij_plugin.services.sync.SyncService
-import ru.kazantsev.nsmp.sdk.intellij_plugin.ui.MessageBundle
+import ru.kazantsev.nsmp.sdk.intellij_plugin.tasks.backgroundable.PullBackgroundTask
 
 class FilePullAction() : AbstractSrcFileAction() {
 
@@ -15,23 +14,7 @@ class FilePullAction() : AbstractSrcFileAction() {
         val project = event.getData(CommonDataKeys.PROJECT) ?: return
         if (!computableWithFile(project, file)) return
         val syncService = project.service<SyncService>()
-        val dialogNotificationService = project.service<DialogNotificationService>()
-        val balloonNotificationService = project.service<BalloonNotificationService>()
-        syncService.pull(
-            file = file,
-            onSuccessCallback = {
-                balloonNotificationService.showInfo(
-                    MessageBundle.message("sync.command.pull.file.notification.title"),
-                    MessageBundle.message("sync.command.pull.file.success")
-                )
-            },
-            onFailureCallback = { error ->
-                dialogNotificationService.showError(
-                    title = MessageBundle.message("sync.command.pull.file.notification.title"),
-                    message = MessageBundle.message("sync.command.error"),
-                    error = error
-                )
-            }
-        )
+        val request = syncService.getSrcRequestForFileElseThrow(file)
+        ProgressManager.getInstance().run(PullBackgroundTask(project = project, request = request))
     }
 }
