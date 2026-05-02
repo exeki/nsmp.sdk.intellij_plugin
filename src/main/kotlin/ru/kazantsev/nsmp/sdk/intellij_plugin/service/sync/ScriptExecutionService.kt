@@ -34,8 +34,7 @@ class ScriptExecutionService(private val project: Project) {
     ): String {
         return listOf(contextVirtualFile, file)
             .onEach { fileSupportService.saveDocument(fileSupportService.getDocument(it)) }
-            .map { file -> readTextWithoutPackage(file) }
-            .joinToString(separator = "\n\n")
+            .joinToString(separator = "\n\n") { file -> readTextWithoutPackage(file) }
     }
 
     private fun readTextWithoutPackage(file: VirtualFile): String {

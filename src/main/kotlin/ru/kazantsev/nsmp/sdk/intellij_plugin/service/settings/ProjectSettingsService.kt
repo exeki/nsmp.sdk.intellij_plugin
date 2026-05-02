@@ -6,7 +6,6 @@ import com.intellij.openapi.project.Project
 import ru.kazantsev.nsmp.basic_api_connector.ConnectorParams
 import ru.kazantsev.nsmp.sdk.intellij_plugin.exception.UnselectedProjectInstallation
 import ru.kazantsev.nsmp.sdk.intellij_plugin.service.settings.state.ProjectState
-import ru.kazantsev.nsmp.sdk.intellij_plugin.service.ui.notification.DialogNotificationService
 import ru.kazantsev.nsmp.sdk.intellij_plugin.ui.MessageBundle
 import ru.kazantsev.nsmp.sdk.sources_sync.SrcFoldersParams
 
@@ -53,14 +52,8 @@ class ProjectSettingsService(private val project: Project) : PersistentStateComp
             )
         }
 
-    fun checkInstallationIsSpecified(): Boolean {
-        if (state.selectedInstallationId.isNotEmpty()) return true
-        //TODO заменить на бандл
-        project.service<DialogNotificationService>().showError(
-            "Project installation not found",
-            "Project installation is not specified. Please specify installation in settings."
-        )
-        return false
+    fun installationIsSpecified(): Boolean {
+        return state.selectedInstallationId.isNotEmpty()
     }
 
     fun getExecutionContext(code: String): String? {

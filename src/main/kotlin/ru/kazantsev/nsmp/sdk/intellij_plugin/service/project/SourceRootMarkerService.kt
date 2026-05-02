@@ -11,14 +11,19 @@ import com.intellij.openapi.vfs.VirtualFile
 import org.jetbrains.jps.model.java.JavaResourceRootType
 import org.jetbrains.jps.model.java.JavaSourceRootType
 import ru.kazantsev.nsmp.sdk.intellij_plugin.service.settings.ProjectSettingsService
+import ru.kazantsev.nsmp.sdk.intellij_plugin.service.ui.PluginActivationService
 
+//TODO завязать на активацию плагина
 @Service(Service.Level.PROJECT)
 class SourceRootMarkerService(private val project: Project) {
 
     private val projectSettingsService = project.service<ProjectSettingsService>()
 
+    private val pluginActivationService = project.service<PluginActivationService>()
+
     private val srcFoldersParams = projectSettingsService.srcFoldersParams
 
+    //TODO оно тут навсегда и не поменяется при смене настроек, исправить
     val srcRoots = setOf(
         srcFoldersParams.getScriptsRelativePathString(),
         srcFoldersParams.getModulesRelativePathString(),
@@ -26,6 +31,7 @@ class SourceRootMarkerService(private val project: Project) {
     )
 
     fun markConfiguredRoots() {
+        if (!pluginActivationService.pluginActive) return
         if (project.isDisposed) return
 
         val modules = ModuleManager.getInstance(project).modules
@@ -37,9 +43,7 @@ class SourceRootMarkerService(private val project: Project) {
                 }
             }
 
-            if (changed) {
-                logger.info("Updated source/resource roots for module '${module.name}'")
-            }
+            if (changed) logger.info("Updated source/resource roots for module '${module.name}'")
         }
     }
 

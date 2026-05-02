@@ -19,6 +19,7 @@ import ru.kazantsev.nsmp.sdk.intellij_plugin.service.ui.notification.DialogNotif
 import ru.kazantsev.nsmp.sdk.intellij_plugin.service.project.SourceRootMarkerService
 import ru.kazantsev.nsmp.sdk.intellij_plugin.service.settings.AppSettingsService
 import ru.kazantsev.nsmp.sdk.intellij_plugin.service.settings.ProjectSettingsService
+import ru.kazantsev.nsmp.sdk.intellij_plugin.service.ui.PluginActivationService
 import java.awt.BorderLayout
 import java.awt.FlowLayout
 import javax.swing.BorderFactory
@@ -162,6 +163,7 @@ class PluginConfigurable(private val project: Project) : Configurable {
         projectSettings.state.modulesDirectoryPath = modulesDirectoryField?.text?.trim().orEmpty()
         projectSettings.state.advImportsDirectoryPath = advImportsDirectoryField?.text?.trim().orEmpty()
         project.service<SourceRootMarkerService>().markConfiguredRoots()
+        project.service<PluginActivationService>().refresh()
         NsdHttpServerServiceHolder.restartServer(project)
     }
 
