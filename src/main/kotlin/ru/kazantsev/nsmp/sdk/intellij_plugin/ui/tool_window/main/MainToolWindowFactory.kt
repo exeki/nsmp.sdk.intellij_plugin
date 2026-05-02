@@ -7,6 +7,7 @@ import com.intellij.ui.content.ContentFactory
 import ru.kazantsev.nsmp.sdk.intellij_plugin.ui.tool_window.main.buttons.PullButton
 import ru.kazantsev.nsmp.sdk.intellij_plugin.ui.tool_window.main.buttons.PushButton
 import ru.kazantsev.nsmp.sdk.intellij_plugin.ui.tool_window.main.buttons.CheckButton
+import ru.kazantsev.nsmp.sdk.intellij_plugin.ui.tool_window.main.buttons.OpenInstallationButton
 import javax.swing.*
 
 /**
@@ -19,6 +20,8 @@ class MainToolWindowFactory : ToolWindowFactory {
             layout = BoxLayout(this, BoxLayout.Y_AXIS)
             border = BorderFactory.createEmptyBorder(8, 8, 8, 8)
             add(Box.createVerticalStrut(5))
+            add(OpenInstallationButton())
+            add(Box.createVerticalStrut(8))
             add(PullButton())
             add(Box.createVerticalStrut(8))
             add(CheckButton())

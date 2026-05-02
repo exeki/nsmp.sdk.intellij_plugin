@@ -24,14 +24,14 @@
                     icon="/icons/logo/stripe_crossed/nsmp_logo_stripe_crossed.svg"
                     factoryClass="ru.kazantsev.nsmp.sdk.intellij_plugin.ui.tool_window.diff_manager.DiffManagerToolWindowFactory"
                     canCloseContents="false"/>
-        <projectConfigurable id="ru.kazantsev.nsmp.sdk.intellij_plugin.services.settings"
+        <projectConfigurable id="ru.kazantsev.nsmp.sdk.intellij_plugin.service.settings"
                              parentId="tools"
                              instance="ru.kazantsev.nsmp.sdk.intellij_plugin.ui.settings.PluginConfigurable"
                              displayName="NSMP SDK"/>
     </extensions>
 
     <projectListeners>
-        <listener class="ru.kazantsev.nsmp.sdk.intellij_plugin.listeners.top_panel.TopPanelFileEditorManagerListener"
+        <listener class="ru.kazantsev.nsmp.sdk.intellij_plugin.listener.top_panel.TopPanelFileEditorManagerListener"
                   topic="com.intellij.openapi.fileEditor.FileEditorManagerListener"/>
     </projectListeners>
 

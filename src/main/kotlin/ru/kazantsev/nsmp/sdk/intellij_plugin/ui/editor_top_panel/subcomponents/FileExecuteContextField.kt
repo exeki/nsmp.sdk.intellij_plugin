@@ -10,8 +10,8 @@ import com.intellij.openapi.ui.TextFieldWithBrowseButton
 import com.intellij.openapi.vfs.VirtualFile
 import com.intellij.util.ui.JBUI
 import com.intellij.util.ui.UIUtil
-import ru.kazantsev.nsmp.sdk.intellij_plugin.services.FileSupportService
-import ru.kazantsev.nsmp.sdk.intellij_plugin.services.settings.ProjectSettingsService
+import ru.kazantsev.nsmp.sdk.intellij_plugin.service.FileSupportService
+import ru.kazantsev.nsmp.sdk.intellij_plugin.service.settings.ProjectSettingsService
 import ru.kazantsev.nsmp.sdk.intellij_plugin.ui.MessageBundle
 import javax.swing.event.DocumentEvent
 import javax.swing.event.DocumentListener

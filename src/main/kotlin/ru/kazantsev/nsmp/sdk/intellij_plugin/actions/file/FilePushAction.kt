@@ -8,8 +8,8 @@ import com.intellij.openapi.project.Project
 import com.intellij.openapi.ui.DialogWrapper
 import com.intellij.ui.components.JBCheckBox
 import com.intellij.ui.components.JBLabel
-import ru.kazantsev.nsmp.sdk.intellij_plugin.services.sync.SyncService
-import ru.kazantsev.nsmp.sdk.intellij_plugin.tasks.backgroundable.PushBackgroundTask
+import ru.kazantsev.nsmp.sdk.intellij_plugin.service.sync.SyncService
+import ru.kazantsev.nsmp.sdk.intellij_plugin.task.backgroundable.PushBackgroundTask
 import ru.kazantsev.nsmp.sdk.intellij_plugin.ui.MessageBundle
 import java.awt.BorderLayout
 import javax.swing.JComponent

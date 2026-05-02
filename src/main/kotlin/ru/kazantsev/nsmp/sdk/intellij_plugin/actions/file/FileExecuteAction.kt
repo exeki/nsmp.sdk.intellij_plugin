@@ -4,8 +4,8 @@ import com.intellij.openapi.actionSystem.AnActionEvent
 import com.intellij.openapi.actionSystem.CommonDataKeys
 import com.intellij.openapi.components.service
 import com.intellij.openapi.progress.ProgressManager
-import ru.kazantsev.nsmp.sdk.intellij_plugin.services.settings.ProjectSettingsService
-import ru.kazantsev.nsmp.sdk.intellij_plugin.tasks.backgroundable.FileExecuteBackgroundTask
+import ru.kazantsev.nsmp.sdk.intellij_plugin.service.settings.ProjectSettingsService
+import ru.kazantsev.nsmp.sdk.intellij_plugin.task.backgroundable.FileExecuteBackgroundTask
 
 class FileExecuteAction : AbstractGroovyFileAction() {
 

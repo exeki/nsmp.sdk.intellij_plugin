@@ -4,7 +4,7 @@ import com.intellij.openapi.ui.ComboBox
 import com.intellij.ui.components.JBTextField
 import com.intellij.util.ui.JBUI
 import ru.kazantsev.nsmp.sdk.intellij_plugin.ui.MessageBundle
-import ru.kazantsev.nsmp.sdk.intellij_plugin.services.sync.data.SrcState
+import ru.kazantsev.nsmp.sdk.intellij_plugin.service.sync.data.SrcState
 import ru.kazantsev.nsmp.sdk.intellij_plugin.ui.tool_window.diff_manager.model.DiffTypeFilter
 import java.awt.Component
 import java.awt.Dimension

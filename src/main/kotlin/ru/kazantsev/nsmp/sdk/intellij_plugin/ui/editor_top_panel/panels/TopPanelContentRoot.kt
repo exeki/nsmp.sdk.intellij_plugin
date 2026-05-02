@@ -4,7 +4,7 @@ import com.intellij.openapi.components.service
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.vfs.VirtualFile
 import com.intellij.util.ui.JBUI
-import ru.kazantsev.nsmp.sdk.intellij_plugin.services.settings.ProjectSettingsService
+import ru.kazantsev.nsmp.sdk.intellij_plugin.service.settings.ProjectSettingsService
 import ru.kazantsev.nsmp.sdk.intellij_plugin.ui.editor_top_panel.TopPanelScrollPane
 import ru.kazantsev.nsmp.sdk.intellij_plugin.ui.editor_top_panel.panels.content.CollapsedPanelContent
 import ru.kazantsev.nsmp.sdk.intellij_plugin.ui.editor_top_panel.panels.content.PanelContent

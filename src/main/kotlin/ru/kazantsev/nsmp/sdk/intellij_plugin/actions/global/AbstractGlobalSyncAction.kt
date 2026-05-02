@@ -2,10 +2,8 @@ package ru.kazantsev.nsmp.sdk.intellij_plugin.actions.global
 
 import com.intellij.openapi.actionSystem.AnActionEvent
 import com.intellij.openapi.actionSystem.CommonDataKeys
-import com.intellij.openapi.components.service
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.ui.DialogWrapper
-import ru.kazantsev.nsmp.sdk.intellij_plugin.services.settings.ProjectSettingsService
 import ru.kazantsev.nsmp.sdk.intellij_plugin.ui.MessageBundle
 import ru.kazantsev.nsmp.sdk.intellij_plugin.ui.global_src_request_dialog.SrcRequestSelectDialog
 import ru.kazantsev.nsmp.sdk.intellij_plugin.ui.global_src_request_dialog.model.SrcRequestSelectState
@@ -24,8 +22,6 @@ abstract class AbstractGlobalSyncAction : AbstractGlobalAction() {
 
     override fun actionPerformed(event: AnActionEvent) {
         val project = event.getData(CommonDataKeys.PROJECT) ?: return
-        val projectSettingsService = project.service<ProjectSettingsService>()
-        if (!projectSettingsService.checkInstallationIsSpecified()) return
         val dialog = getDialog(project)
         dialog.showAndGet()
     }

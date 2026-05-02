@@ -1,8 +1,8 @@
 package ru.kazantsev.nsmp.sdk.intellij_plugin.ui.global_src_request_dialog.options_provider
 
-import ru.kazantsev.nsmp.sdk.intellij_plugin.services.sync.options.SrcOptionsService
+import ru.kazantsev.nsmp.sdk.intellij_plugin.service.sync.options.SrcOptionsService
 import java.util.concurrent.CompletableFuture
-import ru.kazantsev.nsmp.sdk.intellij_plugin.services.sync.options.dto.SrcOption
+import ru.kazantsev.nsmp.sdk.intellij_plugin.service.sync.options.dto.SrcOption
 
 class RemoteSrcOptionsProvider(
     private val srcOptionsService: SrcOptionsService,

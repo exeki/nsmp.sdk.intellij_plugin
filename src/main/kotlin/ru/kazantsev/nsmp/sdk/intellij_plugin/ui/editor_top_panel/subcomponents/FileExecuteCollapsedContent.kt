@@ -3,7 +3,7 @@ package ru.kazantsev.nsmp.sdk.intellij_plugin.ui.editor_top_panel.subcomponents
 import com.intellij.openapi.components.service
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.vfs.VirtualFile
-import ru.kazantsev.nsmp.sdk.intellij_plugin.services.settings.ProjectSettingsService
+import ru.kazantsev.nsmp.sdk.intellij_plugin.service.settings.ProjectSettingsService
 import ru.kazantsev.nsmp.sdk.intellij_plugin.ui.MessageBundle
 import java.awt.event.HierarchyEvent
 import javax.swing.JLabel

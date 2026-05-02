@@ -6,7 +6,7 @@ import com.intellij.openapi.project.Project
 import com.intellij.ui.components.JBScrollPane
 import com.intellij.ui.table.JBTable
 import ru.kazantsev.nsmp.sdk.intellij_plugin.ui.MessageBundle
-import ru.kazantsev.nsmp.sdk.intellij_plugin.services.sync.options.dto.SrcOption
+import ru.kazantsev.nsmp.sdk.intellij_plugin.service.sync.options.dto.SrcOption
 import ru.kazantsev.nsmp.sdk.intellij_plugin.ui.global_src_request_dialog.model.SelectedSrcOption
 import java.awt.BorderLayout
 import java.awt.Dimension

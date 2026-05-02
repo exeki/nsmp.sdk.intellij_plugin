@@ -15,10 +15,10 @@ import ru.kazantsev.nsmp.basic_api_connector.ConfigService
 import ru.kazantsev.nsmp.basic_api_connector.dto.InstallationDto
 import ru.kazantsev.nsmp.sdk.intellij_plugin.ui.MessageBundle
 import ru.kazantsev.nsmp.sdk.intellij_plugin.server.service.NsdHttpServerService
-import ru.kazantsev.nsmp.sdk.intellij_plugin.services.ui.notification.DialogNotificationService
-import ru.kazantsev.nsmp.sdk.intellij_plugin.services.project.SourceRootMarkerService
-import ru.kazantsev.nsmp.sdk.intellij_plugin.services.settings.AppSettingsService
-import ru.kazantsev.nsmp.sdk.intellij_plugin.services.settings.ProjectSettingsService
+import ru.kazantsev.nsmp.sdk.intellij_plugin.service.ui.notification.DialogNotificationService
+import ru.kazantsev.nsmp.sdk.intellij_plugin.service.project.SourceRootMarkerService
+import ru.kazantsev.nsmp.sdk.intellij_plugin.service.settings.AppSettingsService
+import ru.kazantsev.nsmp.sdk.intellij_plugin.service.settings.ProjectSettingsService
 import java.awt.BorderLayout
 import java.awt.FlowLayout
 import javax.swing.BorderFactory
@@ -33,6 +33,7 @@ import javax.swing.table.DefaultTableModel
 class PluginConfigurable(private val project: Project) : Configurable {
     private var panel: JPanel? = null
     private var portField: JBTextField? = null
+    private var scriptExecuteReadTimeoutField: JBTextField? = null
     private var configPathField: JBTextField? = null
     private var installationsTable: JBTable? = null
     private var installationsTableModel: DefaultTableModel? = null
@@ -54,6 +55,7 @@ class PluginConfigurable(private val project: Project) : Configurable {
     override fun createComponent(): JComponent {
         if (panel == null) {
             val port = JBTextField()
+            val scriptExecuteReadTimeout = JBTextField()
             val configPath = JBTextField()
             val model = createTableModel()
             val table = JBTable(model)
@@ -80,6 +82,7 @@ class PluginConfigurable(private val project: Project) : Configurable {
 
             val globalSettingsPanel = FormBuilder.createFormBuilder()
                 .addLabeledComponent(MessageBundle.message("settings.global.server.port"), port)
+                .addLabeledComponent(MessageBundle.message("settings.global.script.execute.read.timeout"), scriptExecuteReadTimeout)
                 .addLabeledComponent(MessageBundle.message("settings.global.connector.config.path"), configPath)
                 .addComponentFillVertically(tablePanel, 0)
                 .panel
@@ -103,6 +106,7 @@ class PluginConfigurable(private val project: Project) : Configurable {
             }
 
             portField = port
+            scriptExecuteReadTimeoutField = scriptExecuteReadTimeout
             configPathField = configPath
             installationsTable = table
             installationsTableModel = model
@@ -121,6 +125,7 @@ class PluginConfigurable(private val project: Project) : Configurable {
         val appSettings = this.appSettings
 
         if (portField?.text?.trim() != appSettings.serverPort.toString()) return true
+        if (scriptExecuteReadTimeoutField?.text?.trim() != appSettings.settings.scriptExecuteReadTimeoutMs.toString()) return true
         val configPath = configPathField?.text?.trim().orEmpty()
         if (configPath != appSettings.pathToConfigFile) return true
 
@@ -138,6 +143,7 @@ class PluginConfigurable(private val project: Project) : Configurable {
         val appSettings = this.appSettings
 
         val port = parsePort(portField?.text)
+        val scriptExecuteReadTimeoutMs = parseScriptExecuteReadTimeout(scriptExecuteReadTimeoutField?.text)
         val configPath = configPathField?.text?.trim().orEmpty()
         if (configPath.isBlank()) throw ConfigurationException(MessageBundle.message("settings.error.config.path.required"))
 
@@ -148,8 +154,9 @@ class PluginConfigurable(private val project: Project) : Configurable {
                 )
             }
 
-        appSettings.serverPort = port
-        appSettings.pathToConfigFile = configPath
+        appSettings.settings.serverPort = port
+        appSettings.settings.scriptExecuteReadTimeoutMs = scriptExecuteReadTimeoutMs
+        appSettings.settings.pathToConfigFile = configPath
         projectSettings.state.selectedInstallationId = (installationBox?.selectedItem as? InstallationOption)?.id.orEmpty()
         projectSettings.state.scriptsDirectoryPath = scriptsDirectoryField?.text?.trim().orEmpty()
         projectSettings.state.modulesDirectoryPath = modulesDirectoryField?.text?.trim().orEmpty()
@@ -161,6 +168,7 @@ class PluginConfigurable(private val project: Project) : Configurable {
     override fun reset() {
         val settings = AppSettingsService.getInstance()
         portField?.text = settings.serverPort.toString()
+        scriptExecuteReadTimeoutField?.text = settings.settings.scriptExecuteReadTimeoutMs.toString()
         configPathField?.text = settings.pathToConfigFile
         installations = createConfigService(settings.pathToConfigFile).getInstallations().toMutableList()
         refreshTable()
@@ -173,6 +181,7 @@ class PluginConfigurable(private val project: Project) : Configurable {
     override fun disposeUIResources() {
         panel = null
         portField = null
+        scriptExecuteReadTimeoutField = null
         configPathField = null
         installationsTable = null
         installationsTableModel = null
@@ -303,6 +312,13 @@ class PluginConfigurable(private val project: Project) : Configurable {
             ?: throw ConfigurationException(MessageBundle.message("settings.error.server.port.integer"))
         if (port !in 1..65535) throw ConfigurationException(MessageBundle.message("settings.error.server.port.range"))
         return port
+    }
+
+    private fun parseScriptExecuteReadTimeout(value: String?): Long {
+        val timeout = value?.trim()?.toLongOrNull()
+            ?: throw ConfigurationException(MessageBundle.message("settings.error.script.execute.read.timeout.integer"))
+        if (timeout <= 0) throw ConfigurationException(MessageBundle.message("settings.error.script.execute.read.timeout.positive"))
+        return timeout
     }
 
     private fun maskSecret(secret: String): String = if (secret.isBlank()) "" else "********"

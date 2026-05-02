@@ -3,7 +3,7 @@ package ru.kazantsev.nsmp.sdk.intellij_plugin.ui.editor_top_panel.panels.content
 import com.intellij.openapi.components.service
 import com.intellij.openapi.project.Project
 import com.intellij.util.ui.JBUI
-import ru.kazantsev.nsmp.sdk.intellij_plugin.services.settings.ProjectSettingsService
+import ru.kazantsev.nsmp.sdk.intellij_plugin.service.settings.ProjectSettingsService
 import ru.kazantsev.nsmp.sdk.intellij_plugin.ui.editor_top_panel.TopPanelScrollPane
 import java.awt.BorderLayout
 import java.awt.Component

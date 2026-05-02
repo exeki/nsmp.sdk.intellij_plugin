@@ -15,10 +15,10 @@ import com.intellij.ui.components.JBScrollPane
 import com.intellij.ui.table.JBTable
 import com.intellij.util.concurrency.AppExecutorUtil
 import com.intellij.util.ui.JBUI
-import ru.kazantsev.nsmp.sdk.intellij_plugin.services.sync.data.DiffStatus
-import ru.kazantsev.nsmp.sdk.intellij_plugin.services.sync.data.SrcState
-import ru.kazantsev.nsmp.sdk.intellij_plugin.services.sync.state.DiffService
-import ru.kazantsev.nsmp.sdk.intellij_plugin.tasks.backgroundable.UpdateRemoteStateBackgroundTask
+import ru.kazantsev.nsmp.sdk.intellij_plugin.service.sync.data.DiffStatus
+import ru.kazantsev.nsmp.sdk.intellij_plugin.service.sync.data.SrcState
+import ru.kazantsev.nsmp.sdk.intellij_plugin.service.sync.state.DiffService
+import ru.kazantsev.nsmp.sdk.intellij_plugin.task.backgroundable.UpdateRemoteStateBackgroundTask
 import ru.kazantsev.nsmp.sdk.intellij_plugin.ui.tool_window.diff_manager.model.DiffRow
 import ru.kazantsev.nsmp.sdk.sources_sync.data.request.SrcRequest
 import java.awt.BorderLayout

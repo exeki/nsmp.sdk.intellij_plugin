@@ -4,8 +4,8 @@ import com.intellij.ide.BrowserUtil
 import com.intellij.openapi.actionSystem.AnActionEvent
 import com.intellij.openapi.actionSystem.CommonDataKeys
 import com.intellij.openapi.components.service
-import ru.kazantsev.nsmp.sdk.intellij_plugin.services.settings.ProjectSettingsService
-import ru.kazantsev.nsmp.sdk.intellij_plugin.services.sync.SyncService
+import ru.kazantsev.nsmp.sdk.intellij_plugin.service.settings.ProjectSettingsService
+import ru.kazantsev.nsmp.sdk.intellij_plugin.service.sync.SyncService
 import ru.kazantsev.nsmp.sdk.sources_sync.data.SrcType
 
 class FileOpenInBrowserAction : AbstractSrcFileAction() {

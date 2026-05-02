@@ -8,7 +8,7 @@ import com.sun.net.httpserver.HttpExchange
 import com.sun.net.httpserver.HttpServer
 import ru.kazantsev.nsmp.sdk.intellij_plugin.server.JsonSerializer
 import kotlinx.serialization.json.JsonElement
-import ru.kazantsev.nsmp.sdk.intellij_plugin.services.settings.AppSettingsService
+import ru.kazantsev.nsmp.sdk.intellij_plugin.service.settings.AppSettingsService
 import java.net.BindException
 import java.net.InetSocketAddress
 import java.nio.charset.StandardCharsets

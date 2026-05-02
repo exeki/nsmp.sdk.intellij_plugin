@@ -3,7 +3,7 @@ package ru.kazantsev.nsmp.sdk.intellij_plugin.actions.file
 import com.intellij.openapi.components.service
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.vfs.VirtualFile
-import ru.kazantsev.nsmp.sdk.intellij_plugin.services.sync.SyncService
+import ru.kazantsev.nsmp.sdk.intellij_plugin.service.sync.SyncService
 
 abstract class AbstractSrcFileAction : AbstractFileAction() {
 
