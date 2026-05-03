@@ -16,7 +16,6 @@ import ru.kazantsev.nsmp.basic_api_connector.dto.InstallationDto
 import ru.kazantsev.nsmp.sdk.intellij_plugin.ui.MessageBundle
 import ru.kazantsev.nsmp.sdk.intellij_plugin.server.service.NsdHttpServerService
 import ru.kazantsev.nsmp.sdk.intellij_plugin.service.ui.notification.DialogNotificationService
-import ru.kazantsev.nsmp.sdk.intellij_plugin.service.project.SourceRootMarkerService
 import ru.kazantsev.nsmp.sdk.intellij_plugin.service.settings.AppSettingsService
 import ru.kazantsev.nsmp.sdk.intellij_plugin.service.settings.ProjectSettingsService
 import ru.kazantsev.nsmp.sdk.intellij_plugin.service.ui.PluginActivationService
@@ -162,7 +161,6 @@ class PluginConfigurable(private val project: Project) : Configurable {
         projectSettings.state.scriptsDirectoryPath = scriptsDirectoryField?.text?.trim().orEmpty()
         projectSettings.state.modulesDirectoryPath = modulesDirectoryField?.text?.trim().orEmpty()
         projectSettings.state.advImportsDirectoryPath = advImportsDirectoryField?.text?.trim().orEmpty()
-        project.service<SourceRootMarkerService>().markConfiguredRoots()
         project.service<PluginActivationService>().refresh()
         NsdHttpServerServiceHolder.restartServer(project)
     }

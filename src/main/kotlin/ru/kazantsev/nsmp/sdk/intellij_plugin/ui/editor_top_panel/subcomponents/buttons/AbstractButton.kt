@@ -5,7 +5,7 @@ import com.intellij.openapi.actionSystem.impl.ActionButtonWithText
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.vfs.VirtualFile
 import com.intellij.util.ui.JBUI
-import ru.kazantsev.nsmp.sdk.intellij_plugin.actions.file.AbstractFileAction
+import ru.kazantsev.nsmp.sdk.intellij_plugin.actions.project.file.AbstractFileAction
 
 abstract class AbstractButton(
     protected val project: Project,

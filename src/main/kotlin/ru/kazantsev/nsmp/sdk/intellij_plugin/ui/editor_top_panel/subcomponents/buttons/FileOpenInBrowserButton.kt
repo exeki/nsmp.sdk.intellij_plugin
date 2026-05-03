@@ -3,7 +3,7 @@ package ru.kazantsev.nsmp.sdk.intellij_plugin.ui.editor_top_panel.subcomponents.
 import com.intellij.openapi.actionSystem.Presentation
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.vfs.VirtualFile
-import ru.kazantsev.nsmp.sdk.intellij_plugin.actions.file.FileOpenInBrowserAction
+import ru.kazantsev.nsmp.sdk.intellij_plugin.actions.project.file.FileOpenInBrowserAction
 
 class FileOpenInBrowserButton(
     project: Project,

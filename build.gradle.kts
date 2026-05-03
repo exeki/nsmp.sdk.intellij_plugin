@@ -6,7 +6,7 @@ plugins {
 }
 
 group = "ru.kazantsev.nsmp.sdk"
-version = "0.7.4"
+version = "0.8.0"
 
 repositories {
     mavenCentral()
@@ -29,6 +29,8 @@ dependencies {
         bundledPlugin("com.intellij.java")
         bundledPlugin("org.intellij.groovy")
     }
+    testImplementation(kotlin("test"))
+    testRuntimeOnly("junit:junit:4.13.2")
 }
 
 intellijPlatform {
@@ -59,6 +61,9 @@ tasks {
     withType<JavaCompile> {
         sourceCompatibility = "21"
         targetCompatibility = "21"
+    }
+    test {
+        useJUnitPlatform()
     }
 }
 

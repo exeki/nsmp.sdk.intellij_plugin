@@ -3,7 +3,7 @@ package ru.kazantsev.nsmp.sdk.intellij_plugin.ui.editor_top_panel.subcomponents.
 import com.intellij.openapi.actionSystem.Presentation
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.vfs.VirtualFile
-import ru.kazantsev.nsmp.sdk.intellij_plugin.actions.file.FileExecuteAction
+import ru.kazantsev.nsmp.sdk.intellij_plugin.actions.project.file.FileExecuteAction
 
 class FileExecuteButton(
     project: Project,

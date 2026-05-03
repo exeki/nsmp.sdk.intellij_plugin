@@ -5,7 +5,6 @@ import com.intellij.openapi.diagnostic.thisLogger
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.startup.ProjectActivity
 import ru.kazantsev.nsmp.sdk.intellij_plugin.server.service.NsdHttpServerService
-import ru.kazantsev.nsmp.sdk.intellij_plugin.service.project.SourceRootMarkerService
 import ru.kazantsev.nsmp.sdk.intellij_plugin.service.settings.AppSettingsService
 import ru.kazantsev.nsmp.sdk.intellij_plugin.service.ui.PluginActivationService
 
@@ -15,7 +14,6 @@ class NsdProjectStartupActivity : ProjectActivity {
 
         ApplicationManager.getApplication().getService(AppSettingsService::class.java)
         ApplicationManager.getApplication().getService(NsdHttpServerService::class.java)
-        project.getService(SourceRootMarkerService::class.java).markConfiguredRoots()
         project.getService(PluginActivationService::class.java).refresh()
 
         logger.info("NSD Plugin services initialized for project '${project.name}'")

@@ -6,6 +6,7 @@ import com.intellij.openapi.application.ApplicationManager
 import com.intellij.openapi.progress.ProgressIndicator
 import com.intellij.openapi.progress.Task
 import com.intellij.openapi.project.Project
+import ru.kazantsev.nsmp.sdk.intellij_plugin.exception.SyncTaskAlreadyRunningException
 import ru.kazantsev.nsmp.sdk.intellij_plugin.service.FileSupportService
 import ru.kazantsev.nsmp.sdk.intellij_plugin.service.ui.notification.BalloonNotificationService
 import ru.kazantsev.nsmp.sdk.intellij_plugin.service.ui.notification.DialogNotificationService
@@ -57,19 +58,26 @@ class PushBackgroundTask(
     }
 
     override fun onThrowable(error: Throwable) {
-        val dialogNotificationService = project.service<DialogNotificationService>()
-        if (error is PushSyncCheckFailedException) {
-            dialogNotificationService.showError(
+        val dialogService = project.service<DialogNotificationService>()
+        when (error) {
+            is SyncTaskAlreadyRunningException -> dialogService.showError(
+                title = MessageBundle.message("sync.command.push.title"),
+                message = error.message,
+                error = error
+            )
+
+            is PushSyncCheckFailedException -> dialogService.showError(
                 title = MessageBundle.message("sync.command.push.title"),
                 message = MessageBundle.message("sync.command.push.sync.check.failed")
             )
-        } else {
-            dialogNotificationService.showError(
+
+            else -> dialogService.showError(
                 title = MessageBundle.message("sync.command.push.title"),
                 message = MessageBundle.message("sync.command.error"),
                 error = error
             )
         }
+
     }
 
     override fun onFinished() {

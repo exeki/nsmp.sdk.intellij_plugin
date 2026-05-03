@@ -35,4 +35,73 @@
                   topic="com.intellij.openapi.fileEditor.FileEditorManagerListener"/>
     </projectListeners>
 
+    <actions>
+        <!--Actions for project -->
+        <action id="NSMP.SDK.Project.OpenInstallation"
+                class="ru.kazantsev.nsmp.sdk.intellij_plugin.actions.project.ProjectOpenInstallationAction"
+                text="NSMP SDK: Open Installation"
+                description="Open selected NSMP installation">
+            <keyboard-shortcut keymap="$default" first-keystroke="ctrl alt shift O"/>
+            <keyboard-shortcut keymap="Mac OS X" first-keystroke="meta alt shift O"/>
+        </action>
+        <action id="NSMP.SDK.Project.Pull"
+                class="ru.kazantsev.nsmp.sdk.intellij_plugin.actions.project.ProjectPullAction"
+                text="NSMP SDK: Pull Project Sources"
+                description="Pull project sources from remote">
+            <keyboard-shortcut keymap="$default" first-keystroke="ctrl alt shift P"/>
+            <keyboard-shortcut keymap="Mac OS X" first-keystroke="meta alt shift P"/>
+        </action>
+        <action id="NSMP.SDK.Project.Push"
+                class="ru.kazantsev.nsmp.sdk.intellij_plugin.actions.project.ProjectPushAction"
+                text="NSMP SDK: Push Project Sources"
+                description="Push project sources to remote">
+            <keyboard-shortcut keymap="$default" first-keystroke="ctrl alt shift U"/>
+            <keyboard-shortcut keymap="Mac OS X" first-keystroke="meta alt shift U"/>
+        </action>
+        <action id="NSMP.SDK.Project.SyncCheck"
+                class="ru.kazantsev.nsmp.sdk.intellij_plugin.actions.project.ProjectSyncCheckAction"
+                text="NSMP SDK: Check Project Sync"
+                description="Check project synchronization state">
+            <keyboard-shortcut keymap="$default" first-keystroke="ctrl alt shift C"/>
+            <keyboard-shortcut keymap="Mac OS X" first-keystroke="meta alt shift C"/>
+        </action>
+
+        <!--Actions for files -->
+        <action id="NSMP.SDK.File.OpenInBrowser"
+                class="ru.kazantsev.nsmp.sdk.intellij_plugin.actions.project.file.FileOpenInBrowserAction"
+                text="NSMP SDK: Open File In Browser"
+                description="Open current source file in browser">
+            <keyboard-shortcut keymap="$default" first-keystroke="ctrl alt O"/>
+            <keyboard-shortcut keymap="Mac OS X" first-keystroke="meta alt O"/>
+        </action>
+        <action id="NSMP.SDK.File.Execute"
+                class="ru.kazantsev.nsmp.sdk.intellij_plugin.actions.project.file.FileExecuteAction"
+                text="NSMP SDK: Execute File"
+                description="Execute current script file">
+            <keyboard-shortcut keymap="$default" first-keystroke="ctrl alt E"/>
+            <keyboard-shortcut keymap="Mac OS X" first-keystroke="meta alt E"/>
+        </action>
+        <action id="NSMP.SDK.File.Pull"
+                class="ru.kazantsev.nsmp.sdk.intellij_plugin.actions.project.file.FilePullAction"
+                text="NSMP SDK: Pull File"
+                description="Pull current file from remote">
+            <keyboard-shortcut keymap="$default" first-keystroke="ctrl alt P"/>
+            <keyboard-shortcut keymap="Mac OS X" first-keystroke="meta alt P"/>
+        </action>
+        <action id="NSMP.SDK.File.Push"
+                class="ru.kazantsev.nsmp.sdk.intellij_plugin.actions.project.file.FilePushAction"
+                text="NSMP SDK: Push File"
+                description="Push current file to remote">
+            <keyboard-shortcut keymap="$default" first-keystroke="ctrl alt U"/>
+            <keyboard-shortcut keymap="Mac OS X" first-keystroke="meta alt U"/>
+        </action>
+        <action id="NSMP.SDK.File.SyncCheck"
+                class="ru.kazantsev.nsmp.sdk.intellij_plugin.actions.project.file.FileSyncCheckAction"
+                text="NSMP SDK: Check File Sync"
+                description="Check synchronization state for current file">
+            <keyboard-shortcut keymap="$default" first-keystroke="ctrl alt C"/>
+            <keyboard-shortcut keymap="Mac OS X" first-keystroke="meta alt C"/>
+        </action>
+    </actions>
+
 </idea-plugin>

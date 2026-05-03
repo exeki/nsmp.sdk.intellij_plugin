@@ -1,19 +1,21 @@
-package ru.kazantsev.nsmp.sdk.intellij_plugin.actions.file
+package ru.kazantsev.nsmp.sdk.intellij_plugin.actions.project.file
 
 import com.intellij.ide.BrowserUtil
 import com.intellij.openapi.actionSystem.AnActionEvent
-import com.intellij.openapi.actionSystem.CommonDataKeys
 import com.intellij.openapi.components.service
+import com.intellij.openapi.project.Project
+import com.intellij.openapi.vfs.VirtualFile
 import ru.kazantsev.nsmp.sdk.intellij_plugin.service.settings.ProjectSettingsService
 import ru.kazantsev.nsmp.sdk.intellij_plugin.service.sync.SyncService
 import ru.kazantsev.nsmp.sdk.sources_sync.data.SrcType
 
 class FileOpenInBrowserAction : AbstractSrcFileAction() {
 
-    override fun actionPerformed(event: AnActionEvent) {
-        val file = event.getData(CommonDataKeys.VIRTUAL_FILE) ?: return
-        val project = event.getData(CommonDataKeys.PROJECT) ?: return
-        if (!computableWithFile(project, file)) return
+    override fun internalPerform(
+        event: AnActionEvent,
+        project: Project,
+        file: VirtualFile
+    ) {
         val projectSettingsService = project.service<ProjectSettingsService>()
         val syncService = project.service<SyncService>()
         val connectorParams = projectSettingsService.connectorParams

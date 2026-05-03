@@ -3,12 +3,12 @@ package ru.kazantsev.nsmp.sdk.intellij_plugin.ui.tool_window.main.buttons
 import com.intellij.openapi.actionSystem.ActionManager
 import com.intellij.openapi.actionSystem.Presentation
 import com.intellij.util.ui.JBUI
-import ru.kazantsev.nsmp.sdk.intellij_plugin.actions.global.AbstractGlobalAction
+import ru.kazantsev.nsmp.sdk.intellij_plugin.actions.project.AbstractProjectAction
 import java.awt.Dimension
 import javax.swing.JButton
 
 abstract class AbstractButton(
-    protected val action: AbstractGlobalAction,
+    protected val action: AbstractProjectAction,
     presentation: Presentation
 ) : JButton(presentation.text) {
 

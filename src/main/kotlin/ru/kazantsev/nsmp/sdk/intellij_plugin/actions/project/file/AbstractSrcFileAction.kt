@@ -1,4 +1,4 @@
-package ru.kazantsev.nsmp.sdk.intellij_plugin.actions.file
+package ru.kazantsev.nsmp.sdk.intellij_plugin.actions.project.file
 
 import com.intellij.openapi.components.service
 import com.intellij.openapi.project.Project
