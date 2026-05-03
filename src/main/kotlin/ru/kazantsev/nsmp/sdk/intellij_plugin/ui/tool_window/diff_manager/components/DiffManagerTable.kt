@@ -3,9 +3,10 @@ package ru.kazantsev.nsmp.sdk.intellij_plugin.ui.tool_window.diff_manager.compon
 import com.intellij.diff.DiffContentFactory
 import com.intellij.diff.DiffManager
 import com.intellij.diff.requests.SimpleDiffRequest
+import com.intellij.openapi.Disposable
+import com.intellij.openapi.actionSystem.ActionManager
 import com.intellij.openapi.application.ApplicationManager
 import com.intellij.openapi.components.service
-import com.intellij.openapi.progress.ProgressManager
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.ui.Messages
 import com.intellij.openapi.util.Disposer
@@ -15,10 +16,13 @@ import com.intellij.ui.components.JBScrollPane
 import com.intellij.ui.table.JBTable
 import com.intellij.util.concurrency.AppExecutorUtil
 import com.intellij.util.ui.JBUI
+import ru.kazantsev.nsmp.sdk.intellij_plugin.actions.project.ProjectRemoteStateUpdateAction
+import ru.kazantsev.nsmp.sdk.intellij_plugin.service.BackgroundTaskTopic
 import ru.kazantsev.nsmp.sdk.intellij_plugin.service.sync.data.DiffStatus
 import ru.kazantsev.nsmp.sdk.intellij_plugin.service.sync.data.SrcState
 import ru.kazantsev.nsmp.sdk.intellij_plugin.service.sync.state.DiffService
 import ru.kazantsev.nsmp.sdk.intellij_plugin.task.backgroundable.UpdateRemoteStateBackgroundTask
+import ru.kazantsev.nsmp.sdk.intellij_plugin.ui.tool_window.diff_manager.DiffManagerToolWindowFactory
 import ru.kazantsev.nsmp.sdk.intellij_plugin.ui.tool_window.diff_manager.model.DiffRow
 import ru.kazantsev.nsmp.sdk.sources_sync.data.request.SrcRequest
 import java.awt.BorderLayout
@@ -35,7 +39,9 @@ import javax.swing.event.DocumentEvent
 import javax.swing.event.DocumentListener
 import javax.swing.table.TableRowSorter
 
-class DiffManagerTable(private val project: Project) : JPanel(BorderLayout()) {
+class DiffManagerTable(private val project: Project) : JPanel(BorderLayout()), Disposable {
+
+    private val messageBus = project.messageBus.connect(this)
     private var updatingCompareSetControls = false
     private var refreshGeneration = 0L
     private val panelDisposable = Disposer.newDisposable("DiffManagerTable.loadingPanel")
@@ -71,6 +77,16 @@ class DiffManagerTable(private val project: Project) : JPanel(BorderLayout()) {
                 override fun changedUpdate(e: DocumentEvent?) = applyFilters()
             })
         }
+        messageBus.subscribe(BackgroundTaskTopic.TOPIC, object : BackgroundTaskTopic {
+            override fun taskFinished(task: ru.kazantsev.nsmp.sdk.intellij_plugin.task.backgroundable.AbstractBackgroundTask) {
+                if (project.isDisposed) return
+                if (task is UpdateRemoteStateBackgroundTask && isRemoteInCompareSet()) {
+                    ApplicationManager.getApplication().invokeLater {
+                        refresh()
+                    }
+                }
+            }
+        })
         add(topPanel, BorderLayout.NORTH)
         add(loadingPanel, BorderLayout.CENTER)
         refresh()
@@ -134,12 +150,12 @@ class DiffManagerTable(private val project: Project) : JPanel(BorderLayout()) {
     }
 
     fun onUpdateRemoteClicked() {
-        ProgressManager.getInstance().run(
-            UpdateRemoteStateBackgroundTask(project) {
-                val left = topPanel.leftStateFilter.selectedItem as? SrcState
-                val right = topPanel.rightStateFilter.selectedItem as? SrcState
-                if (listOf(left, right).contains(SrcState.REMOTE)) refresh()
-            }
+        ActionManager.getInstance().tryToExecute(
+            ProjectRemoteStateUpdateAction(),
+            null,
+            this,
+            DiffManagerToolWindowFactory.ACTION_PLACE,
+            true
         )
     }
 
@@ -213,4 +229,14 @@ class DiffManagerTable(private val project: Project) : JPanel(BorderLayout()) {
         ?.let(VirtualFile::toNioPath)
         ?.let(Files::readString)
         .orEmpty()
+
+    private fun isRemoteInCompareSet(): Boolean {
+        val left = topPanel.leftStateFilter.selectedItem as? SrcState
+        val right = topPanel.rightStateFilter.selectedItem as? SrcState
+        return left == SrcState.REMOTE || right == SrcState.REMOTE
+    }
+
+    override fun dispose() {
+        messageBus.dispose()
+    }
 }

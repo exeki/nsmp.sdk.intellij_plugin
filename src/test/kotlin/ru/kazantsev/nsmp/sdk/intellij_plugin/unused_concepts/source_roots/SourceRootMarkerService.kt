@@ -15,6 +15,7 @@ import ru.kazantsev.nsmp.sdk.intellij_plugin.service.ui.PluginActivationService
 import ru.kazantsev.nsmp.sdk.sources_sync.SrcFoldersParams
 import kotlin.collections.forEach
 
+@Suppress("unused")
 @Service(Service.Level.PROJECT)
 class SourceRootMarkerService(private val project: Project) {
 
@@ -24,9 +25,9 @@ class SourceRootMarkerService(private val project: Project) {
 
     fun logModule(module: Module) {
         System.err.println("name: " + module.name)
-        System.err.println("moduleTypeName: " +module.moduleTypeName)
-        System.err.println("moduleFilePath: " +module.moduleFilePath)
-        System.err.println("moduleFile?.path: " +module.moduleFile?.path)
+        //System.err.println("moduleTypeName: " +module.moduleTypeName)
+        //System.err.println("moduleFilePath: " +module.moduleFilePath)
+        //System.err.println("moduleFile?.path: " +module.moduleFile?.path)
     }
 
     fun markConfiguredRoots() {

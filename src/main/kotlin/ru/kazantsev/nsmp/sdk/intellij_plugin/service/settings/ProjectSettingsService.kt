@@ -6,7 +6,6 @@ import com.intellij.openapi.project.Project
 import ru.kazantsev.nsmp.basic_api_connector.ConnectorParams
 import ru.kazantsev.nsmp.sdk.intellij_plugin.exception.UnselectedProjectInstallation
 import ru.kazantsev.nsmp.sdk.intellij_plugin.service.settings.state.ProjectState
-import ru.kazantsev.nsmp.sdk.intellij_plugin.ui.MessageBundle
 import ru.kazantsev.nsmp.sdk.sources_sync.SrcFoldersParams
 
 @Service(Service.Level.PROJECT)
@@ -32,9 +31,7 @@ class ProjectSettingsService(private val project: Project) : PersistentStateComp
     val connectorParams: ConnectorParams
         get() {
             val selectedInstallationId = settings.selectedInstallationId
-            if (selectedInstallationId.isBlank()) {
-                throw UnselectedProjectInstallation(MessageBundle.message("sync.error.installation.not.selected"))
-            }
+            if (selectedInstallationId.isBlank())throw UnselectedProjectInstallation()
 
             return ConnectorParams.byConfigFileInPath(
                 selectedInstallationId,

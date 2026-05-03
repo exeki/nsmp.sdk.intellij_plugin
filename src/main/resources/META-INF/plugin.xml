@@ -14,7 +14,7 @@
         <notificationGroup id="NSMP SDK Notifications" displayType="BALLOON" isLogByDefault="true"/>
         <postStartupActivity implementation="ru.kazantsev.nsmp.sdk.intellij_plugin.startup.NsdProjectStartupActivity"/>
         <postStartupActivity implementation="ru.kazantsev.nsmp.sdk.intellij_plugin.startup.ListenersStartupActivity"/>
-        <toolWindow id="NSMP SDK Sources Sync"
+        <toolWindow id="NSMP SDK"
                     anchor="right"
                     icon="/icons/logo/stripe/nsmp_logo_stripe.svg"
                     factoryClass="ru.kazantsev.nsmp.sdk.intellij_plugin.ui.tool_window.main.MainToolWindowFactory"
@@ -64,6 +64,13 @@
                 description="Check project synchronization state">
             <keyboard-shortcut keymap="$default" first-keystroke="ctrl alt shift C"/>
             <keyboard-shortcut keymap="Mac OS X" first-keystroke="meta alt shift C"/>
+        </action>
+        <action id="NSMP.SDK.Project.RemoteStateUpdate"
+                class="ru.kazantsev.nsmp.sdk.intellij_plugin.actions.project.ProjectRemoteStateUpdateAction"
+                text="NSMP SDK: Update Remote State"
+                description="Update remote source state">
+            <keyboard-shortcut keymap="$default" first-keystroke="ctrl alt shift R"/>
+            <keyboard-shortcut keymap="Mac OS X" first-keystroke="meta alt shift R"/>
         </action>
 
         <!--Actions for files -->

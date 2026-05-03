@@ -11,7 +11,9 @@ import ru.kazantsev.nsmp.sdk.sources_sync.data.SrcType
 
 class FileOpenInBrowserAction : AbstractSrcFileAction() {
 
-    override fun internalPerform(
+    override val title: String = "Open source in browser"
+
+    override fun actionPerformedFile(
         event: AnActionEvent,
         project: Project,
         file: VirtualFile

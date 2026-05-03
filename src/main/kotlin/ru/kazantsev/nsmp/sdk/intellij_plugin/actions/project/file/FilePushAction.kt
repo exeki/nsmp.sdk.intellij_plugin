@@ -2,15 +2,17 @@ package ru.kazantsev.nsmp.sdk.intellij_plugin.actions.project.file
 
 import com.intellij.openapi.actionSystem.AnActionEvent
 import com.intellij.openapi.components.service
-import com.intellij.openapi.progress.ProgressManager
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.vfs.VirtualFile
 import ru.kazantsev.nsmp.sdk.intellij_plugin.service.sync.SyncService
 import ru.kazantsev.nsmp.sdk.intellij_plugin.task.backgroundable.PushBackgroundTask
+import ru.kazantsev.nsmp.sdk.intellij_plugin.ui.MessageBundle
 import ru.kazantsev.nsmp.sdk.intellij_plugin.ui.common.FilePushConfirmationDialog
 
-class FilePushAction : AbstractSrcFileAction() {
-    override fun internalPerform(
+class FilePushAction : AbstractSrcSyncFileAction() {
+
+    override val title: String = MessageBundle.message("sync.command.push.title")
+    override fun actionPerformedSyncFile(
         event: AnActionEvent,
         project: Project,
         file: VirtualFile
@@ -19,13 +21,8 @@ class FilePushAction : AbstractSrcFileAction() {
         val confirmationDialog = FilePushConfirmationDialog(project)
         if (!confirmationDialog.showAndGet()) return
         val request = syncService.getSrcRequestForFileElseThrow(file)
-        ProgressManager.getInstance().run(
-            PushBackgroundTask(
-                project = project,
-                request = request,
-                force = confirmationDialog.force,
-            )
-        )
+        PushBackgroundTask(project, request, confirmationDialog.force).start()
     }
+
 
 }

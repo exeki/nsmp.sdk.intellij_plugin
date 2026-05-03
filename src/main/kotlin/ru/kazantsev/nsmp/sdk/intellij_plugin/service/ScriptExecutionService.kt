@@ -1,6 +1,6 @@
 @file:Suppress("FoldInitializerAndIfToElvis")
 
-package ru.kazantsev.nsmp.sdk.intellij_plugin.service.sync
+package ru.kazantsev.nsmp.sdk.intellij_plugin.service
 
 import com.intellij.openapi.application.ApplicationManager
 import com.intellij.openapi.components.Service
@@ -12,7 +12,6 @@ import org.jetbrains.plugins.groovy.lang.psi.GroovyFile
 import ru.kazantsev.nsmp.basic_api_connector.Connector
 import ru.kazantsev.nsmp.sdk.intellij_plugin.exception.ContextFileNotExists
 import ru.kazantsev.nsmp.sdk.intellij_plugin.exception.FileExecuteExtensionException
-import ru.kazantsev.nsmp.sdk.intellij_plugin.service.FileSupportService
 import ru.kazantsev.nsmp.sdk.intellij_plugin.service.settings.AppSettingsService
 import ru.kazantsev.nsmp.sdk.intellij_plugin.service.settings.ProjectSettingsService
 import ru.kazantsev.nsmp.sdk.sources_sync.data.SrcFormat
@@ -39,7 +38,7 @@ class ScriptExecutionService(private val project: Project) {
 
     private fun readTextWithoutPackage(file: VirtualFile): String {
         val psiFile = PsiManager.getInstance(project).findFile(file) as? GroovyFile
-            ?: throw FileExecuteExtensionException("File ${file.path} is not a Groovy PSI file")
+            ?: throw FileExecuteExtensionException(file)
         val packageDefinition = psiFile.packageDefinition ?: return psiFile.text
 
         return psiFile.text
@@ -54,12 +53,12 @@ class ScriptExecutionService(private val project: Project) {
     }
 
     fun buildExecutionPayload(file: VirtualFile, contextFileRelativePath: String? = null): String {
-        if (file.extension != SrcFormat.GROOVY.code) throw FileExecuteExtensionException("File ${file.path} is not a Groovy File")
+        if (file.extension != SrcFormat.GROOVY.code) throw FileExecuteExtensionException(file)
         return if (contextFileRelativePath.isNullOrEmpty()) getSingleFileText(file)
         else {
             val contextVirtualFile = fileSupportService.getVirtualFileByRelativePath(contextFileRelativePath)
-            if (contextVirtualFile == null) throw ContextFileNotExists("Context file $contextFileRelativePath not exists")
-            if (contextVirtualFile.extension != SrcFormat.GROOVY.code) throw FileExecuteExtensionException("File ${contextVirtualFile.path} is not a Groovy File")
+            if (contextVirtualFile == null) throw ContextFileNotExists(contextFileRelativePath)
+            if (contextVirtualFile.extension != SrcFormat.GROOVY.code) throw FileExecuteExtensionException(file)
             concatenateFiles(file, contextVirtualFile)
         }
     }

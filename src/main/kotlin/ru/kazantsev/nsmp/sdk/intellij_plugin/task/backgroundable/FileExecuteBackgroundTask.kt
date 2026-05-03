@@ -2,62 +2,48 @@ package ru.kazantsev.nsmp.sdk.intellij_plugin.task.backgroundable
 
 import com.intellij.openapi.components.service
 import com.intellij.openapi.progress.ProgressIndicator
-import com.intellij.openapi.progress.Task
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.vfs.VirtualFile
-import ru.kazantsev.nsmp.basic_api_connector.exception.BadResponseException
-import ru.kazantsev.nsmp.basic_api_connector.exception.RequestProcessException
-import ru.kazantsev.nsmp.sdk.intellij_plugin.service.sync.ScriptExecutionService
+import ru.kazantsev.nsmp.sdk.intellij_plugin.service.ScriptExecutionService
 import ru.kazantsev.nsmp.sdk.intellij_plugin.service.ui.notification.DialogNotificationService
 import ru.kazantsev.nsmp.sdk.intellij_plugin.ui.MessageBundle
 
 class FileExecuteBackgroundTask(
     project: Project,
-    file: VirtualFile,
-    contextFileRelativePath: String?,
-) : Task.Backgroundable(
-    project,
-    "NSMP SDK File execute", //TODO на бандл
-    true
+    val file: VirtualFile,
+    val contextFileRelativePath: String?,
+) : AbstractBackgroundTask(
+    "File execute" + ": " + file.name,
+    project
 ) {
+
     private val scriptExecutionService = project.service<ScriptExecutionService>()
     val payload = scriptExecutionService.buildExecutionPayload(file, contextFileRelativePath)
     var result: String? = null
 
-    override fun run(indicator: ProgressIndicator) {
+    override fun runInternal(indicator: ProgressIndicator) {
+
+        indicator.fraction = 0.5
         result = scriptExecutionService.executePayload(payload)
+        indicator.fraction = 1.0
     }
 
     override fun onSuccess() {
+        //TODO окошко бы побольше
         project.service<DialogNotificationService>().showInfo(
-            title = MessageBundle.message("sync.command.execute.file.result.title"),
-            message = result.orEmpty()
+            title = "File execute",
+            message = buildString {
+                append("Executed file: ${file.name}")
+                append("\n")
+                if (!contextFileRelativePath.isNullOrBlank()) {
+                    append(MessageBundle.message("sync.command.execute.context.title", contextFileRelativePath))
+                    append("\n")
+                }
+                append(MessageBundle.message("sync.command.execute.file.result.title") + ":")
+                append("\n")
+                append("\n")
+                append(result.orEmpty())
+            }
         )
-    }
-
-    override fun onThrowable(error: Throwable) {
-        val dialogNotificationService = project.service<DialogNotificationService>()
-        when (error) {
-            is BadResponseException -> {
-                dialogNotificationService.showError(
-                    title = MessageBundle.message("sync.command.execute.file.error.title"),
-                    message = error.responseSnapshot.bodyAsString
-                )
-            }
-
-            is RequestProcessException -> {
-                dialogNotificationService.showError(
-                    title = MessageBundle.message("sync.command.execute.file.error.title"),
-                    message = error.cause?.javaClass?.name.orEmpty() + ": " + error.cause?.message.orEmpty()
-                )
-            }
-
-            else -> {
-                dialogNotificationService.showError(
-                    title = MessageBundle.message("sync.command.execute.file.error.title"),
-                    error = error
-                )
-            }
-        }
     }
 }

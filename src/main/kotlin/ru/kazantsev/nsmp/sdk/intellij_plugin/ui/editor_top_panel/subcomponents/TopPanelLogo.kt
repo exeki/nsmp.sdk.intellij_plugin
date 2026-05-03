@@ -2,6 +2,7 @@ package ru.kazantsev.nsmp.sdk.intellij_plugin.ui.editor_top_panel.subcomponents
 
 import com.intellij.util.ui.JBUI
 import ru.kazantsev.nsmp.sdk.intellij_plugin.ui.Icons
+import ru.kazantsev.nsmp.sdk.intellij_plugin.ui.MessageBundle
 import java.awt.Cursor
 import java.awt.Graphics
 import java.awt.Graphics2D
@@ -22,7 +23,7 @@ class TopPanelLogo(
         isOpaque = false
         cursor = Cursor.getPredefinedCursor(Cursor.HAND_CURSOR)
         border = JBUI.Borders.empty(LOGO_FOCUS_VERTICAL_GAP, LOGO_FOCUS_HORIZONTAL_GAP)
-        toolTipText = "Toggle NSMP SDK panel"
+        toolTipText = "Toggle ${MessageBundle.message("settings.display.name")} panel"
         addMouseListener(object : MouseAdapter() {
             override fun mouseEntered(event: MouseEvent) {
                 hovered = true

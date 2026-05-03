@@ -1,3 +1,4 @@
 package ru.kazantsev.nsmp.sdk.intellij_plugin.exception
 
-class ContextFileNotExists(message: String) : LogicException(message)
+class ContextFileNotExists(contextFileRelativePath: String) :
+    LogicException("Context file $contextFileRelativePath not exists")

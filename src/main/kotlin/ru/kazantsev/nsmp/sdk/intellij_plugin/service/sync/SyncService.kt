@@ -7,7 +7,6 @@ import com.intellij.openapi.vfs.VirtualFile
 import ru.kazantsev.nsmp.sdk.intellij_plugin.exception.SrcSyncUnsupportedType
 import ru.kazantsev.nsmp.sdk.intellij_plugin.exception.UnknownSourceType
 import ru.kazantsev.nsmp.sdk.intellij_plugin.service.settings.ProjectSettingsService
-import ru.kazantsev.nsmp.sdk.intellij_plugin.ui.MessageBundle
 import ru.kazantsev.nsmp.sdk.sources_sync.SrcSyncService
 import ru.kazantsev.nsmp.sdk.sources_sync.data.SrcType
 import ru.kazantsev.nsmp.sdk.sources_sync.data.request.SrcRequest
@@ -38,8 +37,7 @@ class SyncService(private val project: Project) {
 
     fun getSrcRequestForFileElseThrow(file: VirtualFile): SrcRequest {
         val type = getSrcTypeElseThrow(file)
-        return getSrcRequestForFile(file, type)
-            ?: throw SrcSyncUnsupportedType(MessageBundle.message("sync.error.file.type.unknown"))
+        return getSrcRequestForFile(file, type) ?: throw SrcSyncUnsupportedType()
     }
 
     fun getSrcRequestForFile(file: VirtualFile, type: SrcType): SrcRequest? {
@@ -51,7 +49,7 @@ class SyncService(private val project: Project) {
     }
 
     fun getSrcTypeElseThrow(file: VirtualFile): SrcType {
-        return getSrcType(file) ?: throw UnknownSourceType("Unknown source type")
+        return getSrcType(file) ?: throw UnknownSourceType()
     }
 
     fun getSrcType(file: VirtualFile): SrcType? {

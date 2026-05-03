@@ -1,9 +1,14 @@
 package ru.kazantsev.nsmp.sdk.intellij_plugin.service.ui.notification
 
 import ru.kazantsev.nsmp.sdk.intellij_plugin.exception.LogicException
+import ru.kazantsev.nsmp.sdk.intellij_plugin.ui.MessageBundle
 
-interface NotificationErrorBuilder {
+interface NotificationUtils {
     companion object {
+
+        fun buildTitle(title: String): String {
+            return "${MessageBundle.message("settings.display.name")}: $title"
+        }
 
         fun buildErrorText(error: Throwable): String {
             if (error is LogicException) return error.message

@@ -1,3 +1,5 @@
 package ru.kazantsev.nsmp.sdk.intellij_plugin.exception
 
-class NotTextFileException(message: String) : LogicException(message)
+import com.intellij.openapi.vfs.VirtualFile
+
+class NotTextFileException(file: VirtualFile) : LogicException("File ${file.path} not a text file")

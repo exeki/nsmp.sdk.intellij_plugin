@@ -59,19 +59,18 @@ class FileSupportService(private val project: Project) {
     }
 
     fun getDocument(file: VirtualFile): Document {
-        return fileDocumentManager.getDocument(file) ?: throw NotTextFileException("File ${file.path} not a text file")
+        return fileDocumentManager.getDocument(file) ?: throw NotTextFileException(file)
     }
 
     fun saveDocument(document: Document) {
         fileDocumentManager.saveDocument(document)
     }
 
-    fun refreshProjectExplorer() {
+    fun refreshProjectExplorerAsync() {
         VirtualFileManager.getInstance().asyncRefresh {
             ApplicationManager.getApplication().invokeLater {
                 ProjectView.getInstance(project).refresh()
             }
         }
     }
-
 }

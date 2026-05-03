@@ -11,6 +11,7 @@ import com.intellij.util.ui.JBUI
 import ru.kazantsev.nsmp.sdk.intellij_plugin.ui.MessageBundle
 import ru.kazantsev.nsmp.sdk.intellij_plugin.service.ui.notification.DialogNotificationService
 import ru.kazantsev.nsmp.sdk.intellij_plugin.service.settings.ProjectSettingsService
+import ru.kazantsev.nsmp.sdk.intellij_plugin.service.ui.notification.NotificationUtils.Companion.buildTitle
 import ru.kazantsev.nsmp.sdk.intellij_plugin.ui.global_src_request_dialog.model.SrcRequestSelectState
 import ru.kazantsev.nsmp.sdk.intellij_plugin.ui.global_src_request_dialog.options_provider.SrcOptionsProvider
 import ru.kazantsev.nsmp.sdk.intellij_plugin.ui.global_src_request_dialog.components.CollapsibleSection
@@ -116,7 +117,7 @@ open class SrcRequestSelectDialog(
     private val clearAllButton = JButton(MessageBundle.message("sync.dialog.clear.all"))
 
     init {
-        this.title = title
+        this.title = buildTitle(title)
         preloadOptions()
         bindAllCheckBox(allModulesField, modulesField)
         bindAllCheckBox(allScriptsField, scriptsField)

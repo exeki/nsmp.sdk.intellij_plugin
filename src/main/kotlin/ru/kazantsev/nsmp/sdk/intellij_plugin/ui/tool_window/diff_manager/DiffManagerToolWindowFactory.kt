@@ -1,6 +1,7 @@
 package ru.kazantsev.nsmp.sdk.intellij_plugin.ui.tool_window.diff_manager
 
 import com.intellij.openapi.components.service
+import com.intellij.openapi.project.DumbAware
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.wm.ToolWindow
 import com.intellij.openapi.wm.ToolWindowFactory
@@ -8,7 +9,12 @@ import com.intellij.ui.content.ContentFactory
 import ru.kazantsev.nsmp.sdk.intellij_plugin.service.ui.PluginActivationService
 import ru.kazantsev.nsmp.sdk.intellij_plugin.ui.tool_window.diff_manager.components.DiffManagerTable
 
-class DiffManagerToolWindowFactory : ToolWindowFactory {
+class DiffManagerToolWindowFactory : ToolWindowFactory, DumbAware {
+
+    companion object {
+        const val ACTION_PLACE = "NSMP_SDK.DiffManagerTollWindow"
+    }
+
     override fun shouldBeAvailable(project: Project): Boolean {
         return project.service<PluginActivationService>().pluginActive
     }

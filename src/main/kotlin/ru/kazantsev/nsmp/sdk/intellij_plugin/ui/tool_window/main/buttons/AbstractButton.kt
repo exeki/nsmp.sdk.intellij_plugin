@@ -4,6 +4,7 @@ import com.intellij.openapi.actionSystem.ActionManager
 import com.intellij.openapi.actionSystem.Presentation
 import com.intellij.util.ui.JBUI
 import ru.kazantsev.nsmp.sdk.intellij_plugin.actions.project.AbstractProjectAction
+import ru.kazantsev.nsmp.sdk.intellij_plugin.ui.tool_window.main.MainToolWindowFactory
 import java.awt.Dimension
 import javax.swing.JButton
 
@@ -13,7 +14,6 @@ abstract class AbstractButton(
 ) : JButton(presentation.text) {
 
     companion object {
-        private const val ACTION_PLACE = "NSMP_SDK.MainTollWindow"
         const val BUTTON_HEIGHT = 40
     }
 
@@ -31,7 +31,7 @@ abstract class AbstractButton(
                 action,
                 null,
                 this,
-                ACTION_PLACE,
+                MainToolWindowFactory.ACTION_PLACE,
                 true
             )
         }
