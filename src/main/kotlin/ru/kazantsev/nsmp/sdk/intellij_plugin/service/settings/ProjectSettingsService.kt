@@ -31,7 +31,7 @@ class ProjectSettingsService(private val project: Project) : PersistentStateComp
     val connectorParams: ConnectorParams
         get() {
             val selectedInstallationId = settings.selectedInstallationId
-            if (selectedInstallationId.isBlank())throw UnselectedProjectInstallation()
+            if (selectedInstallationId.isBlank()) throw UnselectedProjectInstallation()
 
             return ConnectorParams.byConfigFileInPath(
                 selectedInstallationId,
