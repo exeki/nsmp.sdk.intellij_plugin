@@ -66,9 +66,7 @@ class NsdHttpServerService : Disposable {
 
     @Synchronized
     private fun stop() {
-        if (server != null) {
-            logger.info("NSD Plugin HTTP server stopping")
-        }
+        if (server != null) logger.info("NSD Plugin HTTP server stopping")
         server?.stop(0)
         server = null
     }

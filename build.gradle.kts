@@ -6,7 +6,7 @@ plugins {
 }
 
 group = "ru.kazantsev.nsmp.sdk"
-version = "0.9.1"
+version = "0.9.2"
 
 repositories {
     mavenCentral()

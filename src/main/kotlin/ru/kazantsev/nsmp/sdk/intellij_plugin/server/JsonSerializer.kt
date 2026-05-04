@@ -13,5 +13,7 @@ object JsonSerializer {
 
     inline fun <reified T> toJson(value: T): String = json.encodeToString(value)
 
+    inline fun <reified T> fromJson(content: String): T = json.decodeFromString(content)
+
     inline fun <reified T> toJsonElement(value: T): JsonElement = json.parseToJsonElement(toJson(value))
 }

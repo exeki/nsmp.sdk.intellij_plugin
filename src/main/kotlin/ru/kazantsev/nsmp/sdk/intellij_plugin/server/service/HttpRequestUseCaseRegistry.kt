@@ -4,6 +4,7 @@ import com.intellij.openapi.components.Service
 import com.intellij.openapi.diagnostic.thisLogger
 import ru.kazantsev.nsmp.sdk.intellij_plugin.server.HttpRoute
 import ru.kazantsev.nsmp.sdk.intellij_plugin.server.usecase.GetOpenProjectsUseCase
+import ru.kazantsev.nsmp.sdk.intellij_plugin.server.usecase.GetProjectByPathUseCase
 import ru.kazantsev.nsmp.sdk.intellij_plugin.server.usecase.GetRootStatusUseCase
 import ru.kazantsev.nsmp.sdk.intellij_plugin.server.usecase.HttpRequestUseCase
 
@@ -12,7 +13,8 @@ class HttpRequestUseCaseRegistry {
 
     private val useCasesByRoute: Map<HttpRoute, HttpRequestUseCase> = listOf(
         GetRootStatusUseCase(),
-        GetOpenProjectsUseCase()
+        GetOpenProjectsUseCase(),
+        GetProjectByPathUseCase(),
     ).associateBy { it.route }
 
     fun find(route: HttpRoute): HttpRequestUseCase? {
