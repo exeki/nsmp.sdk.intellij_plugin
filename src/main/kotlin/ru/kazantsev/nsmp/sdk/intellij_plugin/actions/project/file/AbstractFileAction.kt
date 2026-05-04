@@ -12,7 +12,7 @@ abstract class AbstractFileAction : AbstractProjectAction() {
     abstract fun computableWithFile(project: Project, file: VirtualFile): Boolean
 
     override fun actionPerformedProject(event: AnActionEvent, project: Project) {
-        val file = event.getData(CommonDataKeys.VIRTUAL_FILE) ?: return
+        val file = event.getData(CommonDataKeys.VIRTUAL_FILE) ?: throw ActionStartException("Cant find file for action")
         val computableWithFile = computableWithFile(project, file)
         if (!computableWithFile) throw ActionStartException("Current file ${file.name} is not computable with this action.")
         actionPerformedFile(event, project, file)

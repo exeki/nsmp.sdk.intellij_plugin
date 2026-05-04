@@ -21,6 +21,7 @@ import ru.kazantsev.nsmp.sdk.intellij_plugin.service.BackgroundTaskTopic
 import ru.kazantsev.nsmp.sdk.intellij_plugin.service.sync.data.DiffStatus
 import ru.kazantsev.nsmp.sdk.intellij_plugin.service.sync.data.SrcState
 import ru.kazantsev.nsmp.sdk.intellij_plugin.service.sync.state.DiffService
+import ru.kazantsev.nsmp.sdk.intellij_plugin.task.backgroundable.AbstractBackgroundTask
 import ru.kazantsev.nsmp.sdk.intellij_plugin.task.backgroundable.UpdateRemoteStateBackgroundTask
 import ru.kazantsev.nsmp.sdk.intellij_plugin.ui.tool_window.diff_manager.DiffManagerToolWindowFactory
 import ru.kazantsev.nsmp.sdk.intellij_plugin.ui.tool_window.diff_manager.model.DiffRow
@@ -78,12 +79,12 @@ class DiffManagerTable(private val project: Project) : JPanel(BorderLayout()), D
             })
         }
         messageBus.subscribe(BackgroundTaskTopic.TOPIC, object : BackgroundTaskTopic {
-            override fun taskFinished(task: ru.kazantsev.nsmp.sdk.intellij_plugin.task.backgroundable.AbstractBackgroundTask) {
+            override fun taskFinished(task: AbstractBackgroundTask) {
                 if (project.isDisposed) return
-                if (task is UpdateRemoteStateBackgroundTask && isRemoteInCompareSet()) {
-                    ApplicationManager.getApplication().invokeLater {
-                        refresh()
-                    }
+                if (task is UpdateRemoteStateBackgroundTask) ApplicationManager.getApplication().invokeLater {
+                    if (project.isDisposed) return@invokeLater
+                    if (task.showLastSyncToRemoteInDiffManager) updateCompareSet(SrcState.LAST_SYNC, SrcState.REMOTE)
+                    if (isRemoteInCompareSet()) refresh()
                 }
             }
         })
@@ -234,6 +235,17 @@ class DiffManagerTable(private val project: Project) : JPanel(BorderLayout()), D
         val left = topPanel.leftStateFilter.selectedItem as? SrcState
         val right = topPanel.rightStateFilter.selectedItem as? SrcState
         return left == SrcState.REMOTE || right == SrcState.REMOTE
+    }
+
+    @Suppress("SameParameterValue")
+    private fun updateCompareSet(left: SrcState, right: SrcState) {
+        updatingCompareSetControls = true
+        try {
+            topPanel.leftStateFilter.selectedItem = left
+            topPanel.rightStateFilter.selectedItem = right
+        } finally {
+            updatingCompareSetControls = false
+        }
     }
 
     override fun dispose() {

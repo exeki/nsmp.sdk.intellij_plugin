@@ -1,10 +1,17 @@
 package ru.kazantsev.nsmp.sdk.intellij_plugin.task.backgroundable
 
+import com.intellij.openapi.actionSystem.ActionPlaces
+import com.intellij.openapi.actionSystem.ActionUiKind
+import com.intellij.openapi.actionSystem.AnActionEvent
+import com.intellij.openapi.actionSystem.CommonDataKeys
+import com.intellij.openapi.actionSystem.ex.ActionUtil
+import com.intellij.openapi.actionSystem.impl.SimpleDataContext
 import com.intellij.openapi.application.ApplicationManager
 import com.intellij.openapi.components.service
 import com.intellij.openapi.fileEditor.FileDocumentManager
 import com.intellij.openapi.progress.ProgressIndicator
 import com.intellij.openapi.project.Project
+import ru.kazantsev.nsmp.sdk.intellij_plugin.actions.project.ProjectRemoteStateUpdateAfterSyncCheckAction
 import ru.kazantsev.nsmp.sdk.intellij_plugin.service.sync.SyncService
 import ru.kazantsev.nsmp.sdk.intellij_plugin.service.sync.state.LastSyncedSrcStateService
 import ru.kazantsev.nsmp.sdk.intellij_plugin.service.ui.notification.BalloonNotificationService
@@ -51,10 +58,26 @@ class PushBackgroundTask(
 
     override fun onThrowable(error: Throwable) {
         val dialogService = project.service<DialogNotificationService>()
-        if (error is PushSyncCheckFailedException) dialogService.showError(
-            title = taskTitle,
-            message = MessageBundle.message("sync.command.push.sync.check.failed")
-        )
-        else super.onThrowable(error)
+
+        if (error is PushSyncCheckFailedException) {
+            val req = SrcSetRoot.byEnumIterator { type ->
+                error.localSrcInfoRoot[type].filter { it.conflict }.toSet()
+            }.convertToRequest()
+            dialogService.showError(
+                title = taskTitle,
+                message = MessageBundle.message("sync.command.push.sync.check.failed"),
+                actionTitle = "Show in diff manager",
+                onAction = {
+                    val event = AnActionEvent.createEvent(
+                        SimpleDataContext.builder().add(CommonDataKeys.PROJECT, project).build(),
+                        null,
+                        ActionPlaces.UNKNOWN,
+                        ActionUiKind.NONE,
+                        null
+                    )
+                    ActionUtil.performAction(ProjectRemoteStateUpdateAfterSyncCheckAction(req), event)
+                }
+            )
+        } else super.onThrowable(error)
     }
 }

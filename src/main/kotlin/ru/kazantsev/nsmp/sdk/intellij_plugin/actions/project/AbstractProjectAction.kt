@@ -13,7 +13,7 @@ abstract class AbstractProjectAction : AnAction() {
     abstract val title: String
 
     override fun actionPerformed(event: AnActionEvent) {
-        val project = event.project ?: return
+        val project = event.project ?: throw ActionStartException("Cant find project for action")
         try {
             val pluginActive = project.service<PluginActivationService>().pluginActive
             if (!pluginActive) throw ActionStartException("NSMP SDK Plugin is not active. Set the installation in the plugin settings to fix it.")

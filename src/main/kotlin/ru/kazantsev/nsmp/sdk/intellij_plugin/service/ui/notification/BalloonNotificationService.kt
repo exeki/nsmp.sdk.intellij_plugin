@@ -1,6 +1,7 @@
 package ru.kazantsev.nsmp.sdk.intellij_plugin.service.ui.notification
 
 import com.intellij.notification.NotificationGroupManager
+import com.intellij.notification.NotificationAction
 import com.intellij.notification.NotificationType
 import com.intellij.openapi.components.Service
 import com.intellij.openapi.project.Project
@@ -22,6 +23,32 @@ class BalloonNotificationService(private val project: Project) {
             content = content,
             type = NotificationType.INFORMATION
         )
+    }
+
+    fun showInfo(
+        title: String,
+        content: String,
+        actionTitle: String,
+        action: () -> Unit
+    ) {
+        notifications.createNotification(
+            title = buildTitle(title),
+            content = content,
+            type = NotificationType.INFORMATION
+        ).addAction(NotificationAction.createSimple(actionTitle, action)).notify(project)
+    }
+
+    fun showError(
+        title: String,
+        content: String,
+        actionTitle: String,
+        action: () -> Unit
+    ) {
+        notifications.createNotification(
+            title = buildTitle(title),
+            content = content,
+            type = NotificationType.ERROR
+        ).addAction(NotificationAction.createSimple(actionTitle) {action()}).notify(project)
     }
 
     fun showError(title: String, content: String) = notify(

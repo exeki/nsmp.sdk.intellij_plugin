@@ -29,11 +29,11 @@ class RemoteSrcStateService(private val project: Project) {
     fun updateRemoteState(req: SrcRequest) {
         ApplicationManager.getApplication().invokeAndWait {
             WriteCommandAction.runWriteCommandAction(project) {
-                val remoteReq = syncService.createSrcSyncService().localSrcService.getLocalSrcSetRoot(req).convertToRequest()
-                val data = getRemoteData(remoteReq)
-                data.forEach { (_, src) ->
-                    updateSrcSetRemoteState(src)
-                }
+                val remoteReq = syncService.createSrcSyncService()
+                    .localSrcService
+                    .getLocalSrcSetRoot(req)
+                    .convertToRequest()
+                getRemoteData(remoteReq).forEach { updateSrcSetRemoteState(it.value) }
             }
         }
     }

@@ -1,10 +1,17 @@
 package ru.kazantsev.nsmp.sdk.intellij_plugin.task.backgroundable
 
+import com.intellij.openapi.actionSystem.ActionPlaces
+import com.intellij.openapi.actionSystem.ActionUiKind
+import com.intellij.openapi.actionSystem.AnActionEvent
+import com.intellij.openapi.actionSystem.CommonDataKeys
+import com.intellij.openapi.actionSystem.ex.ActionUtil
+import com.intellij.openapi.actionSystem.impl.SimpleDataContext
 import com.intellij.openapi.application.ApplicationManager
 import com.intellij.openapi.components.service
 import com.intellij.openapi.fileEditor.FileDocumentManager
 import com.intellij.openapi.progress.ProgressIndicator
 import com.intellij.openapi.project.Project
+import ru.kazantsev.nsmp.sdk.intellij_plugin.actions.project.ProjectRemoteStateUpdateAfterSyncCheckAction
 import ru.kazantsev.nsmp.sdk.intellij_plugin.service.sync.SyncService
 import ru.kazantsev.nsmp.sdk.intellij_plugin.service.ui.notification.BalloonNotificationService
 import ru.kazantsev.nsmp.sdk.intellij_plugin.ui.MessageBundle
@@ -40,7 +47,18 @@ class SyncCheckBackgroundTask(
         val notificationService = project.service<BalloonNotificationService>()
         if (value.any { entry -> entry.value.any { it.conflict } }) notificationService.showError(
             title = taskTitle,
-            content = MessageBundle.message("sync.command.sync.check.not.in.sync")
+            content = MessageBundle.message("sync.command.sync.check.not.in.sync"),
+            actionTitle = "Show in diff manager",
+            action = {
+                val event = AnActionEvent.createEvent(
+                    SimpleDataContext.builder().add(CommonDataKeys.PROJECT, project).build(),
+                    null,
+                    ActionPlaces.UNKNOWN,
+                    ActionUiKind.NONE,
+                    null
+                )
+                ActionUtil.performAction(ProjectRemoteStateUpdateAfterSyncCheckAction(request), event)
+            }
         )
         else notificationService.showInfo(
             title = taskTitle,
