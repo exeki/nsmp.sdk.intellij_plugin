@@ -4,7 +4,6 @@ import com.intellij.openapi.components.Service
 import com.intellij.openapi.components.service
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.vfs.VirtualFile
-import ru.kazantsev.nsmp.sdk.intellij_plugin.exception.SrcSyncUnsupportedType
 import ru.kazantsev.nsmp.sdk.intellij_plugin.exception.UnknownSourceType
 import ru.kazantsev.nsmp.sdk.intellij_plugin.service.settings.ProjectSettingsService
 import ru.kazantsev.nsmp.sdk.sources_sync.SrcSyncService
@@ -37,14 +36,19 @@ class SyncService(private val project: Project) {
 
     fun getSrcRequestForFileElseThrow(file: VirtualFile): SrcRequest {
         val type = getSrcTypeElseThrow(file)
-        return getSrcRequestForFile(file, type) ?: throw SrcSyncUnsupportedType()
+        return getSrcRequestForFile(file, type)
     }
 
-    fun getSrcRequestForFile(file: VirtualFile, type: SrcType): SrcRequest? {
+    fun getSrcRequestForFile(file: VirtualFile, type: SrcType): SrcRequest {
+        val code = resolveSrcCode(file)
+        return getSrcRequestForCode(code, type)
+    }
+
+    fun getSrcRequestForCode(code: String, type: SrcType): SrcRequest {
         return when (type) {
-            SrcType.SCRIPT -> SrcRequest(scripts = setOf(resolveSrcCode(file)))
-            SrcType.MODULE -> SrcRequest(modules = setOf(resolveSrcCode(file)))
-            SrcType.ADV_IMPORT -> SrcRequest(advImports = setOf(resolveSrcCode(file)))
+            SrcType.SCRIPT -> SrcRequest(scripts = setOf(code))
+            SrcType.MODULE -> SrcRequest(modules = setOf(code))
+            SrcType.ADV_IMPORT -> SrcRequest(advImports = setOf(code))
         }
     }
 

@@ -5,13 +5,13 @@ import ru.kazantsev.nsmp.sdk.intellij_plugin.server.HttpRoute
 import ru.kazantsev.nsmp.sdk.intellij_plugin.server.dto.response.MessageResponse
 import ru.kazantsev.nsmp.sdk.intellij_plugin.server.UseCaseResult
 
-class NotFoundUseCase : HttpRequestUseCase {
+class NotFoundUseCase : AbstractHttpRequestUseCase() {
     override val route: HttpRoute = HttpRoute(
         method = "*",
         path = "*",
     )
 
-    override fun execute(httpExchange: HttpExchange): UseCaseResult {
+    override fun executeInternal(httpExchange: HttpExchange): UseCaseResult {
         return UseCaseResult.of(
             statusCode = 404,
             body = MessageResponse(message = "Not found"),

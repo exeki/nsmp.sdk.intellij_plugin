@@ -27,15 +27,10 @@ class NsdHttpServerService : Disposable {
     private val requestHandlerService: NsdHttpRequestHandlerService
         get() = ApplicationManager.getApplication().getService(NsdHttpRequestHandlerService::class.java)
 
-    init {
-        logger.info("NSD Plugin HTTP service initializing")
-        start()
-    }
-
     @Synchronized
-    fun restart() {
+    fun restart() : Boolean {
         stop()
-        start()
+        return start()
     }
 
     override fun dispose() {
@@ -45,9 +40,9 @@ class NsdHttpServerService : Disposable {
     }
 
     @Synchronized
-    private fun start() {
+    private fun start() : Boolean {
         val port = AppSettingsService.getInstance().serverPort
-
+        if(port == 0) return false
         try {
             val httpServer = HttpServer.create(InetSocketAddress("127.0.0.1", port), 0).apply {
                 createContext("/") { exchange -> handleRequest(exchange) }
@@ -57,10 +52,13 @@ class NsdHttpServerService : Disposable {
 
             server = httpServer
             logger.info("NSD Plugin HTTP server started on port $port")
+            return true
         } catch (e: BindException) {
             logger.warn("NSD Plugin HTTP server failed to start on port $port: ${e.message}")
+            throw e
         } catch (e: Exception) {
             logger.warn("NSD Plugin HTTP server failed to start", e)
+            throw e
         }
     }
 

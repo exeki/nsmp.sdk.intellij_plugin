@@ -19,6 +19,7 @@ import ru.kazantsev.nsmp.sdk.intellij_plugin.service.ui.notification.DialogNotif
 import ru.kazantsev.nsmp.sdk.intellij_plugin.service.settings.AppSettingsService
 import ru.kazantsev.nsmp.sdk.intellij_plugin.service.settings.ProjectSettingsService
 import ru.kazantsev.nsmp.sdk.intellij_plugin.service.ui.PluginActivationService
+import ru.kazantsev.nsmp.sdk.intellij_plugin.service.ui.notification.BalloonNotificationService
 import java.awt.BorderLayout
 import java.awt.FlowLayout
 import javax.swing.BorderFactory
@@ -48,12 +49,13 @@ class PluginConfigurable(private val project: Project) : Configurable {
     private val appSettings: AppSettingsService
         get() = ApplicationManager.getApplication().service<AppSettingsService>()
 
-    fun createConfigService(pathToConfigFile : String): ConfigService = ConfigService(pathToConfigFile)
+    fun createConfigService(pathToConfigFile: String): ConfigService = ConfigService(pathToConfigFile)
 
     override fun getDisplayName(): String = MessageBundle.message("settings.display.name")
 
     override fun createComponent(): JComponent {
         if (panel == null) {
+            //TODO добавить подсказку, что если установить 0 - сервер не будет стартовать
             val port = JBTextField()
             val scriptExecuteReadTimeout = JBTextField()
             val configPath = JBTextField()
@@ -82,7 +84,10 @@ class PluginConfigurable(private val project: Project) : Configurable {
 
             val globalSettingsPanel = FormBuilder.createFormBuilder()
                 .addLabeledComponent(MessageBundle.message("settings.global.server.port"), port)
-                .addLabeledComponent(MessageBundle.message("settings.global.script.execute.read.timeout"), scriptExecuteReadTimeout)
+                .addLabeledComponent(
+                    MessageBundle.message("settings.global.script.execute.read.timeout"),
+                    scriptExecuteReadTimeout
+                )
                 .addLabeledComponent(MessageBundle.message("settings.global.connector.config.path"), configPath)
                 .addComponentFillVertically(tablePanel, 0)
                 .panel
@@ -157,7 +162,8 @@ class PluginConfigurable(private val project: Project) : Configurable {
         appSettings.settings.serverPort = port
         appSettings.settings.scriptExecuteReadTimeoutMs = scriptExecuteReadTimeoutMs
         appSettings.settings.pathToConfigFile = configPath
-        projectSettings.state.selectedInstallationId = (installationBox?.selectedItem as? InstallationOption)?.id.orEmpty()
+        projectSettings.state.selectedInstallationId =
+            (installationBox?.selectedItem as? InstallationOption)?.id.orEmpty()
         projectSettings.state.scriptsDirectoryPath = scriptsDirectoryField?.text?.trim().orEmpty()
         projectSettings.state.modulesDirectoryPath = modulesDirectoryField?.text?.trim().orEmpty()
         projectSettings.state.advImportsDirectoryPath = advImportsDirectoryField?.text?.trim().orEmpty()
@@ -310,7 +316,7 @@ class PluginConfigurable(private val project: Project) : Configurable {
     private fun parsePort(value: String?): Int {
         val port = value?.trim()?.toIntOrNull()
             ?: throw ConfigurationException(MessageBundle.message("settings.error.server.port.integer"))
-        if (port !in 1..65535) throw ConfigurationException(MessageBundle.message("settings.error.server.port.range"))
+        if (port !in 0..65535) throw ConfigurationException(MessageBundle.message("settings.error.server.port.range"))
         return port
     }
 
@@ -339,12 +345,22 @@ private data class InstallationOption(
 private object NsdHttpServerServiceHolder {
     fun restartServer(project: Project) {
         val service = ApplicationManager.getApplication().getService(NsdHttpServerService::class.java)
+
         runCatching { service.restart() }
             .onFailure {
-                project.getService(DialogNotificationService::class.java).showError(
-                    MessageBundle.message("settings.display.name"),
-                    MessageBundle.message("settings.error.server.restart.failed", it.message ?: "")
-                )
+                ApplicationManager.getApplication().invokeLater {
+                    project.getService(BalloonNotificationService::class.java).showError(
+                        MessageBundle.message("server.notification.title"),
+                        MessageBundle.message("server.error.restart.failed", it.message ?: "")
+                    )
+                }
+            }.onSuccess { res: Boolean ->
+                if (res) ApplicationManager.getApplication().invokeLater {
+                    project.getService(BalloonNotificationService::class.java).showInfo(
+                        MessageBundle.message("server.notification.title"),
+                        MessageBundle.message("server.start.success")
+                    )
+                }
             }
     }
 }

@@ -7,13 +7,13 @@ import ru.kazantsev.nsmp.sdk.intellij_plugin.server.UseCaseResult
 import ru.kazantsev.nsmp.sdk.intellij_plugin.server.dto.ProjectInfoDto
 import ru.kazantsev.nsmp.sdk.intellij_plugin.server.dto.response.OpenProjectsResponse
 
-class GetOpenProjectsUseCase : HttpRequestUseCase {
+class GetOpenProjectsUseCase : AbstractHttpRequestUseCase() {
     override val route: HttpRoute = HttpRoute(
         method = "GET",
         path = "/projects",
     )
 
-    override fun execute(httpExchange: HttpExchange): UseCaseResult {
+    override fun executeInternal(httpExchange: HttpExchange): UseCaseResult {
         val projects = ProjectManager.getInstance().openProjects.map { project ->
             ProjectInfoDto.from(project)
         }
