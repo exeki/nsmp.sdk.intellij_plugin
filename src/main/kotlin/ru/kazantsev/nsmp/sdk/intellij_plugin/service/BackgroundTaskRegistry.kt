@@ -3,6 +3,7 @@ package ru.kazantsev.nsmp.sdk.intellij_plugin.service
 import com.intellij.openapi.components.Service
 import com.intellij.openapi.project.Project
 import ru.kazantsev.nsmp.sdk.intellij_plugin.task.backgroundable.AbstractBackgroundTask
+import ru.kazantsev.nsmp.sdk.intellij_plugin.topics.BackgroundTaskTopic
 import java.util.UUID
 import java.util.concurrent.ConcurrentHashMap
 

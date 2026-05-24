@@ -17,7 +17,7 @@ import com.intellij.ui.table.JBTable
 import com.intellij.util.concurrency.AppExecutorUtil
 import com.intellij.util.ui.JBUI
 import ru.kazantsev.nsmp.sdk.intellij_plugin.actions.project.ProjectRemoteStateUpdateAction
-import ru.kazantsev.nsmp.sdk.intellij_plugin.service.BackgroundTaskTopic
+import ru.kazantsev.nsmp.sdk.intellij_plugin.topics.BackgroundTaskTopic
 import ru.kazantsev.nsmp.sdk.intellij_plugin.service.sync.data.DiffStatus
 import ru.kazantsev.nsmp.sdk.intellij_plugin.service.sync.data.SrcState
 import ru.kazantsev.nsmp.sdk.intellij_plugin.service.sync.state.DiffService

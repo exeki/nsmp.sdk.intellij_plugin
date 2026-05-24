@@ -12,8 +12,7 @@
 
     <extensions defaultExtensionNs="com.intellij">
         <notificationGroup id="NSMP SDK Notifications" displayType="BALLOON" isLogByDefault="true"/>
-        <postStartupActivity implementation="ru.kazantsev.nsmp.sdk.intellij_plugin.startup.NsdProjectStartupActivity"/>
-        <postStartupActivity implementation="ru.kazantsev.nsmp.sdk.intellij_plugin.startup.ListenersStartupActivity"/>
+        <postStartupActivity implementation="ru.kazantsev.nsmp.sdk.intellij_plugin.startup.PluginStartup"/>
         <toolWindow id="NSMP SDK"
                     anchor="right"
                     icon="/icons/logo/stripe/nsmp_logo_stripe.svg"

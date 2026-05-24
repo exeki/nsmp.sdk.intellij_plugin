@@ -13,22 +13,14 @@ import com.intellij.ui.table.JBTable
 import com.intellij.util.ui.FormBuilder
 import ru.kazantsev.nsmp.basic_api_connector.ConfigService
 import ru.kazantsev.nsmp.basic_api_connector.dto.InstallationDto
-import ru.kazantsev.nsmp.sdk.intellij_plugin.ui.MessageBundle
-import ru.kazantsev.nsmp.sdk.intellij_plugin.server.service.NsdHttpServerService
-import ru.kazantsev.nsmp.sdk.intellij_plugin.service.ui.notification.DialogNotificationService
 import ru.kazantsev.nsmp.sdk.intellij_plugin.service.settings.AppSettingsService
 import ru.kazantsev.nsmp.sdk.intellij_plugin.service.settings.ProjectSettingsService
-import ru.kazantsev.nsmp.sdk.intellij_plugin.service.ui.PluginActivationService
-import ru.kazantsev.nsmp.sdk.intellij_plugin.service.ui.notification.BalloonNotificationService
+import ru.kazantsev.nsmp.sdk.intellij_plugin.service.ui.notification.DialogNotificationService
+import ru.kazantsev.nsmp.sdk.intellij_plugin.topics.SettingsTopic
+import ru.kazantsev.nsmp.sdk.intellij_plugin.ui.MessageBundle
 import java.awt.BorderLayout
 import java.awt.FlowLayout
-import javax.swing.BorderFactory
-import javax.swing.JButton
-import javax.swing.JComponent
-import javax.swing.JLabel
-import javax.swing.JPanel
-import javax.swing.SwingConstants
-import javax.swing.BoxLayout
+import javax.swing.*
 import javax.swing.table.DefaultTableModel
 
 class PluginConfigurable(private val project: Project) : Configurable {
@@ -167,8 +159,10 @@ class PluginConfigurable(private val project: Project) : Configurable {
         projectSettings.state.scriptsDirectoryPath = scriptsDirectoryField?.text?.trim().orEmpty()
         projectSettings.state.modulesDirectoryPath = modulesDirectoryField?.text?.trim().orEmpty()
         projectSettings.state.advImportsDirectoryPath = advImportsDirectoryField?.text?.trim().orEmpty()
-        project.service<PluginActivationService>().refresh()
-        NsdHttpServerServiceHolder.restartServer(project)
+        ApplicationManager.getApplication()
+            .messageBus
+            .syncPublisher(SettingsTopic.TOPIC)
+            .settingsChanged()
     }
 
     override fun reset() {
@@ -183,6 +177,7 @@ class PluginConfigurable(private val project: Project) : Configurable {
         modulesDirectoryField?.text = projectSettings.state.modulesDirectoryPath
         advImportsDirectoryField?.text = projectSettings.state.advImportsDirectoryPath
     }
+
 
     override fun disposeUIResources() {
         panel = null
@@ -339,28 +334,5 @@ private data class InstallationOption(
             id = "",
             label = MessageBundle.message("settings.project.installation.not.selected")
         )
-    }
-}
-
-private object NsdHttpServerServiceHolder {
-    fun restartServer(project: Project) {
-        val service = ApplicationManager.getApplication().getService(NsdHttpServerService::class.java)
-
-        runCatching { service.restart() }
-            .onFailure {
-                ApplicationManager.getApplication().invokeLater {
-                    project.getService(BalloonNotificationService::class.java).showError(
-                        MessageBundle.message("server.notification.title"),
-                        MessageBundle.message("server.error.restart.failed", it.message ?: "")
-                    )
-                }
-            }.onSuccess { res: Boolean ->
-                if (res) ApplicationManager.getApplication().invokeLater {
-                    project.getService(BalloonNotificationService::class.java).showInfo(
-                        MessageBundle.message("server.notification.title"),
-                        MessageBundle.message("server.start.success")
-                    )
-                }
-            }
     }
 }

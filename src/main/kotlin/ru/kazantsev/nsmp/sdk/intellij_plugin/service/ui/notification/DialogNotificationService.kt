@@ -11,7 +11,7 @@ import ru.kazantsev.nsmp.sdk.intellij_plugin.service.ui.notification.Notificatio
 @Service(Service.Level.PROJECT)
 class DialogNotificationService(private val project: Project) {
     fun showInfo(title: String, message: String) {
-        Messages.showInfoMessage(project, message, buildTitle(title))
+        Messages.showInfoMessage(message, buildTitle(title))
     }
 
     fun showInfo(

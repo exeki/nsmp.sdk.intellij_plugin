@@ -6,9 +6,12 @@ import com.intellij.openapi.components.Service
 import com.intellij.openapi.diagnostic.thisLogger
 import com.sun.net.httpserver.HttpExchange
 import com.sun.net.httpserver.HttpServer
-import ru.kazantsev.nsmp.sdk.intellij_plugin.server.JsonSerializer
 import kotlinx.serialization.json.JsonElement
+import ru.kazantsev.nsmp.sdk.intellij_plugin.server.JsonSerializer
 import ru.kazantsev.nsmp.sdk.intellij_plugin.service.settings.AppSettingsService
+import ru.kazantsev.nsmp.sdk.intellij_plugin.topics.ServerStateTopic
+import ru.kazantsev.nsmp.sdk.intellij_plugin.topics.SettingsTopic
+import com.intellij.openapi.project.ProjectManager
 import java.net.BindException
 import java.net.InetSocketAddress
 import java.nio.charset.StandardCharsets
@@ -20,6 +23,9 @@ class NsdHttpServerService : Disposable {
     private var server: HttpServer? = null
 
     @Volatile
+    private var lastStartError: Exception? = null
+
+    @Volatile
     private var executor = Executors.newSingleThreadExecutor { runnable ->
         Thread(runnable, "nsd-plugin-http-server").apply { isDaemon = true }
     }
@@ -27,10 +33,14 @@ class NsdHttpServerService : Disposable {
     private val requestHandlerService: NsdHttpRequestHandlerService
         get() = ApplicationManager.getApplication().getService(NsdHttpRequestHandlerService::class.java)
 
-    @Synchronized
-    fun restart() : Boolean {
-        stop()
-        return start()
+    private val messageBus = ApplicationManager.getApplication().messageBus.connect()
+
+    init {
+        messageBus.subscribe(SettingsTopic.TOPIC, object : SettingsTopic {
+            override fun settingsChanged() {
+                restart()
+            }
+        })
     }
 
     override fun dispose() {
@@ -40,9 +50,22 @@ class NsdHttpServerService : Disposable {
     }
 
     @Synchronized
-    private fun start() : Boolean {
+    fun restart() {
+        stop()
+        start()
+    }
+
+    fun isRunning(): Boolean = server != null
+
+    fun lastStartError(): Exception? = lastStartError
+
+    @Synchronized
+    fun start() {
         val port = AppSettingsService.getInstance().serverPort
-        if(port == 0) return false
+        if (port == 0) {
+            publishServerState { serverStopped() }
+            return
+        }
         try {
             val httpServer = HttpServer.create(InetSocketAddress("127.0.0.1", port), 0).apply {
                 createContext("/") { exchange -> handleRequest(exchange) }
@@ -51,22 +74,33 @@ class NsdHttpServerService : Disposable {
             }
 
             server = httpServer
+            lastStartError = null
             logger.info("NSD Plugin HTTP server started on port $port")
-            return true
-        } catch (e: BindException) {
-            logger.warn("NSD Plugin HTTP server failed to start on port $port: ${e.message}")
-            throw e
+            publishServerState { serverStarted(port) }
         } catch (e: Exception) {
-            logger.warn("NSD Plugin HTTP server failed to start", e)
-            throw e
+            lastStartError = e
+            if (e is BindException)
+                logger.warn("NSD Plugin HTTP server failed to start on port $port: ${e.message}")
+            else
+                logger.warn("NSD Plugin HTTP server failed to start", e)
+            publishServerState { serverStartError(e) }
         }
     }
 
     @Synchronized
-    private fun stop() {
-        if (server != null) logger.info("NSD Plugin HTTP server stopping")
-        server?.stop(0)
-        server = null
+    fun stop() {
+        if (server != null) {
+            logger.info("NSD Plugin HTTP server stopping")
+            server!!.stop(0)
+            server = null
+            publishServerState { serverStopped() }
+        }
+    }
+
+    private fun publishServerState(action: ServerStateTopic.() -> Unit) {
+        ProjectManager.getInstance().openProjects.forEach { project ->
+            project.messageBus.syncPublisher(ServerStateTopic.TOPIC).action()
+        }
     }
 
     private fun handleRequest(exchange: HttpExchange) {

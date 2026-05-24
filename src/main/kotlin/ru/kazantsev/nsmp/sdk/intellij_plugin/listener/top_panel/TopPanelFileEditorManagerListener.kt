@@ -9,7 +9,9 @@ import com.intellij.openapi.project.Project
 import com.intellij.openapi.vfs.VirtualFile
 import ru.kazantsev.nsmp.sdk.intellij_plugin.service.ui.TopPanelService
 
-class TopPanelFileEditorManagerListener(project: Project) : FileEditorManagerListener, DumbAware {
+class TopPanelFileEditorManagerListener(
+    project: Project
+) : FileEditorManagerListener, DumbAware {
     private val topPanelService = project.service<TopPanelService>()
 
     override fun fileOpened(source: FileEditorManager, file: VirtualFile) {

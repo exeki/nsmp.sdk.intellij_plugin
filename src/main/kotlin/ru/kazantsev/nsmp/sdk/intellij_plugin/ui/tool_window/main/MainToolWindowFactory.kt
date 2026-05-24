@@ -31,10 +31,22 @@ class MainToolWindowFactory : ToolWindowFactory, DumbAware {
     }
 
     override fun createToolWindowContent(project: Project, toolWindow: ToolWindow) {
+        val installationInfoPanel = InstallationInfoPanel(project).also {
+            project.service<PluginActivationService>().mainToolWindowInstallationInfoPanel = it
+        }
+        val serverStatePanel = ServerStatePanel(project)
+
+        val statusPanel = JPanel().apply {
+            layout = BoxLayout(this, BoxLayout.Y_AXIS)
+            isOpaque = false
+            add(installationInfoPanel)
+            add(serverStatePanel)
+        }
+
         val actionsPanel = JPanel().apply {
             layout = BoxLayout(this, BoxLayout.Y_AXIS)
-            add(OpenInstallationButton())
-            add(Box.createVerticalStrut(8))
+            //add(OpenInstallationButton())
+            //add(Box.createVerticalStrut(8))
             add(PullButton())
             add(Box.createVerticalStrut(8))
             add(CheckButton())
@@ -45,6 +57,7 @@ class MainToolWindowFactory : ToolWindowFactory, DumbAware {
 
         val panel = JPanel(BorderLayout()).apply {
             border = BorderFactory.createEmptyBorder(8, 8, 8, 8)
+            add(statusPanel, BorderLayout.NORTH)
             add(actionsPanel, BorderLayout.CENTER)
             add(AuthorFooter(), BorderLayout.SOUTH)
         }

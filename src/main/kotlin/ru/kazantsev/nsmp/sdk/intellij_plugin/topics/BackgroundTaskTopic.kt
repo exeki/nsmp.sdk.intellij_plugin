@@ -1,4 +1,4 @@
-package ru.kazantsev.nsmp.sdk.intellij_plugin.service
+package ru.kazantsev.nsmp.sdk.intellij_plugin.topics
 
 import com.intellij.util.messages.Topic
 import ru.kazantsev.nsmp.sdk.intellij_plugin.task.backgroundable.AbstractBackgroundTask
@@ -16,4 +16,3 @@ interface BackgroundTaskTopic {
 
     fun taskFinished(task: AbstractBackgroundTask) {}
 }
-
