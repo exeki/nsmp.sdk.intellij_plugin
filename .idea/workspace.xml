@@ -4,21 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0ed9795e-0975-48aa-bb0f-4d495b6ed849" name="Changes" comment="Добавлен метод для интеграции в браузерным плагином.">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.intellijPlatform/localPlatformArtifacts/IC-252.27397.103/bundledModule-intellij.libraries.ai.grazie.spell.gec.engine.local-IC-252.27397.103.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.intellijPlatform/localPlatformArtifacts/IC-252.27397.103/bundledModule-intellij.libraries.ai.grazie.spell.gec.engine.local-IC-252.27397.103.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.intellijPlatform/localPlatformArtifacts/IC-252.27397.103/bundledModule-intellij.libraries.lucene.common-IC-252.27397.103.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.intellijPlatform/localPlatformArtifacts/IC-252.27397.103/bundledModule-intellij.libraries.lucene.common-IC-252.27397.103.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.intellijPlatform/localPlatformArtifacts/IC-252.27397.103/bundledModule-intellij.libraries.microba-IC-252.27397.103.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.intellijPlatform/localPlatformArtifacts/IC-252.27397.103/bundledModule-intellij.libraries.microba-IC-252.27397.103.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.intellijPlatform/localPlatformArtifacts/IC-252.27397.103/bundledModule-intellij.platform.backend-IC-252.27397.103.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.intellijPlatform/localPlatformArtifacts/IC-252.27397.103/bundledModule-intellij.platform.backend-IC-252.27397.103.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.intellijPlatform/localPlatformArtifacts/IC-252.27397.103/bundledModule-intellij.platform.vcs.impl-IC-252.27397.103.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.intellijPlatform/localPlatformArtifacts/IC-252.27397.103/bundledModule-intellij.platform.vcs.impl-IC-252.27397.103.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.intellijPlatform/localPlatformArtifacts/IC-252.27397.103/bundledModule-intellij.platform.vcs.impl.lang-IC-252.27397.103.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.intellijPlatform/localPlatformArtifacts/IC-252.27397.103/bundledModule-intellij.platform.vcs.impl.lang-IC-252.27397.103.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.intellijPlatform/localPlatformArtifacts/IC-252.27397.103/bundledModule-intellij.platform.vcs.impl.shared-IC-252.27397.103.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.intellijPlatform/localPlatformArtifacts/IC-252.27397.103/bundledModule-intellij.platform.vcs.impl.shared-IC-252.27397.103.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.intellijPlatform/localPlatformArtifacts/IC-252.27397.103/bundledModule-intellij.spellchecker-IC-252.27397.103.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.intellijPlatform/localPlatformArtifacts/IC-252.27397.103/bundledModule-intellij.spellchecker-IC-252.27397.103.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.intellijPlatform/localPlatformArtifacts/IC-252.27397.103/bundledPlugin-com.intellij.java-IC-252.27397.103.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.intellijPlatform/localPlatformArtifacts/IC-252.27397.103/bundledPlugin-com.intellij.java-IC-252.27397.103.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/ru/kazantsev/nsmp/sdk/intellij_plugin/ui/tool_window/main/AuthorFooter.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/ru/kazantsev/nsmp/sdk/intellij_plugin/ui/tool_window/main/AuthorFooter.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/ru/kazantsev/nsmp/sdk/intellij_plugin/ui/tool_window/main/InstallationInfoPanel.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/ru/kazantsev/nsmp/sdk/intellij_plugin/ui/tool_window/main/InstallationInfoPanel.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/messages/MessageBundle.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/messages/MessageBundle.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/messages/MessageBundle_ru.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/messages/MessageBundle_ru.properties" afterDir="false" />
+    <list default="true" id="0ed9795e-0975-48aa-bb0f-4d495b6ed849" name="Changes" comment="Видоизменен главный tool window. Исправлена проблема с открытием/закрытием tool window при активации/деактивации плагина.">
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/ru/kazantsev/nsmp/sdk/intellij_plugin/service/ui/PluginActivationService.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/ru/kazantsev/nsmp/sdk/intellij_plugin/service/ui/PluginActivationService.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -719,7 +706,15 @@
       <option name="project" value="LOCAL" />
       <updated>1779052425616</updated>
     </task>
-    <option name="localTasksCounter" value="30" />
+    <task id="LOCAL-00030" summary="Видоизменен главный tool window. Исправлена проблема с открытием/закрытием tool window при активации/деактивации плагина.">
+      <option name="closed" value="true" />
+      <created>1779665496339</created>
+      <option name="number" value="00030" />
+      <option name="presentableId" value="LOCAL-00030" />
+      <option name="project" value="LOCAL" />
+      <updated>1779665496339</updated>
+    </task>
+    <option name="localTasksCounter" value="31" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -754,7 +749,8 @@
     <MESSAGE value="Служебная папка теперь автоматически исключается из индексации и добавляется в .gitignore при ее первом появлении." />
     <MESSAGE value="Добавлены методы для интеграции с gradle плагином." />
     <MESSAGE value="Добавлен метод для интеграции в браузерным плагином." />
-    <option name="LAST_COMMIT_MESSAGE" value="Добавлен метод для интеграции в браузерным плагином." />
+    <MESSAGE value="Видоизменен главный tool window. Исправлена проблема с открытием/закрытием tool window при активации/деактивации плагина." />
+    <option name="LAST_COMMIT_MESSAGE" value="Видоизменен главный tool window. Исправлена проблема с открытием/закрытием tool window при активации/деактивации плагина." />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

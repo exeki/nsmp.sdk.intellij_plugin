@@ -63,7 +63,7 @@ class PluginActivationService(private val project: Project) : Disposable {
 
     private companion object {
         val TOOL_WINDOW_IDS = listOf(
-            "NSMP SDK Main",
+            "NSMP SDK",
             "NSMP SDK Diff Manager",
         )
     }
