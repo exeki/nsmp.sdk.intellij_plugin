@@ -1,7 +1,6 @@
 package ru.kazantsev.nsmp.sdk.intellij_plugin.topics
 
 import com.intellij.util.messages.Topic
-import ru.kazantsev.nsmp.sdk.intellij_plugin.task.backgroundable.AbstractBackgroundTask
 
 interface SettingsTopic {
     companion object {
