@@ -20,7 +20,7 @@ class AuthorFooter : JPanel() {
         isOpaque = false
 
         val authorLabel = JBLabel("By Kazantsev Egor")
-        val githubLabel = JBLabel("<html><a href=\"$GITHUB_URL\"'>GutHub</a></html>").apply {
+        val githubLabel = JBLabel("<html><a href=\"$GITHUB_URL\"'>GitHub</a></html>").apply {
             cursor = Cursor.getPredefinedCursor(Cursor.HAND_CURSOR)
             toolTipText = GITHUB_URL
             addMouseListener(object : MouseAdapter() {

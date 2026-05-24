@@ -55,11 +55,11 @@ class InstallationInfoPanel(
     fun refresh() {
         val projectSettings = project.service<ProjectSettingsService>()
         if (!projectSettings.installationIsSpecified()) {
-            idLabel.text = formatLine(MessageBundle.message("settings.table.id"), "—")
+            idLabel.text = formatLine(MessageBundle.message("tool_window.main.installation.id"), "—")
             setHostPlain("—")
         } else {
             val connectorParams = projectSettings.connectorParams
-            idLabel.text = formatLine(MessageBundle.message("settings.table.id"), connectorParams.installationId)
+            idLabel.text = formatLine(MessageBundle.message("tool_window.main.installation.id"), connectorParams.installationId)
             val url = "${connectorParams.scheme}://${connectorParams.host}/sd/admin"
             setHostLink(connectorParams.host, url)
         }
@@ -69,14 +69,14 @@ class InstallationInfoPanel(
 
     private fun setHostPlain(host: String) {
         hostLinkEnabled = false
-        hostLabel.text = formatLine(MessageBundle.message("settings.table.host"), host)
+        hostLabel.text = formatLine(MessageBundle.message("tool_window.main.installation.host"), host)
         hostLabel.cursor = Cursor.getDefaultCursor()
         hostLabel.toolTipText = null
     }
 
     private fun setHostLink(host: String, url: String) {
         hostLinkEnabled = true
-        val label = escapeHtml(MessageBundle.message("settings.table.host"))
+        val label = escapeHtml(MessageBundle.message("tool_window.main.installation.host"))
         hostLabel.text = "<html>$label: <a href=\"${escapeHtml(url)}\">${escapeHtml(host)}</a></html>"
         hostLabel.cursor = Cursor.getPredefinedCursor(Cursor.HAND_CURSOR)
         hostLabel.toolTipText = url
