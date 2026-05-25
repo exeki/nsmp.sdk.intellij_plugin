@@ -8,7 +8,7 @@ import ru.kazantsev.nsmp.sdk.intellij_plugin.service.sync.options.dto.SrcOptions
 
 class SrcOptionsConnector(params: ConnectorParams) : Connector(params) {
     private val moduleBase: String = "modules.sdkController."
-    private val paramsConst: String = "request,response,user"
+    private val paramsConst: String = ""
     private val json = Json { ignoreUnknownKeys = true }
 
     fun getScriptOptions(lang: String? = null): SrcOptionsContainer {

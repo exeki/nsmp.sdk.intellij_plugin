@@ -4,10 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0ed9795e-0975-48aa-bb0f-4d495b6ed849" name="Changes" comment="Видоизменен главный tool window. Исправлена проблема с открытием/закрытием tool window при активации/деактивации плагина.">
+    <list default="true" id="0ed9795e-0975-48aa-bb0f-4d495b6ed849" name="Changes" comment="Фикс для фикса.">
+      <change beforePath="$PROJECT_DIR$/.idea/.name" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.name" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle.kts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/META-INF/plugin.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/META-INF/plugin.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/ru/kazantsev/nsmp/sdk/intellij_plugin/service/sync/options/SrcOptionsConnector.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/ru/kazantsev/nsmp/sdk/intellij_plugin/service/sync/options/SrcOptionsConnector.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -15,7 +16,7 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="EmbeddingIndexingInfo">
-    <option name="cachedIndexableFilesCount" value="191" />
+    <option name="cachedIndexableFilesCount" value="194" />
   </component>
   <component name="ExternalProjectsData">
     <projectState path="$PROJECT_DIR$">
@@ -33,16 +34,16 @@
             <expand>
               <path>
                 <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
-                <item name="intellij_plugin" type="f1a62948:ProjectNode" />
+                <item name="nsmp.skd.intellij_plugin" type="f1a62948:ProjectNode" />
               </path>
               <path>
                 <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
-                <item name="intellij_plugin" type="f1a62948:ProjectNode" />
+                <item name="nsmp.skd.intellij_plugin" type="f1a62948:ProjectNode" />
                 <item name="Tasks" type="e4a08cd1:TasksNode" />
               </path>
               <path>
                 <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
-                <item name="intellij_plugin" type="f1a62948:ProjectNode" />
+                <item name="nsmp.skd.intellij_plugin" type="f1a62948:ProjectNode" />
                 <item name="Tasks" type="e4a08cd1:TasksNode" />
                 <item name="build" type="c8890929:TasksNode$1" />
               </path>
@@ -475,6 +476,7 @@
       <workItem from="1779401585907" duration="946000" />
       <workItem from="1779525540728" duration="599000" />
       <workItem from="1779638604944" duration="16309000" />
+      <workItem from="1779733831114" duration="2204000" />
     </task>
     <task id="LOCAL-00001" summary="1">
       <option name="closed" value="true" />
@@ -724,7 +726,15 @@
       <option name="project" value="LOCAL" />
       <updated>1779665651615</updated>
     </task>
-    <option name="localTasksCounter" value="32" />
+    <task id="LOCAL-00032" summary="Фикс для фикса.">
+      <option name="closed" value="true" />
+      <created>1779665823531</created>
+      <option name="number" value="00032" />
+      <option name="presentableId" value="LOCAL-00032" />
+      <option name="project" value="LOCAL" />
+      <updated>1779665823531</updated>
+    </task>
+    <option name="localTasksCounter" value="33" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -760,7 +770,8 @@
     <MESSAGE value="Добавлены методы для интеграции с gradle плагином." />
     <MESSAGE value="Добавлен метод для интеграции в браузерным плагином." />
     <MESSAGE value="Видоизменен главный tool window. Исправлена проблема с открытием/закрытием tool window при активации/деактивации плагина." />
-    <option name="LAST_COMMIT_MESSAGE" value="Видоизменен главный tool window. Исправлена проблема с открытием/закрытием tool window при активации/деактивации плагина." />
+    <MESSAGE value="Фикс для фикса." />
+    <option name="LAST_COMMIT_MESSAGE" value="Фикс для фикса." />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

@@ -6,7 +6,7 @@ plugins {
 }
 
 group = "ru.kazantsev.nsmp.sdk"
-version = "0.9.5"
+version = "0.9.6"
 
 repositories {
     mavenCentral()
@@ -18,7 +18,7 @@ repositories {
 // Read more: https://plugins.jetbrains.com/docs/intellij/tools-intellij-platform-gradle-plugin.html
 dependencies {
     @Suppress("VulnerableLibrariesLocal", "RedundantSuppression")
-    implementation("ru.kazantsev.nsmp.sdk.sources_sync:core:1.7.6")
+    implementation("ru.kazantsev.nsmp.sdk.sources_sync:core:1.7.7")
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.9.0")
     intellijPlatform {
         intellijIdeaCommunity("2025.2.4")
