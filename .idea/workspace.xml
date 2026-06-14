@@ -4,11 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0ed9795e-0975-48aa-bb0f-4d495b6ed849" name="Changes" comment="Фикс для фикса.">
-      <change beforePath="$PROJECT_DIR$/.idea/.name" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.name" afterDir="false" />
+    <list default="true" id="0ed9795e-0975-48aa-bb0f-4d495b6ed849" name="Changes" comment="Переработан контроллер на стороне инсталляции.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle.kts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/ru/kazantsev/nsmp/sdk/intellij_plugin/service/sync/options/SrcOptionsConnector.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/ru/kazantsev/nsmp/sdk/intellij_plugin/service/sync/options/SrcOptionsConnector.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.intellijPlatform/self-update.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.intellijPlatform/self-update.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/ru/kazantsev/nsmp/sdk/intellij_plugin/service/sync/state/RemoteSrcStateService.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/ru/kazantsev/nsmp/sdk/intellij_plugin/service/sync/state/RemoteSrcStateService.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -16,7 +15,7 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="EmbeddingIndexingInfo">
-    <option name="cachedIndexableFilesCount" value="194" />
+    <option name="cachedIndexableFilesCount" value="192" />
   </component>
   <component name="ExternalProjectsData">
     <projectState path="$PROJECT_DIR$">
@@ -381,10 +380,10 @@
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Gradle.nsd-plugin [clean]" />
-        <item itemvalue="Gradle.Tests.test" />
-        <item itemvalue="Gradle.nsd-plugin [build]" />
         <item itemvalue="Gradle.nsmp_sdk_intellij_plugin [buildPlugin]" />
+        <item itemvalue="Gradle.nsd-plugin [clean]" />
+        <item itemvalue="Gradle.nsd-plugin [build]" />
+        <item itemvalue="Gradle.Tests.test" />
       </list>
     </recent_temporary>
   </component>
@@ -476,7 +475,12 @@
       <workItem from="1779401585907" duration="946000" />
       <workItem from="1779525540728" duration="599000" />
       <workItem from="1779638604944" duration="16309000" />
-      <workItem from="1779733831114" duration="2204000" />
+      <workItem from="1779733831114" duration="2832000" />
+      <workItem from="1780442942476" duration="772000" />
+      <workItem from="1780489570445" duration="1973000" />
+      <workItem from="1780929205708" duration="592000" />
+      <workItem from="1781387094483" duration="2953000" />
+      <workItem from="1781450363733" duration="3977000" />
     </task>
     <task id="LOCAL-00001" summary="1">
       <option name="closed" value="true" />
@@ -734,7 +738,15 @@
       <option name="project" value="LOCAL" />
       <updated>1779665823531</updated>
     </task>
-    <option name="localTasksCounter" value="33" />
+    <task id="LOCAL-00033" summary="Переработан контроллер на стороне инсталляции.">
+      <option name="closed" value="true" />
+      <created>1779739588019</created>
+      <option name="number" value="00033" />
+      <option name="presentableId" value="LOCAL-00033" />
+      <option name="project" value="LOCAL" />
+      <updated>1779739588020</updated>
+    </task>
+    <option name="localTasksCounter" value="34" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -771,7 +783,8 @@
     <MESSAGE value="Добавлен метод для интеграции в браузерным плагином." />
     <MESSAGE value="Видоизменен главный tool window. Исправлена проблема с открытием/закрытием tool window при активации/деактивации плагина." />
     <MESSAGE value="Фикс для фикса." />
-    <option name="LAST_COMMIT_MESSAGE" value="Фикс для фикса." />
+    <MESSAGE value="Переработан контроллер на стороне инсталляции." />
+    <option name="LAST_COMMIT_MESSAGE" value="Переработан контроллер на стороне инсталляции." />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

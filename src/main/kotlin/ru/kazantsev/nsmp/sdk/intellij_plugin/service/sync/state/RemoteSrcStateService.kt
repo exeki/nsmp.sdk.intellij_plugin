@@ -43,7 +43,8 @@ class RemoteSrcStateService(private val project: Project) {
     }
 
     private fun getRemoteData(req: SrcRequest): SrcSetRoot<SrcTextChecksum> {
-        return syncService.createSrcSyncService().remoteSrcService.getRemoteSrc(req)
+        val lookup = syncService.createSrcSyncService().remoteSrcService.lookupRemoteSrc(req)
+        return SrcSetRoot.fromLookupRoot(lookup)
     }
 
     private fun getOrCreateTargetFolder(type: SrcType): VirtualFile {
@@ -52,8 +53,17 @@ class RemoteSrcStateService(private val project: Project) {
         return VfsUtil.createDirectoryIfMissing(base, path)
     }
 
+    private fun clearTargetDirectory(type: SrcType){
+        val path = getTargetFolderRelativePath(type)
+        val base = VfsUtil.findRelativeFile(fileSupportService.getProjectVirtualFile(), path)
+        if(base != null && base.exists()) base.children.forEach {
+            it.delete(this)
+        }
+    }
+
     private fun updateSrcSetRemoteState(srcSet: ISrcSet<SrcTextChecksum>) {
         val folder = getOrCreateTargetFolder(srcSet.type)
+        clearTargetDirectory(srcSet.type)
         val format = srcSet.type.format.code
         srcSet.forEach {
             val filename = "${it.code}.$format"
