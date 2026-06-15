@@ -8,6 +8,7 @@ import ru.kazantsev.nsmp.sdk.intellij_plugin.exception.ActionStartException
 import ru.kazantsev.nsmp.sdk.intellij_plugin.service.ui.PluginActivationService
 import ru.kazantsev.nsmp.sdk.intellij_plugin.service.ui.notification.DialogNotificationService
 import ru.kazantsev.nsmp.sdk.intellij_plugin.ui.MessageBundle
+import ru.kazantsev.nsmp.sdk.intellij_plugin.ui.editor_top_panel.subcomponents.buttons.AbstractButton
 
 abstract class AbstractProjectAction : AnAction() {
 
@@ -19,6 +20,7 @@ abstract class AbstractProjectAction : AnAction() {
         get() = MessageBundle.message(titleKey)
 
     override fun update(e: AnActionEvent) {
+        if (e.place == AbstractButton.ACTION_PLACE) return
         e.presentation.text = MessageBundle.message(presentationTextKey)
         e.presentation.description = MessageBundle.message(presentationDescriptionKey)
     }

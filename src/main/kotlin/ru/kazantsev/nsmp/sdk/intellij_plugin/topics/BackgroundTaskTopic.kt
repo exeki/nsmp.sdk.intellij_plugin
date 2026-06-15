@@ -3,6 +3,7 @@ package ru.kazantsev.nsmp.sdk.intellij_plugin.topics
 import com.intellij.util.messages.Topic
 import ru.kazantsev.nsmp.sdk.intellij_plugin.task.backgroundable.AbstractBackgroundTask
 
+@Suppress("EmptyMethod")
 interface BackgroundTaskTopic {
     companion object {
         @JvmField

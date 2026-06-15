@@ -19,7 +19,7 @@ abstract class AbstractButton(
     minimumSize
 ) {
     companion object {
-        private const val ACTION_PLACE = "NSMP.EditorTopPanel"
+        const val ACTION_PLACE = "NSMP.EditorTopPanel"
         const val MINIMUM_BUTTON_HEIGHT = 20
         const val MINIMUM_BUTTON_WIDTH = 40
         private val minimumSize = JBUI.size(MINIMUM_BUTTON_WIDTH, MINIMUM_BUTTON_HEIGHT)

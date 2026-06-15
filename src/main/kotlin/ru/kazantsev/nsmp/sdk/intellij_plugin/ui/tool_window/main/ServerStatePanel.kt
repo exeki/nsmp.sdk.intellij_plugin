@@ -21,7 +21,7 @@ import javax.swing.BoxLayout
 import javax.swing.JPanel
 
 class ServerStatePanel(
-    private val project: Project
+    project: Project
 ) : JPanel(), Disposable {
 
     private val statusLabel = JBLabel().apply {

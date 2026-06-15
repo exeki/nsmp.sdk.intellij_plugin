@@ -8,7 +8,6 @@ import com.intellij.openapi.wm.ToolWindowFactory
 import com.intellij.ui.content.ContentFactory
 import ru.kazantsev.nsmp.sdk.intellij_plugin.service.ui.PluginActivationService
 import ru.kazantsev.nsmp.sdk.intellij_plugin.ui.tool_window.main.buttons.CheckButton
-import ru.kazantsev.nsmp.sdk.intellij_plugin.ui.tool_window.main.buttons.OpenInstallationButton
 import ru.kazantsev.nsmp.sdk.intellij_plugin.ui.tool_window.main.buttons.PullButton
 import ru.kazantsev.nsmp.sdk.intellij_plugin.ui.tool_window.main.buttons.PushButton
 import java.awt.BorderLayout

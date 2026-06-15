@@ -67,6 +67,7 @@ class InstallationInfoPanel(
         repaint()
     }
 
+    @Suppress("SameParameterValue")
     private fun setHostPlain(host: String) {
         hostLinkEnabled = false
         hostLabel.text = formatLine(MessageBundle.message("tool_window.main.installation.host"), host)
