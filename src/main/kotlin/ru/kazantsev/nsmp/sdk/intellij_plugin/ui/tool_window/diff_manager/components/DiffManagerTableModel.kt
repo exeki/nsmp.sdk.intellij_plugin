@@ -1,7 +1,6 @@
 package ru.kazantsev.nsmp.sdk.intellij_plugin.ui.tool_window.diff_manager.components
 
 import ru.kazantsev.nsmp.sdk.intellij_plugin.ui.MessageBundle
-import ru.kazantsev.nsmp.sdk.intellij_plugin.ui.localizedName
 import ru.kazantsev.nsmp.sdk.intellij_plugin.ui.tool_window.diff_manager.model.DiffRow
 import javax.swing.table.AbstractTableModel
 
