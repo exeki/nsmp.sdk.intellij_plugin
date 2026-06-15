@@ -1,7 +1,9 @@
 package ru.kazantsev.nsmp.sdk.intellij_plugin.ui.common
 
+import com.intellij.openapi.ide.CopyPasteManager
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.ui.DialogWrapper
+import com.intellij.openapi.wm.WindowManager
 import com.intellij.ui.components.JBLabel
 import com.intellij.ui.components.JBScrollPane
 import com.intellij.ui.components.JBTextArea
@@ -12,6 +14,8 @@ import java.awt.Dimension
 import java.awt.Font
 import java.awt.GraphicsEnvironment
 import java.awt.Rectangle
+import java.awt.datatransfer.StringSelection
+import java.awt.event.ActionEvent
 import javax.swing.Action
 import javax.swing.BoxLayout
 import javax.swing.JComponent
@@ -19,11 +23,17 @@ import javax.swing.JPanel
 import javax.swing.ScrollPaneConstants
 
 class FileExecuteResultDialog(
-    project: Project,
+    private val project: Project,
     private val fileName: String,
     private val contextFileRelativePath: String?,
     private val result: String,
 ) : DialogWrapper(project) {
+
+    private val copyAction = object : DialogWrapperAction(MessageBundle.message("sync.command.execute.file.copy")) {
+        override fun doAction(e: ActionEvent?) {
+            CopyPasteManager.getInstance().setContents(StringSelection(result))
+        }
+    }
 
     init {
         title = MessageBundle.message("sync.command.execute.file.title")
@@ -31,9 +41,9 @@ class FileExecuteResultDialog(
     }
 
     override fun createCenterPanel(): JComponent {
-        val screenBounds = screenBounds()
-        val dialogWidth = (screenBounds.width * WIDTH_SCREEN_FRACTION).toInt()
-        val maxContentHeight = (screenBounds.height * MAX_HEIGHT_SCREEN_FRACTION).toInt() - DIALOG_CHROME_HEIGHT
+        val ideBounds = ideBounds(project)
+        val dialogWidth = (ideBounds.width * WIDTH_FRACTION).toInt()
+        val maxContentHeight = (ideBounds.height * MAX_HEIGHT_FRACTION).toInt() - DIALOG_CHROME_HEIGHT
 
         val resultArea = JBTextArea(result).apply {
             isEditable = false
@@ -77,11 +87,11 @@ class FileExecuteResultDialog(
         }
     }
 
-    override fun createActions(): Array<Action> = arrayOf(okAction)
+    override fun createActions(): Array<Action> = arrayOf(copyAction, okAction)
 
     companion object {
-        private const val WIDTH_SCREEN_FRACTION = 0.5
-        private const val MAX_HEIGHT_SCREEN_FRACTION = 2.0 / 3.0
+        private const val WIDTH_FRACTION = 0.5
+        private const val MAX_HEIGHT_FRACTION = 2.0 / 3.0
         private const val DIALOG_CHROME_HEIGHT = 140
         private const val MIN_CONTENT_HEIGHT = 120
 
@@ -94,7 +104,9 @@ class FileExecuteResultDialog(
             FileExecuteResultDialog(project, fileName, contextFileRelativePath, result).show()
         }
 
-        private fun screenBounds(): Rectangle =
-            GraphicsEnvironment.getLocalGraphicsEnvironment().maximumWindowBounds
+        private fun ideBounds(project: Project): Rectangle =
+            WindowManager.getInstance().suggestParentWindow(project)?.bounds
+                ?: WindowManager.getInstance().getFrame(project)?.bounds
+                ?: GraphicsEnvironment.getLocalGraphicsEnvironment().maximumWindowBounds
     }
 }

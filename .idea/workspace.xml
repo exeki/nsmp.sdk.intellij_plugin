@@ -4,8 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0ed9795e-0975-48aa-bb0f-4d495b6ed849" name="Changes" comment="Правки.">
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/ru/kazantsev/nsmp/sdk/intellij_plugin/ui/tool_window/diff_manager/components/DiffManagerTopPanel.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/ru/kazantsev/nsmp/sdk/intellij_plugin/ui/tool_window/diff_manager/components/DiffManagerTopPanel.kt" afterDir="false" />
+    <list default="true" id="0ed9795e-0975-48aa-bb0f-4d495b6ed849" name="Changes" comment="Добавлен горизонтальный скролл в DiffManagerTopPanel по образу и подобию TopPanel">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/LICENSE" beforeDir="false" afterPath="$PROJECT_DIR$/LICENSE" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.MD" beforeDir="false" afterPath="$PROJECT_DIR$/README.MD" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/ru/kazantsev/nsmp/sdk/intellij_plugin/ui/common/FileExecuteResultDialog.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/ru/kazantsev/nsmp/sdk/intellij_plugin/ui/common/FileExecuteResultDialog.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/messages/MessageBundle.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/messages/MessageBundle.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/messages/MessageBundle_ru.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/messages/MessageBundle_ru.properties" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -139,7 +144,7 @@
     &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
     &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
     &quot;run.code.analysis.last.selected.profile&quot;: &quot;pProject Default&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.keymap&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
 }</component>
@@ -482,7 +487,8 @@
       <workItem from="1781387094483" duration="2953000" />
       <workItem from="1781450363733" duration="4996000" />
       <workItem from="1781476851553" duration="12907000" />
-      <workItem from="1781492101095" duration="1962000" />
+      <workItem from="1781492101095" duration="2198000" />
+      <workItem from="1781523867690" duration="2490000" />
     </task>
     <task id="LOCAL-00001" summary="1">
       <option name="closed" value="true" />
@@ -812,7 +818,15 @@
       <option name="project" value="LOCAL" />
       <updated>1781493795000</updated>
     </task>
-    <option name="localTasksCounter" value="42" />
+    <task id="LOCAL-00042" summary="Добавлен горизонтальный скролл в DiffManagerTopPanel по образу и подобию TopPanel">
+      <option name="closed" value="true" />
+      <created>1781494136667</created>
+      <option name="number" value="00042" />
+      <option name="presentableId" value="LOCAL-00042" />
+      <option name="project" value="LOCAL" />
+      <updated>1781494136667</updated>
+    </task>
+    <option name="localTasksCounter" value="43" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -830,7 +844,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Добавил скролл в топ панель, работает годно" />
     <MESSAGE value="Работаю со сворачиванием панели." />
     <MESSAGE value="Повышена версия src sync" />
     <MESSAGE value="Изменение структуры top panel" />
@@ -855,7 +868,8 @@
     <MESSAGE value="Мелкий рефакторинг сообщений в енамах" />
     <MESSAGE value="Для результата выполнения скрипта сделан отдельный popup" />
     <MESSAGE value="Правки." />
-    <option name="LAST_COMMIT_MESSAGE" value="Правки." />
+    <MESSAGE value="Добавлен горизонтальный скролл в DiffManagerTopPanel по образу и подобию TopPanel" />
+    <option name="LAST_COMMIT_MESSAGE" value="Добавлен горизонтальный скролл в DiffManagerTopPanel по образу и подобию TopPanel" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

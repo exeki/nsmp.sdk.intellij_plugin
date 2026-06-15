@@ -20,7 +20,7 @@
 
 ## 2. Требования 
 
-1. IDE на базе JetBrains Platform 2025+ (проводились тесты на базе OpenIDE, IntelliJ IDEA)
+1. IDE на базе JetBrains Platform 2025.2.4+ (проводились тесты на базе OpenIDE, IntelliJ IDEA)
 2. Сетевой доступ к вашей инсталляции
 3. Руки или их функциональный заменитель
 
