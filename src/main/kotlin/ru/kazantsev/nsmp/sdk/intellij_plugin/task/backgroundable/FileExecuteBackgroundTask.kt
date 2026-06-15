@@ -5,8 +5,8 @@ import com.intellij.openapi.progress.ProgressIndicator
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.vfs.VirtualFile
 import ru.kazantsev.nsmp.sdk.intellij_plugin.service.ScriptExecutionService
-import ru.kazantsev.nsmp.sdk.intellij_plugin.service.ui.notification.DialogNotificationService
 import ru.kazantsev.nsmp.sdk.intellij_plugin.ui.MessageBundle
+import ru.kazantsev.nsmp.sdk.intellij_plugin.ui.common.FileExecuteResultDialog
 
 class FileExecuteBackgroundTask(
     project: Project,
@@ -29,21 +29,11 @@ class FileExecuteBackgroundTask(
     }
 
     override fun onSuccess() {
-        //TODO окошко бы побольше
-        project.service<DialogNotificationService>().showInfo(
-            title = MessageBundle.message("sync.command.execute.file.title"),
-            message = buildString {
-                append(MessageBundle.message("sync.command.execute.file.executed", file.name))
-                append("\n")
-                if (!contextFileRelativePath.isNullOrBlank()) {
-                    append(MessageBundle.message("sync.command.execute.context.title", contextFileRelativePath))
-                    append("\n")
-                }
-                append(MessageBundle.message("sync.command.execute.file.result.title") + ":")
-                append("\n")
-                append("\n")
-                append(result.orEmpty())
-            }
+        FileExecuteResultDialog.show(
+            project = project,
+            fileName = file.name,
+            contextFileRelativePath = contextFileRelativePath,
+            result = result.orEmpty(),
         )
     }
 }
