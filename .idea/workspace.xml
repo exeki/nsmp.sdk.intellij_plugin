@@ -4,10 +4,17 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0ed9795e-0975-48aa-bb0f-4d495b6ed849" name="Changes" comment="Переработан контроллер на стороне инсталляции.">
+    <list default="true" id="0ed9795e-0975-48aa-bb0f-4d495b6ed849" name="Changes" comment="Убрано падение при отсутствии искомых исходников на инсталляции при обновлении remote state.&#10;Добавлена очистка папки remote state перед обновлением.">
+      <change afterPath="$PROJECT_DIR$/LICENSE" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/README.MD" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/docs/settings.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/docs/syncOperations.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.intellijPlatform/self-update.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.intellijPlatform/self-update.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/ru/kazantsev/nsmp/sdk/intellij_plugin/service/sync/state/RemoteSrcStateService.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/ru/kazantsev/nsmp/sdk/intellij_plugin/service/sync/state/RemoteSrcStateService.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/ru/kazantsev/nsmp/sdk/intellij_plugin/ui/tool_window/main/ServerStatePanel.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/ru/kazantsev/nsmp/sdk/intellij_plugin/ui/tool_window/main/ServerStatePanel.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/META-INF/plugin.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/META-INF/plugin.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/messages/MessageBundle.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/messages/MessageBundle.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/messages/MessageBundle_ru.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/messages/MessageBundle_ru.properties" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -154,6 +161,8 @@
       <recent name="C:\projects\jvm\nsd-plugin" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\projects\jvm\nsd\sdk\nsmp.sdk.intellij_plugin\docs" />
+      <recent name="C:\projects\jvm\nsd\sdk\nsmp.sdk.intellij_plugin\docs\syncOperations" />
       <recent name="C:\projects\jvm\nsd\sdk\nsmp.sdk.intellij_plugin\src\main\resources\icons\top_panel" />
     </key>
     <key name="CopyKotlinDeclarationDialog.RECENTS_KEY">
@@ -480,7 +489,8 @@
       <workItem from="1780489570445" duration="1973000" />
       <workItem from="1780929205708" duration="592000" />
       <workItem from="1781387094483" duration="2953000" />
-      <workItem from="1781450363733" duration="3977000" />
+      <workItem from="1781450363733" duration="4996000" />
+      <workItem from="1781476851553" duration="9195000" />
     </task>
     <task id="LOCAL-00001" summary="1">
       <option name="closed" value="true" />
@@ -746,7 +756,15 @@
       <option name="project" value="LOCAL" />
       <updated>1779739588020</updated>
     </task>
-    <option name="localTasksCounter" value="34" />
+    <task id="LOCAL-00034" summary="Убрано падение при отсутствии искомых исходников на инсталляции при обновлении remote state.&#10;Добавлена очистка папки remote state перед обновлением.">
+      <option name="closed" value="true" />
+      <created>1781475935972</created>
+      <option name="number" value="00034" />
+      <option name="presentableId" value="LOCAL-00034" />
+      <option name="project" value="LOCAL" />
+      <updated>1781475935973</updated>
+    </task>
+    <option name="localTasksCounter" value="35" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -784,7 +802,8 @@
     <MESSAGE value="Видоизменен главный tool window. Исправлена проблема с открытием/закрытием tool window при активации/деактивации плагина." />
     <MESSAGE value="Фикс для фикса." />
     <MESSAGE value="Переработан контроллер на стороне инсталляции." />
-    <option name="LAST_COMMIT_MESSAGE" value="Переработан контроллер на стороне инсталляции." />
+    <MESSAGE value="Убрано падение при отсутствии искомых исходников на инсталляции при обновлении remote state.&#10;Добавлена очистка папки remote state перед обновлением." />
+    <option name="LAST_COMMIT_MESSAGE" value="Убрано падение при отсутствии искомых исходников на инсталляции при обновлении remote state.&#10;Добавлена очистка папки remote state перед обновлением." />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

@@ -1,6 +1,10 @@
 package ru.kazantsev.nsmp.sdk.intellij_plugin.ui.tool_window.main
 
+import com.intellij.icons.AllIcons
 import com.intellij.openapi.Disposable
+import com.intellij.openapi.actionSystem.AnAction
+import com.intellij.openapi.actionSystem.AnActionEvent
+import com.intellij.openapi.actionSystem.impl.ActionButton
 import com.intellij.openapi.application.ApplicationManager
 import com.intellij.openapi.components.service
 import com.intellij.openapi.project.Project
@@ -20,17 +24,28 @@ class ServerStatePanel(
     private val project: Project
 ) : JPanel(), Disposable {
 
-    private val statusLabel = JBLabel()
-    private val detailsLabel = JBLabel()
+    private val statusLabel = JBLabel().apply {
+        foreground = UIUtil.getLabelForeground()
+    }
+    private val restartButton = createRestartButton()
+    private val statusRow = JPanel().apply {
+        layout = BoxLayout(this, BoxLayout.X_AXIS)
+        isOpaque = false
+        alignmentX = LEFT_ALIGNMENT
+        add(statusLabel)
+        add(Box.createHorizontalStrut(JBUI.scale(4)))
+        add(restartButton)
+    }
+    private val detailsLabel = JBLabel().apply {
+        foreground = UIUtil.getLabelForeground()
+    }
     private val messageBus = project.messageBus.connect(this)
 
     init {
         layout = BoxLayout(this, BoxLayout.Y_AXIS)
         border = JBUI.Borders.emptyLeft(8)
         isOpaque = false
-        statusLabel.foreground = UIUtil.getLabelForeground()
-        detailsLabel.foreground = UIUtil.getLabelForeground()
-        add(statusLabel)
+        add(statusRow)
         add(Box.createVerticalStrut(4))
         add(detailsLabel)
         add(Box.createVerticalStrut(8))
@@ -114,4 +129,28 @@ class ServerStatePanel(
     }
 
     private fun formatLine(label: String, value: String): String = "$label: $value"
+
+    private fun createRestartButton(): ActionButton {
+        val action = object : AnAction(
+            MessageBundle.message("tool_window.main.server.restart"),
+            MessageBundle.message("tool_window.main.server.restart"),
+            AllIcons.Actions.Restart
+        ) {
+            override fun actionPerformed(e: AnActionEvent) {
+                ApplicationManager.getApplication().service<NsdHttpServerService>().restart()
+            }
+        }
+        val lineHeight = statusLabel.getFontMetrics(statusLabel.font).height.coerceAtLeast(JBUI.scale(16))
+        val buttonSize = JBUI.size(lineHeight, lineHeight)
+        return ActionButton(
+            action,
+            action.templatePresentation,
+            MainToolWindowFactory.ACTION_PLACE,
+            buttonSize
+        ).apply {
+            alignmentY = CENTER_ALIGNMENT
+            preferredSize = buttonSize
+            maximumSize = buttonSize
+        }
+    }
 }

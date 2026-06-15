@@ -4,7 +4,8 @@
     <name>NSMP SDK</name>
     <vendor email="exeki@yandex.ru">Kazantsev Egor</vendor>
     <description><![CDATA[
-        Plugin for Naumen Server Management Platform developers.
+        Plugin to simplify development in the Naumen Service Management Platform environment.
+        It contains functions for working with the platform's sources in a git-like form.
     ]]></description>
     <depends>com.intellij.modules.platform</depends>
     <depends>com.intellij.modules.java</depends>
