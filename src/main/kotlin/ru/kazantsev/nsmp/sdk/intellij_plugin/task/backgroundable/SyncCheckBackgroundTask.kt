@@ -48,7 +48,7 @@ class SyncCheckBackgroundTask(
         if (value.any { entry -> entry.value.any { it.conflict } }) notificationService.showError(
             title = taskTitle,
             content = MessageBundle.message("sync.command.sync.check.not.in.sync"),
-            actionTitle = "Show in diff manager",
+            actionTitle = MessageBundle.message("sync.command.diff.manager.show.in"),
             action = {
                 val event = AnActionEvent.createEvent(
                     SimpleDataContext.builder().add(CommonDataKeys.PROJECT, project).build(),

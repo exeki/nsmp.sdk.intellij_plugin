@@ -48,7 +48,10 @@ abstract class AbstractBackgroundTask(
         when (error) {
             is BadResponseException -> dialogNotificationService.showError(
                 title = taskTitle,
-                message = "Bad response from server: ${error.responseSnapshot.bodyAsString}"
+                message = MessageBundle.message(
+                    "task.error.bad.response",
+                    error.responseSnapshot.bodyAsString
+                )
             )
 
             is RequestProcessException -> dialogNotificationService.showError(
@@ -58,7 +61,7 @@ abstract class AbstractBackgroundTask(
 
             else -> dialogNotificationService.showError(
                 title = taskTitle,
-                message = "Failed to execute background task:",
+                message = MessageBundle.message("task.error.failed"),
                 error = error
             )
         }

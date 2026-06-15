@@ -4,6 +4,7 @@ import com.intellij.openapi.actionSystem.Presentation
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.vfs.VirtualFile
 import ru.kazantsev.nsmp.sdk.intellij_plugin.actions.project.file.FileExecuteAction
+import ru.kazantsev.nsmp.sdk.intellij_plugin.ui.MessageBundle
 
 class FileExecuteButton(
     project: Project,
@@ -12,10 +13,9 @@ class FileExecuteButton(
     file = file,
     project = project,
     action = FileExecuteAction(),
-    //TODO перевести на бандл
     presentation = Presentation().apply {
-        text = "Execute"
-        description = "Send current file for execution"
+        text = MessageBundle.message("editor.top.panel.button.execute")
+        description = MessageBundle.message("editor.top.panel.button.execute.description")
         isEnabledAndVisible = true
         icon = null
     }

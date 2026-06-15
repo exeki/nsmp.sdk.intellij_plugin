@@ -6,10 +6,11 @@ import com.intellij.openapi.project.Project
 import com.intellij.openapi.vfs.VirtualFile
 import ru.kazantsev.nsmp.sdk.intellij_plugin.service.sync.SyncService
 import ru.kazantsev.nsmp.sdk.intellij_plugin.task.backgroundable.PullBackgroundTask
-import ru.kazantsev.nsmp.sdk.intellij_plugin.ui.MessageBundle
 
 class FilePullAction : AbstractSrcSyncFileAction() {
-    override val title: String = MessageBundle.message("sync.command.pull.title")
+    override val titleKey = "sync.command.pull.title"
+    override val presentationTextKey = "action.file.pull.text"
+    override val presentationDescriptionKey = "action.file.pull.description"
 
     override fun actionPerformedSyncFile(
         event: AnActionEvent,

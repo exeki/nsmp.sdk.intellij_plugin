@@ -4,6 +4,7 @@ import com.sun.net.httpserver.HttpExchange
 import ru.kazantsev.nsmp.sdk.intellij_plugin.server.HttpRoute
 import ru.kazantsev.nsmp.sdk.intellij_plugin.server.dto.response.MessageResponse
 import ru.kazantsev.nsmp.sdk.intellij_plugin.server.UseCaseResult
+import ru.kazantsev.nsmp.sdk.intellij_plugin.ui.MessageBundle
 
 class NotFoundUseCase : AbstractHttpRequestUseCase() {
     override val route: HttpRoute = HttpRoute(
@@ -14,7 +15,7 @@ class NotFoundUseCase : AbstractHttpRequestUseCase() {
     override fun executeInternal(httpExchange: HttpExchange): UseCaseResult {
         return UseCaseResult.of(
             statusCode = 404,
-            body = MessageResponse(message = "Not found"),
+            body = MessageResponse(message = MessageBundle.message("api.error.not.found")),
         )
     }
 }

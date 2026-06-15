@@ -23,7 +23,7 @@ class TopPanelLogo(
         isOpaque = false
         cursor = Cursor.getPredefinedCursor(Cursor.HAND_CURSOR)
         border = JBUI.Borders.empty(LOGO_FOCUS_VERTICAL_GAP, LOGO_FOCUS_HORIZONTAL_GAP)
-        toolTipText = "Toggle ${MessageBundle.message("settings.display.name")} panel"
+        toolTipText = MessageBundle.message("ui.top.panel.toggle", MessageBundle.message("settings.display.name"))
         addMouseListener(object : MouseAdapter() {
             override fun mouseEntered(event: MouseEvent) {
                 hovered = true

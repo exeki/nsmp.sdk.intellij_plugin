@@ -4,6 +4,7 @@ import com.intellij.openapi.actionSystem.Presentation
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.vfs.VirtualFile
 import ru.kazantsev.nsmp.sdk.intellij_plugin.actions.project.file.FileOpenInBrowserAction
+import ru.kazantsev.nsmp.sdk.intellij_plugin.ui.MessageBundle
 
 class FileOpenInBrowserButton(
     project: Project,
@@ -12,10 +13,9 @@ class FileOpenInBrowserButton(
     file = file,
     project = project,
     action = FileOpenInBrowserAction(),
-    //TODO перевести на бандл
     presentation = Presentation().apply {
-        text = "Open in Browser"
-        description = "Open current file in browser"
+        text = MessageBundle.message("editor.top.panel.button.open.in.browser")
+        description = MessageBundle.message("editor.top.panel.button.open.in.browser.description")
         isEnabledAndVisible = true
         icon = null
     }

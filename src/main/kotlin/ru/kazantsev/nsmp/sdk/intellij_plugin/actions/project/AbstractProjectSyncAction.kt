@@ -7,6 +7,7 @@ import com.intellij.openapi.ui.DialogWrapper
 import ru.kazantsev.nsmp.sdk.intellij_plugin.exception.ActionStartException
 import ru.kazantsev.nsmp.sdk.intellij_plugin.service.BackgroundTaskRegistry
 import ru.kazantsev.nsmp.sdk.intellij_plugin.task.backgroundable.AbstractBackgroundSyncTask
+import ru.kazantsev.nsmp.sdk.intellij_plugin.ui.MessageBundle
 import ru.kazantsev.nsmp.sdk.intellij_plugin.ui.global_src_request_dialog.SrcRequestSelectDialog
 import ru.kazantsev.nsmp.sdk.intellij_plugin.ui.global_src_request_dialog.model.SrcRequestSelectState
 import ru.kazantsev.nsmp.sdk.intellij_plugin.ui.global_src_request_dialog.options_provider.SrcOptionsProvider
@@ -25,7 +26,7 @@ abstract class AbstractProjectSyncAction : AbstractProjectAction() {
     override fun actionPerformedProject(event: AnActionEvent, project: Project) {
         val backgroundTaskRegistry = project.service<BackgroundTaskRegistry>()
         val hasStarted = backgroundTaskRegistry.getByType<AbstractBackgroundSyncTask>().isNotEmpty()
-        if (hasStarted) throw ActionStartException("Another sync task is already running")
+        if (hasStarted) throw ActionStartException(MessageBundle.message("action.error.sync.task.running"))
         val dialog = getDialog(project)
         dialog.showAndGet()
     }

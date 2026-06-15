@@ -4,6 +4,7 @@ import com.intellij.openapi.actionSystem.Presentation
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.vfs.VirtualFile
 import ru.kazantsev.nsmp.sdk.intellij_plugin.actions.project.file.FileSyncCheckAction
+import ru.kazantsev.nsmp.sdk.intellij_plugin.ui.MessageBundle
 
 class FileSyncCheckButton(
     project: Project,
@@ -12,10 +13,9 @@ class FileSyncCheckButton(
     file = file,
     project = project,
     action = FileSyncCheckAction(),
-    //TODO перевести на бандл
     presentation = Presentation().apply {
-        text = "Sync Check"
-        description = "Sync check current file"
+        text = MessageBundle.message("editor.top.panel.button.sync.check")
+        description = MessageBundle.message("editor.top.panel.button.sync.check.description")
         isEnabledAndVisible = true
         icon = null
     }

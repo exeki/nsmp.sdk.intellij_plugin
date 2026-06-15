@@ -1,10 +1,12 @@
 package ru.kazantsev.nsmp.sdk.intellij_plugin.ui.tool_window.diff_manager.components
 
 import com.intellij.openapi.ui.ComboBox
+import com.intellij.ui.SimpleListCellRenderer
 import com.intellij.ui.components.JBTextField
 import com.intellij.util.ui.JBUI
-import ru.kazantsev.nsmp.sdk.intellij_plugin.ui.MessageBundle
 import ru.kazantsev.nsmp.sdk.intellij_plugin.service.sync.data.SrcState
+import ru.kazantsev.nsmp.sdk.intellij_plugin.ui.MessageBundle
+import ru.kazantsev.nsmp.sdk.intellij_plugin.ui.localizedName
 import ru.kazantsev.nsmp.sdk.intellij_plugin.ui.tool_window.diff_manager.model.DiffTypeFilter
 import java.awt.Component
 import java.awt.Dimension
@@ -24,7 +26,7 @@ class DiffManagerTopPanel : JPanel(FlowLayout(FlowLayout.LEFT, 8, 0)) {
     val leftStateFilter = ComboBox(SrcState.entries.toTypedArray())
     val rightLabel = JLabel(MessageBundle.message("sync.command.diff.manager.compare.right"))
     val rightStateFilter = ComboBox(SrcState.entries.toTypedArray())
-    val refreshButton = JButton("Refresh") //TODO перевести на бандл
+    val refreshButton = JButton(MessageBundle.message("sync.command.diff.manager.refresh"))
     val updateRemoteButton = JButton(MessageBundle.message("sync.command.diff.manager.remote.update"))
     val typeLabel = JLabel(MessageBundle.message("sync.command.diff.manager.table.type"))
     val typeFilterField = ComboBox(DiffTypeFilter.entries.toTypedArray())
@@ -32,6 +34,9 @@ class DiffManagerTopPanel : JPanel(FlowLayout(FlowLayout.LEFT, 8, 0)) {
     val codeFilterField = JBTextField(18)
 
     init {
+        leftStateFilter.renderer = stateRenderer()
+        rightStateFilter.renderer = stateRenderer()
+        typeFilterField.renderer = typeRenderer()
         leftStateFilter.selectedItem = SrcState.CURRENT
         rightStateFilter.selectedItem = SrcState.LAST_SYNC
         add(leftLabel)
@@ -44,6 +49,14 @@ class DiffManagerTopPanel : JPanel(FlowLayout(FlowLayout.LEFT, 8, 0)) {
         add(typeFilterField)
         add(codeLabel)
         add(codeFilterField)
+    }
+
+    private fun stateRenderer() = SimpleListCellRenderer.create<SrcState>("") { value ->
+        value?.localizedName().orEmpty()
+    }
+
+    private fun typeRenderer() = SimpleListCellRenderer.create<DiffTypeFilter>("") { value ->
+        value?.localizedName().orEmpty()
     }
 
     override fun add(component: Component): Component? {

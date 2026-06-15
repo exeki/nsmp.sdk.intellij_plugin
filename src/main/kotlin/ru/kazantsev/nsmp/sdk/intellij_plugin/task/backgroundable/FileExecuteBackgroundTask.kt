@@ -13,7 +13,7 @@ class FileExecuteBackgroundTask(
     val file: VirtualFile,
     val contextFileRelativePath: String?,
 ) : AbstractBackgroundTask(
-    "File execute" + ": " + file.name,
+    MessageBundle.message("sync.command.execute.file.task.title", file.name),
     project
 ) {
 
@@ -31,9 +31,9 @@ class FileExecuteBackgroundTask(
     override fun onSuccess() {
         //TODO окошко бы побольше
         project.service<DialogNotificationService>().showInfo(
-            title = "File execute",
+            title = MessageBundle.message("sync.command.execute.file.title"),
             message = buildString {
-                append("Executed file: ${file.name}")
+                append(MessageBundle.message("sync.command.execute.file.executed", file.name))
                 append("\n")
                 if (!contextFileRelativePath.isNullOrBlank()) {
                     append(MessageBundle.message("sync.command.execute.context.title", contextFileRelativePath))

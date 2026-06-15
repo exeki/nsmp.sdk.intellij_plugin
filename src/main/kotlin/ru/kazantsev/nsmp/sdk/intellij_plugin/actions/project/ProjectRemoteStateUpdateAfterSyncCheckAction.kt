@@ -6,6 +6,7 @@ import com.intellij.openapi.project.Project
 import ru.kazantsev.nsmp.sdk.intellij_plugin.exception.ActionStartException
 import ru.kazantsev.nsmp.sdk.intellij_plugin.service.BackgroundTaskRegistry
 import ru.kazantsev.nsmp.sdk.intellij_plugin.task.backgroundable.UpdateRemoteStateBackgroundTask
+import ru.kazantsev.nsmp.sdk.intellij_plugin.ui.MessageBundle
 import ru.kazantsev.nsmp.sdk.sources_sync.data.request.SrcRequest
 
 class ProjectRemoteStateUpdateAfterSyncCheckAction(val req: SrcRequest) : ProjectRemoteStateUpdateAction() {
@@ -16,7 +17,7 @@ class ProjectRemoteStateUpdateAfterSyncCheckAction(val req: SrcRequest) : Projec
     ) {
         val backgroundTaskRegistry = project.service<BackgroundTaskRegistry>()
         if (backgroundTaskRegistry.getByType<UpdateRemoteStateBackgroundTask>().isNotEmpty()) {
-            throw ActionStartException("Another update remote state task is already running")
+            throw ActionStartException(MessageBundle.message("action.error.remote.state.task.running"))
         } else UpdateRemoteStateBackgroundTask(project, true).start()
     }
 }

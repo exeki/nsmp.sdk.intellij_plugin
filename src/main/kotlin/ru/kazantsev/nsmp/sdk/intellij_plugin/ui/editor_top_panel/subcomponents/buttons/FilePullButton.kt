@@ -4,6 +4,7 @@ import com.intellij.openapi.actionSystem.Presentation
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.vfs.VirtualFile
 import ru.kazantsev.nsmp.sdk.intellij_plugin.actions.project.file.FilePullAction
+import ru.kazantsev.nsmp.sdk.intellij_plugin.ui.MessageBundle
 
 class FilePullButton(
     project: Project,
@@ -12,10 +13,9 @@ class FilePullButton(
     file = file,
     project = project,
     action = FilePullAction(),
-    //TODO перевести на бандл
     presentation = Presentation().apply {
-        text = "Pull"
-        description = "Pull current file"
+        text = MessageBundle.message("editor.top.panel.button.pull")
+        description = MessageBundle.message("editor.top.panel.button.pull.description")
         isEnabledAndVisible = true
         icon = null
     }

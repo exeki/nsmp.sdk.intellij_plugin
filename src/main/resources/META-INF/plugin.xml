@@ -11,6 +11,8 @@
     <depends>com.intellij.modules.java</depends>
     <depends>org.intellij.groovy</depends>
 
+    <resource-bundle>messages.MessageBundle</resource-bundle>
+
     <extensions defaultExtensionNs="com.intellij">
         <notificationGroup id="NSMP SDK Notifications" displayType="BALLOON" isLogByDefault="true"/>
         <postStartupActivity implementation="ru.kazantsev.nsmp.sdk.intellij_plugin.startup.PluginStartup"/>

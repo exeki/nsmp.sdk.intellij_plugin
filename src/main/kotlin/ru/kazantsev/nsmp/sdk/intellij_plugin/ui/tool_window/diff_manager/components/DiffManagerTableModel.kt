@@ -1,6 +1,7 @@
 package ru.kazantsev.nsmp.sdk.intellij_plugin.ui.tool_window.diff_manager.components
 
 import ru.kazantsev.nsmp.sdk.intellij_plugin.ui.MessageBundle
+import ru.kazantsev.nsmp.sdk.intellij_plugin.ui.localizedName
 import ru.kazantsev.nsmp.sdk.intellij_plugin.ui.tool_window.diff_manager.model.DiffRow
 import javax.swing.table.AbstractTableModel
 
@@ -25,7 +26,7 @@ class DiffManagerTableModel : AbstractTableModel() {
         return when (columnIndex) {
             0 -> row.type.code
             1 -> row.code
-            2 -> row.status.name
+            2 -> row.status.localizedName()
             else -> ""
         }
     }

@@ -11,7 +11,9 @@ import ru.kazantsev.nsmp.sdk.sources_sync.data.SrcType
 
 class FileOpenInBrowserAction : AbstractSrcFileAction() {
 
-    override val title: String = "Open source in browser"
+    override val titleKey = "action.file.open.in.browser.title"
+    override val presentationTextKey = "action.file.open.in.browser.text"
+    override val presentationDescriptionKey = "action.file.open.in.browser.description"
 
     override fun actionPerformedFile(
         event: AnActionEvent,
@@ -31,5 +33,4 @@ class FileOpenInBrowserAction : AbstractSrcFileAction() {
         }
         BrowserUtil.browse(url)
     }
-
 }

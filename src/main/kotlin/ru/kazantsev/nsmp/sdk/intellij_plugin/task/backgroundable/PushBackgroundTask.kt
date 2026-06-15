@@ -66,7 +66,7 @@ class PushBackgroundTask(
             dialogService.showError(
                 title = taskTitle,
                 message = MessageBundle.message("sync.command.push.sync.check.failed"),
-                actionTitle = "Show in diff manager",
+                actionTitle = MessageBundle.message("sync.command.diff.manager.show.in"),
                 onAction = {
                     val event = AnActionEvent.createEvent(
                         SimpleDataContext.builder().add(CommonDataKeys.PROJECT, project).build(),

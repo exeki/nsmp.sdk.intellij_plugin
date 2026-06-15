@@ -7,7 +7,9 @@ import com.intellij.openapi.project.Project
 import ru.kazantsev.nsmp.sdk.intellij_plugin.service.settings.ProjectSettingsService
 
 class ProjectOpenInstallationAction : AbstractProjectAction() {
-    override val title: String = "Open installation"
+    override val titleKey = "action.project.open.installation.title"
+    override val presentationTextKey = "action.project.open.installation.text"
+    override val presentationDescriptionKey = "action.project.open.installation.description"
 
     override fun actionPerformedProject(
         event: AnActionEvent,

@@ -23,8 +23,10 @@ import ru.kazantsev.nsmp.sdk.intellij_plugin.service.sync.data.SrcState
 import ru.kazantsev.nsmp.sdk.intellij_plugin.service.sync.state.DiffService
 import ru.kazantsev.nsmp.sdk.intellij_plugin.task.backgroundable.AbstractBackgroundTask
 import ru.kazantsev.nsmp.sdk.intellij_plugin.task.backgroundable.UpdateRemoteStateBackgroundTask
+import ru.kazantsev.nsmp.sdk.intellij_plugin.ui.MessageBundle
 import ru.kazantsev.nsmp.sdk.intellij_plugin.ui.tool_window.diff_manager.DiffManagerToolWindowFactory
 import ru.kazantsev.nsmp.sdk.intellij_plugin.ui.tool_window.diff_manager.model.DiffRow
+import ru.kazantsev.nsmp.sdk.intellij_plugin.ui.tool_window.diff_manager.model.DiffTypeFilter
 import ru.kazantsev.nsmp.sdk.sources_sync.data.request.SrcRequest
 import java.awt.BorderLayout
 import java.awt.Component
@@ -136,8 +138,8 @@ class DiffManagerTable(private val project: Project) : JPanel(BorderLayout()), D
                         if (failure != null) {
                             Messages.showErrorDialog(
                                 project,
-                                failure.message ?: "Failed to load diff rows.",
-                                "Diff Manager"
+                                failure.message ?: MessageBundle.message("sync.command.diff.manager.error.load.rows"),
+                                MessageBundle.message("sync.command.diff.manager.error.title")
                             )
                         } else {
                             setRows(diffRows)
@@ -179,11 +181,11 @@ class DiffManagerTable(private val project: Project) : JPanel(BorderLayout()), D
     fun applyFilters() {
         val codeText = topPanel.codeFilterField.text.trim()
         val selectedType =
-            topPanel.typeFilterField.selectedItem as? ru.kazantsev.nsmp.sdk.intellij_plugin.ui.tool_window.diff_manager.model.DiffTypeFilter
+            topPanel.typeFilterField.selectedItem as? DiffTypeFilter
 
         val filters = mutableListOf<RowFilter<DiffManagerTableModel, Int>>()
-        if (selectedType != null && selectedType != ru.kazantsev.nsmp.sdk.intellij_plugin.ui.tool_window.diff_manager.model.DiffTypeFilter.ALL) {
-            filters += RowFilter.regexFilter("^${Pattern.quote(selectedType.code)}$", 0)
+        if (selectedType != null && selectedType != DiffTypeFilter.ALL) {
+            filters += RowFilter.regexFilter("^${Pattern.quote(selectedType.srcType.code)}$", 0)
         }
         if (codeText.isNotBlank()) {
             filters += RowFilter.regexFilter("(?i)${Pattern.quote(codeText)}", 1)
@@ -217,8 +219,8 @@ class DiffManagerTable(private val project: Project) : JPanel(BorderLayout()), D
                     if (project.isDisposed) return@invokeLater
                     Messages.showErrorDialog(
                         project,
-                        t.message ?: "Failed to load compared files.",
-                        "Diff Manager"
+                        t.message ?: MessageBundle.message("sync.command.diff.manager.error.load.files"),
+                        MessageBundle.message("sync.command.diff.manager.error.title")
                     )
                 }
             }

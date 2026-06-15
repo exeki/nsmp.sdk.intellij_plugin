@@ -5,14 +5,14 @@ import com.intellij.openapi.progress.ProgressIndicator
 import com.intellij.openapi.project.Project
 import ru.kazantsev.nsmp.sdk.intellij_plugin.service.sync.state.RemoteSrcStateService
 import ru.kazantsev.nsmp.sdk.intellij_plugin.service.ui.notification.BalloonNotificationService
+import ru.kazantsev.nsmp.sdk.intellij_plugin.ui.MessageBundle
 import ru.kazantsev.nsmp.sdk.sources_sync.data.request.SrcRequest
 
 open class UpdateRemoteStateBackgroundTask(
     project: Project,
     val showLastSyncToRemoteInDiffManager: Boolean = false
 ) : AbstractBackgroundTask(
-    //TODO перевести на бандл
-    "Update remote state",
+    MessageBundle.message("sync.command.remote.state.update.title"),
     project
 ) {
 
@@ -26,7 +26,7 @@ open class UpdateRemoteStateBackgroundTask(
     override fun onSuccess() {
         project.service<BalloonNotificationService>().showInfo(
             title = taskTitle,
-            content = "Remote state update completed successfully" //TODO перевести на бандл
+            content = MessageBundle.message("sync.command.remote.state.update.success")
         )
     }
 }

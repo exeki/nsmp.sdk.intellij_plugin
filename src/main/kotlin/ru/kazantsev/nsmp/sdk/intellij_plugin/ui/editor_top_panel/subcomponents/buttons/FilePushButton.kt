@@ -4,6 +4,7 @@ import com.intellij.openapi.actionSystem.Presentation
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.vfs.VirtualFile
 import ru.kazantsev.nsmp.sdk.intellij_plugin.actions.project.file.FilePushAction
+import ru.kazantsev.nsmp.sdk.intellij_plugin.ui.MessageBundle
 
 class FilePushButton(
     project: Project,
@@ -12,10 +13,9 @@ class FilePushButton(
     file = file,
     project = project,
     action = FilePushAction(),
-    //TODO перевести на бандл
     presentation = Presentation().apply {
-        text = "Push"
-        description = "Push current file"
+        text = MessageBundle.message("editor.top.panel.button.push")
+        description = MessageBundle.message("editor.top.panel.button.push.description")
         isEnabledAndVisible = true
         icon = null
     }
