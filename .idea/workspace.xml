@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0ed9795e-0975-48aa-bb0f-4d495b6ed849" name="Changes" comment="Исправлено формирование границ для окна с результатом выполнения скрипта. Добавлена кнопка копирования текста результата.">
+    <list default="true" id="0ed9795e-0975-48aa-bb0f-4d495b6ed849" name="Changes" comment="обновлено readme">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/README.MD" beforeDir="false" afterPath="$PROJECT_DIR$/README.MD" afterDir="false" />
     </list>
@@ -819,7 +819,15 @@
       <option name="project" value="LOCAL" />
       <updated>1781528738028</updated>
     </task>
-    <option name="localTasksCounter" value="44" />
+    <task id="LOCAL-00044" summary="обновлено readme">
+      <option name="closed" value="true" />
+      <created>1782262983231</created>
+      <option name="number" value="00044" />
+      <option name="presentableId" value="LOCAL-00044" />
+      <option name="project" value="LOCAL" />
+      <updated>1782262983231</updated>
+    </task>
+    <option name="localTasksCounter" value="45" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -837,7 +845,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Повышена версия src sync" />
     <MESSAGE value="Изменение структуры top panel" />
     <MESSAGE value="Top Panel наконец то приведен к желаемому виду. &#10;Действия вынесены в отдельные классы." />
     <MESSAGE value="тесты" />
@@ -862,7 +869,8 @@
     <MESSAGE value="Правки." />
     <MESSAGE value="Добавлен горизонтальный скролл в DiffManagerTopPanel по образу и подобию TopPanel" />
     <MESSAGE value="Исправлено формирование границ для окна с результатом выполнения скрипта. Добавлена кнопка копирования текста результата." />
-    <option name="LAST_COMMIT_MESSAGE" value="Исправлено формирование границ для окна с результатом выполнения скрипта. Добавлена кнопка копирования текста результата." />
+    <MESSAGE value="обновлено readme" />
+    <option name="LAST_COMMIT_MESSAGE" value="обновлено readme" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
