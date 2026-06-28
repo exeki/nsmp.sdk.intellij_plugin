@@ -14,12 +14,15 @@ import java.nio.file.Path
 @Service(Service.Level.PROJECT)
 class ServiceDirSetupService(private val project: Project) {
 
-    fun ensureExcludedAndGitIgnore() {
-        ensureExcludedInModules()
+    fun ensureServiceDirLayout() {
+        ensureExcludedSubfoldersInModules()
         ensureGitIgnoreRule()
     }
 
-    fun ensureExcludedInModules() {
+    /** @deprecated use [ensureServiceDirLayout] */
+    fun ensureExcludedAndGitIgnore() = ensureServiceDirLayout()
+
+    private fun ensureExcludedSubfoldersInModules() {
         ApplicationManager.getApplication().invokeAndWait {
             WriteAction.run<RuntimeException> {
                 ModuleManager.getInstance(project).modules.forEach { module ->
@@ -28,8 +31,14 @@ class ServiceDirSetupService(private val project: Project) {
                         model.contentEntries.forEach { contentEntry ->
                             val contentRoot = contentEntry.file ?: return@forEach
                             val serviceDir = VfsUtil.findRelativeFile(contentRoot, Constants.SDK_DIR) ?: return@forEach
-                            if (contentEntry.excludeFolderUrls.none { it == serviceDir.url }) {
-                                contentEntry.addExcludeFolder(serviceDir)
+
+                            removeExcludeFolder(contentEntry, serviceDir)
+
+                            NsmpSdkLayout.INDEX_EXCLUDED_SUBDIRS.forEach { subDirPath ->
+                                val subDir = findRelativePath(serviceDir, subDirPath) ?: return@forEach
+                                if (contentEntry.excludeFolderUrls.none { it == subDir.url }) {
+                                    contentEntry.addExcludeFolder(subDir)
+                                }
                             }
                         }
                         model.commit()
@@ -40,6 +49,23 @@ class ServiceDirSetupService(private val project: Project) {
                 }
             }
         }
+    }
+
+    private fun removeExcludeFolder(contentEntry: com.intellij.openapi.roots.ContentEntry, folder: com.intellij.openapi.vfs.VirtualFile) {
+        if (contentEntry.excludeFolderUrls.contains(folder.url)) {
+            contentEntry.removeExcludeFolder(folder.url)
+        }
+    }
+
+    private fun findRelativePath(
+        base: com.intellij.openapi.vfs.VirtualFile,
+        relativePath: String,
+    ): com.intellij.openapi.vfs.VirtualFile? {
+        var current: com.intellij.openapi.vfs.VirtualFile? = base
+        for (segment in relativePath.split('/')) {
+            current = current?.findChild(segment) ?: return null
+        }
+        return current
     }
 
     fun ensureGitIgnoreRule() {
@@ -55,8 +81,7 @@ class ServiceDirSetupService(private val project: Project) {
         Files.writeString(
             gitIgnore,
             suffix,
-            java.nio.file.StandardOpenOption.APPEND
+            java.nio.file.StandardOpenOption.APPEND,
         )
     }
 }
-

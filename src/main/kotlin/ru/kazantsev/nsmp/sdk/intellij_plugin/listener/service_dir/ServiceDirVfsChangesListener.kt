@@ -26,7 +26,7 @@ class ServiceDirVfsChangesListener(
     override fun after(events: List<VFileEvent>) {
         if (project.isDisposed) return
         if (events.any(::isServiceDirCreated)) {
-            serviceDirSetupService.ensureExcludedAndGitIgnore()
+            serviceDirSetupService.ensureServiceDirLayout()
         }
     }
 

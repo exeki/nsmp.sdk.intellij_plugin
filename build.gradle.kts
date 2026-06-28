@@ -20,9 +20,12 @@ dependencies {
     @Suppress("VulnerableLibrariesLocal", "RedundantSuppression")
     implementation("ru.kazantsev.nsmp.sdk.sources_sync:core:1.7.7")
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.9.0")
+    implementation("com.squareup:javapoet:1.13.0")
+    implementation("org.jsoup:jsoup:1.16.1")
     intellijPlatform {
         intellijIdeaCommunity("2025.2.4")
         testFramework(org.jetbrains.intellij.platform.gradle.TestFrameworkType.Platform)
+        testFramework(org.jetbrains.intellij.platform.gradle.TestFrameworkType.Plugin.Java)
         //instrumentationTools()
 
         // Add plugin dependencies for compilation here, example:
@@ -30,6 +33,8 @@ dependencies {
         bundledPlugin("org.intellij.groovy")
     }
     testImplementation(kotlin("test"))
+    testImplementation("junit:junit:4.13.2")
+    testRuntimeOnly("org.junit.vintage:junit-vintage-engine:5.11.4")
     testRuntimeOnly("junit:junit:4.13.2")
 }
 

@@ -26,10 +26,26 @@
                     icon="/icons/logo/stripe_crossed/nsmp_logo_stripe_crossed.svg"
                     factoryClass="ru.kazantsev.nsmp.sdk.intellij_plugin.ui.tool_window.diff_manager.DiffManagerToolWindowFactory"
                     canCloseContents="false"/>
+        <toolWindow id="NSMP SDK Meta Classes"
+                    anchor="right"
+                    icon="/icons/logo/stripe/nsmp_logo_stripe.svg"
+                    factoryClass="ru.kazantsev.nsmp.sdk.intellij_plugin.ui.tool_window.metaclass.MetaClassToolWindowFactory"
+                    canCloseContents="false"/>
         <projectConfigurable id="ru.kazantsev.nsmp.sdk.intellij_plugin.service.settings"
                              parentId="tools"
                              instance="ru.kazantsev.nsmp.sdk.intellij_plugin.ui.settings.PluginConfigurable"
                              displayName="NSMP SDK"/>
+    </extensions>
+
+    <extensions defaultExtensionNs="org.intellij.groovy">
+        <variableEnhancer implementation="ru.kazantsev.nsmp.sdk.intellij_plugin.service.metaclass.binding.MetaClassVariableTypeEnhancer"/>
+        <referenceTypeEnhancer implementation="ru.kazantsev.nsmp.sdk.intellij_plugin.service.metaclass.binding.MetaClassReferenceTypeEnhancer"/>
+        <typeAugmenter implementation="ru.kazantsev.nsmp.sdk.intellij_plugin.service.metaclass.binding.MetaClassTypeAugmenter"/>
+        <typeCalculator forClass="org.jetbrains.plugins.groovy.lang.psi.api.statements.expressions.GrReferenceExpression"
+                        implementationClass="ru.kazantsev.nsmp.sdk.intellij_plugin.service.metaclass.binding.MetaClassReferenceTypeCalculator"
+                        order="first"/>
+        <membersContributor implementation="ru.kazantsev.nsmp.sdk.intellij_plugin.service.metaclass.binding.MetaClassMembersContributor"
+                            order="last"/>
     </extensions>
 
     <projectListeners>
@@ -73,6 +89,13 @@
                 description="Update remote source state">
             <keyboard-shortcut keymap="$default" first-keystroke="ctrl alt shift R"/>
             <keyboard-shortcut keymap="Mac OS X" first-keystroke="meta alt shift R"/>
+        </action>
+        <action id="NSMP.SDK.Project.MetaClassSync"
+                class="ru.kazantsev.nsmp.sdk.intellij_plugin.actions.project.ProjectMetaClassSyncAction"
+                text="NSMP SDK: Sync Meta Classes"
+                description="Fetch meta classes from installation and regenerate IDE stubs">
+            <keyboard-shortcut keymap="$default" first-keystroke="ctrl alt shift M"/>
+            <keyboard-shortcut keymap="Mac OS X" first-keystroke="meta alt shift M"/>
         </action>
 
         <!--Actions for files -->

@@ -65,6 +65,7 @@ class PluginActivationService(private val project: Project) : Disposable {
         val TOOL_WINDOW_IDS = listOf(
             "NSMP SDK",
             "NSMP SDK Diff Manager",
+            "NSMP SDK Meta Classes",
         )
     }
 }
