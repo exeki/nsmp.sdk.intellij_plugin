@@ -22,7 +22,7 @@
 
 1. IDE на базе JetBrains Platform 2025.2.4+ (проводились тесты на OpenIDE, IntelliJ IDEA)
 2. Сетевой доступ к вашей инсталляции NSMP (тестировалось только на Naumen Service Desk 4.20+)
-3. [Модуль](https://github.com/exeki?tab=repositories), загруженный на инсталляцию
+3. [Модуль](https://github.com/exeki/nsmp.modules.sdk_controller), загруженный на инсталляцию
 4. Руки или их функциональный заменитель
 
 ## 3. Ручная установка
