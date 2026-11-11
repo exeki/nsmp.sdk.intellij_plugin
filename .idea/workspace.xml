@@ -6,6 +6,17 @@
   <component name="ChangeListManager">
     <list default="true" id="0ed9795e-0975-48aa-bb0f-4d495b6ed849" name="Changes" comment="обновлено readme">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.intellijPlatform/localPlatformArtifacts/IC-252.27397.103/bundledModule-intellij.libraries.ai.grazie.spell.gec.engine.local-IC-252.27397.103.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.intellijPlatform/localPlatformArtifacts/IC-252.27397.103/bundledModule-intellij.libraries.ai.grazie.spell.gec.engine.local-IC-252.27397.103.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.intellijPlatform/localPlatformArtifacts/IC-252.27397.103/bundledModule-intellij.libraries.lucene.common-IC-252.27397.103.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.intellijPlatform/localPlatformArtifacts/IC-252.27397.103/bundledModule-intellij.libraries.lucene.common-IC-252.27397.103.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.intellijPlatform/localPlatformArtifacts/IC-252.27397.103/bundledModule-intellij.libraries.microba-IC-252.27397.103.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.intellijPlatform/localPlatformArtifacts/IC-252.27397.103/bundledModule-intellij.libraries.microba-IC-252.27397.103.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.intellijPlatform/localPlatformArtifacts/IC-252.27397.103/bundledModule-intellij.platform.backend-IC-252.27397.103.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.intellijPlatform/localPlatformArtifacts/IC-252.27397.103/bundledModule-intellij.platform.backend-IC-252.27397.103.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.intellijPlatform/localPlatformArtifacts/IC-252.27397.103/bundledModule-intellij.platform.vcs.impl-IC-252.27397.103.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.intellijPlatform/localPlatformArtifacts/IC-252.27397.103/bundledModule-intellij.platform.vcs.impl-IC-252.27397.103.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.intellijPlatform/localPlatformArtifacts/IC-252.27397.103/bundledModule-intellij.platform.vcs.impl.lang-IC-252.27397.103.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.intellijPlatform/localPlatformArtifacts/IC-252.27397.103/bundledModule-intellij.platform.vcs.impl.lang-IC-252.27397.103.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.intellijPlatform/localPlatformArtifacts/IC-252.27397.103/bundledModule-intellij.platform.vcs.impl.shared-IC-252.27397.103.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.intellijPlatform/localPlatformArtifacts/IC-252.27397.103/bundledModule-intellij.platform.vcs.impl.shared-IC-252.27397.103.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.intellijPlatform/localPlatformArtifacts/IC-252.27397.103/bundledModule-intellij.spellchecker-IC-252.27397.103.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.intellijPlatform/localPlatformArtifacts/IC-252.27397.103/bundledModule-intellij.spellchecker-IC-252.27397.103.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.intellijPlatform/localPlatformArtifacts/IC-252.27397.103/bundledPlugin-com.intellij.java-IC-252.27397.103.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.intellijPlatform/localPlatformArtifacts/IC-252.27397.103/bundledPlugin-com.intellij.java-IC-252.27397.103.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.obsidian/core-plugins.json" beforeDir="false" afterPath="$PROJECT_DIR$/.obsidian/core-plugins.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.obsidian/workspace.json" beforeDir="false" afterPath="$PROJECT_DIR$/.obsidian/workspace.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/README.MD" beforeDir="false" afterPath="$PROJECT_DIR$/README.MD" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -14,7 +25,7 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="EmbeddingIndexingInfo">
-    <option name="cachedIndexableFilesCount" value="208" />
+    <option name="cachedIndexableFilesCount" value="194" />
   </component>
   <component name="ExternalProjectsData">
     <projectState path="$PROJECT_DIR$">
@@ -62,7 +73,7 @@
 }</component>
   <component name="GithubPullRequestsUISettings">{
   &quot;selectedUrlAndAccountId&quot;: {
-    &quot;url&quot;: &quot;https://github.com/exeki/nsd-intellij-plugin.git&quot;,
+    &quot;url&quot;: &quot;https://github.com/exeki/nsmp.sdk.intellij_plugin.git&quot;,
     &quot;accountId&quot;: &quot;678ca613-af78-4bb2-994b-c29bbb590d5a&quot;
   }
 }</component>
@@ -474,6 +485,10 @@
       <workItem from="1781476851553" duration="12907000" />
       <workItem from="1781492101095" duration="2198000" />
       <workItem from="1781523867690" duration="2863000" />
+      <workItem from="1784544683296" duration="39000" />
+      <workItem from="1784823747809" duration="1857000" />
+      <workItem from="1784888799240" duration="22000" />
+      <workItem from="1794404484179" duration="352000" />
     </task>
     <task id="LOCAL-00001" summary="1">
       <option name="closed" value="true" />
@@ -827,7 +842,15 @@
       <option name="project" value="LOCAL" />
       <updated>1782262983231</updated>
     </task>
-    <option name="localTasksCounter" value="45" />
+    <task id="LOCAL-00045" summary="обновлено readme">
+      <option name="closed" value="true" />
+      <created>1784544715115</created>
+      <option name="number" value="00045" />
+      <option name="presentableId" value="LOCAL-00045" />
+      <option name="project" value="LOCAL" />
+      <updated>1784544715116</updated>
+    </task>
+    <option name="localTasksCounter" value="46" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
